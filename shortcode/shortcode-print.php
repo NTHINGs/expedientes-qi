@@ -30,7 +30,7 @@ if ( ! function_exists( 'imprimir_expediente_shortcode' ) ) {
         $js = "
         function imprimir(mode) {
             console.log(mode);
-            <?php do_action('convertir_pdf', '`. $_atts['mode'] . `');?>
+            <?php do_action('convertir_pdf', '". $_atts['mode'] . "');?>
         }
         ";
         return do_shortcode("[js]" . $js . "[/js]") . `
