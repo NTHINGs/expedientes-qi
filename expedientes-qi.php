@@ -50,8 +50,8 @@ if ( file_exists( ABS_DIR . '/shortcode/shortcode-print.php' ) ) {
 	require_once( ABS_DIR . '/shortcode/shortcode-print.php' );
 }
 
-add_action('convertir_pdf', 'convertir_pdf', 10, 1)
-function convertir_pdf($mode) {
+add_action('convertir_pdf', 'fun_convertir_pdf', 10, 1);
+function fun_convertir_pdf($mode) {
 	// do something
 	echo "CONVERTIDO";
 }
