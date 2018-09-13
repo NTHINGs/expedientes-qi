@@ -25,16 +25,8 @@ if ( ! function_exists( 'imprimir_expediente_shortcode' ) ) {
 	function imprimir_expediente_shortcode($atts) {
         $_atts = shortcode_atts( array(
 			'mode'  => 'default',
-		), $atts );
-
-        $js = "
-        function imprimir(mode) {
-            console.log(mode);
-            <?php do_action('convertir_pdf', '". $_atts['mode'] . "');?>
-        }
-        ";
-        return do_shortcode("[js]" . $js . "[/js]") . `
-            <button class='btn btn-primary pull-right' onclick="imprimir('`. $_atts['mode'] . `')">Imprimir</button>
-        `;
+        ), $atts );
+        
+        return "<button class='btn btn-primary pull-right' onclick="expedientes_qi_imprimir('`. $_atts['mode'] . `')">Imprimir</button>";
 	}
 }

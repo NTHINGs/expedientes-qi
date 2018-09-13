@@ -50,8 +50,8 @@ if ( file_exists( ABS_DIR . '/shortcode/shortcode-print.php' ) ) {
 	require_once( ABS_DIR . '/shortcode/shortcode-print.php' );
 }
 
-add_action('convertir_pdf', 'fun_convertir_pdf', 10, 1);
-function fun_convertir_pdf($mode) {
-	// do something
-	echo "CONVERTIDO";
+add_action('wp_enqueue_scripts','expedientes_qi_init');
+
+function expedientes_qi_init() {
+    wp_enqueue_script( 'expedientes_qi', plugins_url( '/js/expedientes_qi.js', __FILE__ ));
 }
