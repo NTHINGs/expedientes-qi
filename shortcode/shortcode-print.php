@@ -27,6 +27,6 @@ if ( ! function_exists( 'imprimir_expediente_shortcode' ) ) {
 			'mode'  => 'default',
         ), $atts );
         
-        return "<button class='btn btn-primary pull-right' onclick="expedientes_qi_imprimir('`. $_atts['mode'] . `')">Imprimir</button>";
+        return '<button class="btn btn-primary pull-right" onclick="expedientes_qi_imprimir("'. $_atts['mode'] . '")">Imprimir</button>';
 	}
 }
