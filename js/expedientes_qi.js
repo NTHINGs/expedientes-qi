@@ -7,7 +7,7 @@ function expedientes_qi_imprimir(mode, expedientes) {
     var parser = new DOMParser()
     var el = parser.parseFromString(markup, "text/xml");
 
-    doc.fromHTML(el);
+    doc.fromHTML(el.firstChild);
     // doc.text('Hello world!', 10, 10)
     // doc.text(patient.nombre, 15, 15);
     doc.save('a4.pdf')
