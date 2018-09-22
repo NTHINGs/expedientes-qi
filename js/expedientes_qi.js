@@ -3,14 +3,24 @@ function expedientes_qi_imprimir(mode, expedientes) {
 
     let doc = new jsPDF()
 
-    let div = document.createElement('div');
-    div.setAttribute("id", "pdf");
-    div.innerHTML = '<p>' + patient.nombre + '</p>';
-    // div.style.display = 'none';
+    parseTemplate('/wp-content/plugins/expedientes-qi/templates/informacion-personal.html')
+        .then(function (template) {
+            doc.fromHTML(template, 10, 10);
+            doc.save('a4.pdf');
+        });
+}
 
-    doc.fromHTML('<p>' + patient.nombre + '</p>', 10, 10);
-    // doc.text('Hello world!', 10, 10)
-    // doc.text(patient.nombre, 15, 15);
-    doc.save('a4.pdf')
-    // doc.output("dataurlnewwindow");
+function parseTemplate(file) {
+    return new Promise(function (resolve, reject) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function () {
+            if (rawFile.readyState === 4) {
+                if (rawFile.status === 200 || rawFile.status == 0) {
+                    resolve(rawFile.responseText);
+                }
+            }
+        }
+        rawFile.send(null);
+    });
 }
