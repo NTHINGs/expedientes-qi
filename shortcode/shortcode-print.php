@@ -35,6 +35,6 @@ if ( ! function_exists( 'imprimir_expediente_shortcode' ) ) {
 		// Escape quotes from json
 		$patient = addslashes(json_encode($result));
 
-        return '<button class="btn btn-primary pull-right" onclick="expedientes_qi_imprimir(\''. $_atts['mode'] . '\', \'' . $patient . '\')">Imprimir</button>';
+        return '<h1>' . $_GET['pdb'] . '</h1><button class="btn btn-primary pull-right" onclick="expedientes_qi_imprimir(\''. $_atts['mode'] . '\', \'' . $patient . '\')">Imprimir</button>';
 	}
 }
