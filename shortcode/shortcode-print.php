@@ -25,8 +25,11 @@ if ( ! function_exists( 'imprimir_expediente_shortcode' ) ) {
 	function imprimir_expediente_shortcode($atts) {
         $_atts = shortcode_atts( array(
 			'mode'  => 'default',
-        ), $atts );
+		), $atts );
+		
+		global $wpdb;
+		$result = $wpdb->get_results('SELECT * FROM wp_participants_database');
         
-        return '<button class="btn btn-primary pull-right" onclick="expedientes_qi_imprimir(\''. $_atts['mode'] . '\')">Imprimir</button>';
+        return '<button class="btn btn-primary pull-right" onclick="expedientes_qi_imprimir(\''. $_atts['mode'] . '\', \'' . json_encode($result) . '\')">Imprimir</button>';
 	}
 }
