@@ -30,7 +30,7 @@ if ( ! function_exists( 'imprimir_expediente_shortcode' ) ) {
 
 		// Query for patient
 		global $wpdb;
-		$result = $wpdb->get_results('SELECT * FROM wp_participants_database WHERE "id" = ' . $_GET['pdb']);
+		$result = $wpdb->get_results('SELECT * FROM wp_participants_database WHERE id = ' . $_GET['pdb']);
 		
 		// Escape quotes from json
 		$patient = addslashes(json_encode($result));
