@@ -10,5 +10,6 @@ function expedientes_qi_imprimir(mode, expedientes) {
     doc.fromHTML(el.firstChild);
     // doc.text('Hello world!', 10, 10)
     // doc.text(patient.nombre, 15, 15);
-    doc.save('a4.pdf')
+    // doc.save('a4.pdf')
+    doc.output("dataurlnewwindow");
 }
