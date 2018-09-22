@@ -33,7 +33,7 @@ if ( ! function_exists( 'imprimir_expediente_shortcode' ) ) {
 		$result = $wpdb->get_results('SELECT * FROM wp_participants_database WHERE id = ' . $_GET['pdb']);
 		
 		// Escape quotes from json
-		$patient = addslashes(json_encode($result));
+		$patient = base64_encode(json_encode($result));
 
         return '<h1>' . $_GET['pdb'] . '</h1><button class="btn btn-primary pull-right" onclick="expedientes_qi_imprimir(\''. $_atts['mode'] . '\', \'' . $patient . '\')">Imprimir</button>';
 	}
