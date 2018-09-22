@@ -1,5 +1,5 @@
 function expedientes_qi_imprimir(mode, expedientes) {
-    let patient = JSON.parse(window.atob(expedientes));
+    let patient = JSON.parse(window.atob(expedientes))[0];
 
     let doc = new jsPDF()
 
