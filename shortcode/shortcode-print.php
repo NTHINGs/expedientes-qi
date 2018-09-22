@@ -23,13 +23,18 @@ if ( ! function_exists( 'imprimir_expediente_shortcode' ) ) {
 	 * @since  1.0.0
 	 */
 	function imprimir_expediente_shortcode($atts) {
+		// Get mode
         $_atts = shortcode_atts( array(
 			'mode'  => 'default',
 		), $atts );
-		
+
+		// Query for patient
 		global $wpdb;
-		$result = $wpdb->get_results('SELECT * FROM wp_participants_database');
-        
-        return '<button class="btn btn-primary pull-right" onclick="expedientes_qi_imprimir(\''. $_atts['mode'] . '\', \'' . json_encode($result) . '\')">Imprimir</button>';
+		$result = $wpdb->get_results('SELECT * FROM wp_participants_database WHERE "id" = ' . $_GET['pdb']);
+		
+		// Escape quotes from json
+		$patient = addslashes(json_encode($result));
+
+        return '<button class="btn btn-primary pull-right" onclick="expedientes_qi_imprimir(\''. $_atts['mode'] . '\', \'' . $patient . '\')">Imprimir</button>';
 	}
 }
