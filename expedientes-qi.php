@@ -56,8 +56,10 @@ if ( file_exists( ABS_DIR . '/shortcodes/agregar-paciente.php' ) ) {
 add_action('wp_enqueue_scripts','expedientes_qi_init');
 
 function expedientes_qi_init() {
+	wp_enqueue_script( 'bootstrap', plugins_url('/js/bootstrap.min.js', __FILE__ ))
     wp_enqueue_script( 'jspdf', plugins_url( '/js/jspdf.min.js', __FILE__ ));
-    wp_enqueue_script( 'expedientes_qi', plugins_url( '/js/expedientes_qi.js', __FILE__ ));
+	wp_enqueue_script( 'expedientes_qi', plugins_url( '/js/expedientes_qi.js', __FILE__ ));
+	wp_enqueue_style( 'bootstrap', plugins_url( '/css/bootstrap.min.css', __FILE__);
 }
 
 // Create Tables
