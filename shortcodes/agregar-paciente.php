@@ -22,15 +22,19 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 	 * @since  1.0.0
 	 */
 	function agregar_paciente_shortcode($atts) {
+        $current_user = wp_get_current_user();
         ob_start();
         ?>
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <h1>I'm in the shortcode :)</h1>
+                    <h1>Estoy en el shortcode :)</h1>
                 </div>
                 <div class="col-6">
-                    <h2>And with bootstrap</h2>
+                    <h2>Y con Bootstrap</h2>
+                </div>
+                <div class="col-12">
+                    Usuario loggeado: <?php $current_user->user_login; ?>
                 </div>
             </div>
         </div>

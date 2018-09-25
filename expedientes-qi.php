@@ -63,7 +63,7 @@ function expedientes_qi_init() {
 // Create Tables
 register_activation_hook( __FILE__, 'create_plugin_database' );
 function create_plugin_database() {
-    global $table_prefix, $wpdb;
+    global $table_prefix;
 
 	$sql = str_replace("%TABLE_PREFIX%", $table_prefix, file_get_contents( plugin_dir_path(__FILE__) . "/schema.sql" ));
 	require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
