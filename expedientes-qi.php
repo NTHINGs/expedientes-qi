@@ -46,8 +46,11 @@ if ( ! defined( 'ABS_URL' ) ) {
  *
  * @since 1.0.0
  */
-if ( file_exists( ABS_DIR . '/shortcode/shortcode-print.php' ) ) {
-	require_once( ABS_DIR . '/shortcode/shortcode-print.php' );
+if ( file_exists( ABS_DIR . '/shortcodes/shortcode-print.php' ) ) {
+	require_once( ABS_DIR . '/shortcodes/shortcode-print.php' );
+}
+if ( file_exists( ABS_DIR . '/shortcodes/agregar-paciente.php' ) ) {
+	require_once( ABS_DIR . '/shortcodes/agregar-paciente.php' );
 }
 
 add_action('wp_enqueue_scripts','expedientes_qi_init');
@@ -55,4 +58,14 @@ add_action('wp_enqueue_scripts','expedientes_qi_init');
 function expedientes_qi_init() {
     wp_enqueue_script( 'jspdf', plugins_url( '/js/jspdf.min.js', __FILE__ ));
     wp_enqueue_script( 'expedientes_qi', plugins_url( '/js/expedientes_qi.js', __FILE__ ));
+}
+
+// Create Tables
+register_activation_hook( __FILE__, 'create_plugin_database' );
+function create_plugin_database() {
+    global $table_prefix, $wpdb;
+
+	$sql = str_replace("%TABLE_PREFIX%", $table_prefix, file_get_contents( plugin_dir_path(__FILE__) . "/schema.sql" ));
+	require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
+	dbDelta($sql);
 }
