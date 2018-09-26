@@ -5,7 +5,11 @@
     <div class="row">
         <div class="col-12">
             <form class="row" action="%REQUEST_URI%" method="POST">
-                <div class="form-group">
+                <div class="form-group col-6">
+                    <label for="nombre">Fotografía</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa el nombre del paciente">
+                </div>
+                <div class="form-group col-6">
                     <label for="nombre">Nombre</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa el nombre del paciente">
                 </div>
@@ -19,47 +23,47 @@
                     </span>
                     <input type="hidden" id="edad" name="edad">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="escolaridad">Escolaridad</label>
                     <input type="text" class="form-control" id="escolaridad" name="escolaridad" placeholder="Ingresa la escolaridad del paciente">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="ocupacion">Ocupación</label>
                     <input type="text" class="form-control" id="ocupacion" name="ocupacion" placeholder="Ingresa la ocupación del paciente">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="estadocivil">Estado Civil</label>
                     <input type="text" class="form-control" id="estadocivil" name="estadocivil" placeholder="Ingresa el estado civil del paciente">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="cantidadhijos">Cantidad de Hijos</label>
                     <input type="number" class="form-control" id="cantidadhijos" name="cantidadhijos" placeholder="Ingresa la cantidad de hijos del paciente">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="domicilio">Domicilio</label>
                     <input type="text" class="form-control" id="domicilio" name="domicilio" placeholder="Ingresa el domicilio del paciente">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="ciudaddeorigen">Ciudad de Origen</label>
                     <input type="text" class="form-control" id="ciudaddeorigen" name="ciudaddeorigen" placeholder="Ingresa la ciudad de origen del paciente">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="telefono">Teléfono</label>
                     <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingresa el teléfono del paciente">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="email">Correo Electrónico</label>
                     <input type="text" class="form-control" id="email" name="email" placeholder="Ingresa el correo electrónico del paciente">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="enfermedades">Enfermedades</label>
                     <textarea class="form-control" id="enfermedades" name="enfermedades" placeholder="Ingresa las enfermedades del paciente"></textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="alergias">Alergias</label>
                     <textarea class="form-control" id="alergias" name="alergias" placeholder="Ingresa las alergias del paciente"></textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-6">
                     <label for="responsable">Responsable</label>
                     <input type="text" class="form-control" id="responsable" name="responsable" value="%CURRENT_USER%" readonly>
                 </div>
@@ -71,5 +75,5 @@
 </div>
 
 <script>
-    alert($('fechadenacimiento').value);
+    // alert($('fechadenacimiento').value);
 </script>
