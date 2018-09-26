@@ -23,7 +23,6 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 	 */
 	function agregar_paciente_shortcode() {
         $current_user = wp_get_current_user();
-        return plugin_dir_path(__FILE__);
-        // return str_replace("%CURRENT_USER%", $current_user->user_login, file_get_contents( plugin_dir_path(__FILE__) . "/templates/agregar-paciente.html" ));
+        return str_replace("%CURRENT_USER%", $current_user->user_login, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/agregar-paciente.html" ));
 	}
 }
