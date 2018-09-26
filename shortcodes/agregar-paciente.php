@@ -32,12 +32,12 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
         $current_user = wp_get_current_user();
         $variables = array("%CURRENT_USER%", "%REQUEST_URI%");
         $values = array($current_user->user_login, esc_url( $_SERVER['REQUEST_URI'] ));
-        return str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/agregar-paciente.html" ));
+        echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/agregar-paciente.html" ));
     }
 
     function guardar_paciente() {
         if ( isset( $_POST['submitted'] ) ) {
-            return 'NOMBRE RECIBIDO: ' . $_POST['nombre'];
+            echo 'NOMBRE RECIBIDO: ' . $_POST['nombre'];
         }
     }
 }
