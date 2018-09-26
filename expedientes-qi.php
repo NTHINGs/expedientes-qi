@@ -55,8 +55,7 @@ if ( file_exists( ABS_DIR . '/shortcodes/agregar-paciente.php' ) ) {
 
 add_action('wp_enqueue_scripts','expedientes_qi_init');
 
-function expedientes_qi_init() {https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js
-	
+function expedientes_qi_init() {
 	wp_register_script( 'popper', '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array( 'jquery' ), '3.3.1', false );
 	wp_register_script( 'bootstrap', '//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', array( 'jquery', 'popper' ), '3.3.1', false );
 	wp_register_script( 'gijgo', '//cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js', array( 'jquery' ), '3.3.1', false );
