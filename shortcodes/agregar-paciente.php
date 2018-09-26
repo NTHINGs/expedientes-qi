@@ -22,7 +22,22 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 	 * @since  1.0.0
 	 */
 	function agregar_paciente_shortcode() {
+        ob_start();
+        guardar_paciente();
+        render_html();
+        return ob_get_clean();
+    }
+    
+    function render_html() {
         $current_user = wp_get_current_user();
-        return str_replace("%CURRENT_USER%", $current_user->user_login, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/agregar-paciente.html" ));
-	}
+        $variables = array("%CURRENT_USER%", "%REQUEST_URI%");
+        $values = array($current_user->user_login, esc_url( $_SERVER['REQUEST_URI'] ));
+        return str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/agregar-paciente.html" ));
+    }
+
+    function guardar_paciente() {
+        if ( isset( $_POST['submitted'] ) ) {
+            return 'NOMBRE RECIBIDO: ' . $_POST['nombre'];
+        }
+    }
 }

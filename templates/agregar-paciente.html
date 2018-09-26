@@ -1,13 +1,16 @@
+<!-- PHP VARIABLES -->
+<!-- %CURRENT_USER% = Usuario Loggeado -->
+<!-- REQUEST_URI = URL para guardar al paciente -->
 <div class="container">
     <div class="row">
-        <div class="col-6">
-            <h1>Estoy en el shortcode :)</h1>
-        </div>
-        <div class="col-6">
-            <h2>Y con Bootstrap</h2>
-        </div>
         <div class="col-12">
             Usuario loggeado: %CURRENT_USER%
+        </div>
+        <div class="col-12">
+            <form action="%REQUEST_URI%" method="POST">
+                <input type="text" name="nombre" />
+                <input type="submit" name="submitted" value="Guardar"/>
+            </form>
         </div>
     </div>
 </div>
