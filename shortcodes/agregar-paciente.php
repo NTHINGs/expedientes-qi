@@ -21,24 +21,8 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 	 * @return string
 	 * @since  1.0.0
 	 */
-	function agregar_paciente_shortcode($atts) {
+	function agregar_paciente_shortcode() {
         $current_user = wp_get_current_user();
-        ob_start();
-        ?>
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <h1>Estoy en el shortcode :)</h1>
-                </div>
-                <div class="col-6">
-                    <h2>Y con Bootstrap</h2>
-                </div>
-                <div class="col-12">
-                    Usuario loggeado: <?php $current_user->user_login; ?>
-                </div>
-            </div>
-        </div>
-        <?php
-        return ob_get_clean();
+        return str_replace("%CURRENT_USER%", $current_user->user_login, file_get_contents( plugin_dir_path(__FILE__) . "/templates/agregar-paciente.html" ));
 	}
 }
