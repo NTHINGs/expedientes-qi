@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%paciente`
  `telefono`          VARCHAR(45) ,
  `email`             VARCHAR(100) NOT NULL ,
  `enfermedades`      TEXT ,
- `alergias`          TEXT NOT NULL ,
+ `alergias`          TEXT ,
  `responsable`       VARCHAR(50) NOT NULL ,
 
 PRIMARY KEY (`id`)
