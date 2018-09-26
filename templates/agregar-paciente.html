@@ -4,22 +4,20 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <form action="%REQUEST_URI%" method="POST">
+            <form class="row" action="%REQUEST_URI%" method="POST">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa el nombre del paciente">
                 </div>
-                <div class="row">
-                    <div class="form-group col-sm-8">
-                        <label for="fechadenacimiento">Fecha de Nacimiento</label>
-                        <input type="text" class="form-control" id="fechadenacimiento" name="fechadenacimiento" placeholder="Ingresa el nombre del paciente">
-                    </div>
-                    <div class="col-sm-4">
-                        <span>Edad:
-                            <span id="edad-span"></span>
-                        </span>
-                        <input type="hidden" id="edad" name="edad">
-                    </div>
+                <div class="form-group col-sm-8">
+                    <label for="fechadenacimiento">Fecha de Nacimiento</label>
+                    <input type="text" class="form-control" id="fechadenacimiento" name="fechadenacimiento" placeholder="Ingresa el nombre del paciente">
+                </div>
+                <div class="col-sm-4">
+                    <span>Edad:
+                        <span id="edad-span"></span>
+                    </span>
+                    <input type="hidden" id="edad" name="edad">
                 </div>
                 <div class="form-group">
                     <label for="escolaridad">Escolaridad</label>
@@ -73,5 +71,5 @@
 </div>
 
 <script>
-    // alert('js works');
+    alert($('fechadenacimiento').value);
 </script>
