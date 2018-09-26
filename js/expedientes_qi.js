@@ -1,3 +1,6 @@
+window.load= function(callback) {
+    callback();
+}
 String.prototype.supplant = function (o) {
     return this.replace(/{([^${}]*)}/g,
         function (a, b) {
