@@ -37,6 +37,13 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 
     function guardar_paciente() {
         if ( isset( $_POST['submitted'] ) ) {
+            $movefile = wp_handle_upload( $_FILES['fotografia'] );
+            if ( $movefile ) {
+                echo "File is valid, and was successfully uploaded.\n";
+                var_dump( $movefile);
+            } else {
+                echo "Possible file upload attack!\n";
+            }
             echo 'NOMBRE RECIBIDO: ' . $_POST['nombre'];
         }
     }

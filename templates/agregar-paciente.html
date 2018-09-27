@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <form class="row" action="%REQUEST_URI%" method="POST">
+            <form class="row" action="%REQUEST_URI%" method="POST" enctype="multipart/form-data">
                 <div class="form-group col-12 col-sm-6">
                     <label for="nombre">Fotografía</label>
-                    <input type="text" class="form-control" id="nombre" name="fotografia">
+                    <input type="file" class="form-control" name="fotografia" id="fotografia">
                 </div>
                 <div class="form-group col-12 col-sm-6">
                     <label for="nombre">Nombre</label>
