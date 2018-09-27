@@ -54,8 +54,10 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                      */
                     echo $movefile['error'];
                 }
+            } else {
+                echo "I'M IN THE ELSE";
             }
-            
+             
             echo 'NOMBRE RECIBIDO: ' . $_POST['nombre'];
         }
     }
