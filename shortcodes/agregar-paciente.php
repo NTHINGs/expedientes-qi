@@ -41,10 +41,9 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
         }
     
         if ( isset( $_POST['submitted'] ) ) {
-            $uploadedfile = $_FILES['fotografia'];
-            if ( isset(  $uploadedfile ) ) {
+            if ( isset(  $_FILES['fotografia'] ) ) {
                 $upload_overrides = array( 'test_form' => false );
-                $movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
+                $movefile = wp_handle_upload( $_FILES['fotografia'], $upload_overrides );
                 if ( $movefile && ! isset( $movefile['error'] ) ) {
                     // echo "File is valid, and was successfully uploaded.\n" . $movefile['url'];
                     var_dump( $movefile );
