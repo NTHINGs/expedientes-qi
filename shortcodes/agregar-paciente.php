@@ -8,7 +8,7 @@
  * @since    1.0.0
  */
 
-global $wpdb;
+global $table_prefix, $wpdb;
 
 if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 	// Add the action.
@@ -63,34 +63,26 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 // No se subio una foto
             }
 
-            $table_name = $wpdb->prefix . "expedientes_pacientes";
+            $table_name = $table_prefix . "expedientes_pacientes";
             $wpdb->insert( $table_name, array(
                 'fotografia' => $fotografia,
-                'nombre'            => check_value($_POST['nombre']),
-                'fechadenacimiento' => check_value(date($_POST['fechadenacimiento'])),
-                'edad'              => check_value($_POST['edad']),
-                'escolaridad'       => check_value($_POST['escolaridad']),
-                'ocupacion'         => check_value($_POST['ocupacion']),
-                'estadocivil'       => check_value($_POST['estadocivil']),
-                'cantidadhijos'     => check_value($_POST['cantidadhijos']),
-                'domicilio'         => check_value($_POST['domicilio']),
-                'ciudaddeorigen'    => check_value($_POST['ciudaddeorigen']),
-                'telefono'          => check_value($_POST['telefono']),
-                'email'             => check_value($_POST['email']),
-                'enfermedades'      => check_value($_POST['enfermedades']),
-                'alergias'          => check_value($_POST['alergias']),
-                'responsable'       => check_value($_POST['responsable'])
+                'nombre'            => $_POST['nombre'],
+                'fechadenacimiento' => date($_POST['fechadenacimiento']),
+                'edad'              => $_POST['edad'],
+                'escolaridad'       => $_POST['escolaridad'],
+                'ocupacion'         => $_POST['ocupacion'],
+                'estadocivil'       => $_POST['estadocivil'],
+                'cantidadhijos'     => $_POST['cantidadhijos'],
+                'domicilio'         => $_POST['domicilio'],
+                'ciudaddeorigen'    => $_POST['ciudaddeorigen'],
+                'telefono'          => $_POST['telefono'],
+                'email'             => $_POST['email'],
+                'enfermedades'      => $_POST['enfermedades'],
+                'alergias'          => $_POST['alergias'],
+                'responsable'       => $_POST['responsable']
             ), '%s');
             
             echo $_POST['nombre'] . ' agregado correctamente';
-        }
-    }
-
-    function check_value($value) {
-        if(!isset($value)) {
-            return "";
-        } else {
-            return $value;
         }
     }
 }
