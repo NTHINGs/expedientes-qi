@@ -80,7 +80,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 'enfermedades'      => $_POST['enfermedades'],
                 'alergias'          => $_POST['alergias'],
                 'responsable'       => $_POST['responsable']
-            ));
+            ), '%s');
             
             echo $_POST['nombre'] . ' agregado correctamente';
         }
