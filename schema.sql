@@ -3,7 +3,7 @@
 
 -- ************************************** %TABLE_PREFIX%expedientes_pacientes
 
-CREATE TABLE IF NOT EXISTS %TABLE_PREFIX%expedientes_pacientes
+CREATE TABLE %TABLE_PREFIX%expedientes_pacientes
 (
  id                INT NOT NULL AUTO_INCREMENT,
  fotografia        VARCHAR(500) NOT NULL ,
@@ -28,7 +28,7 @@ PRIMARY KEY (id)
 
 -- ************************************** %TABLE_PREFIX%expedientes_psicotropicos
 
-CREATE TABLE IF NOT EXISTS %TABLE_PREFIX%expedientes_psicotropicos
+CREATE TABLE %TABLE_PREFIX%expedientes_psicotropicos
 (
  id                 INT NOT NULL AUTO_INCREMENT,
  sustancia          VARCHAR(45) NOT NULL ,
@@ -53,7 +53,7 @@ CONSTRAINT FK_67 FOREIGN KEY fkIdx_67 (paciente) REFERENCES %TABLE_PREFIX%expedi
 
 -- ************************************** %TABLE_PREFIX%expedientes_personas_contacto
 
-CREATE TABLE IF NOT EXISTS %TABLE_PREFIX%expedientes_personas_contacto
+CREATE TABLE %TABLE_PREFIX%expedientes_personas_contacto
 (
  id        INT NOT NULL AUTO_INCREMENT,
  nombre    VARCHAR(100) NOT NULL ,
@@ -70,7 +70,7 @@ CONSTRAINT FK_49 FOREIGN KEY fkIdx_49 (paciente) REFERENCES %TABLE_PREFIX%expedi
 
 -- ************************************** %TABLE_PREFIX%expedientes_riesgos_psicosociales
 
-CREATE TABLE IF NOT EXISTS %TABLE_PREFIX%expedientes_riesgos_psicosociales
+CREATE TABLE %TABLE_PREFIX%expedientes_riesgos_psicosociales
 (
  id            INT NOT NULL AUTO_INCREMENT,
  individual    TEXT ,
