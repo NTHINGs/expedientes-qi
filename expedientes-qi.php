@@ -70,7 +70,7 @@ function expedientes_qi_init() {
 function create_plugin_database() {
     global $table_prefix, $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
-	$sql = str_replace(array("%TABLE_PREFIX%", "%CHARSET_COLLATE%"), array($table_prefix, $charset_collate), file_get_contents( plugin_dir_path(__FILE__) . "/schema.sql" ));
+	$sql = str_replace(array("%TABLE_PREFIX%", "%CHARSET_COLLATE%"), array($table_prefix . "expedientes_", $charset_collate), file_get_contents( plugin_dir_path(__FILE__) . "/schema.sql" ));
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta($sql);
 }

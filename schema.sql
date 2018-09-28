@@ -1,9 +1,9 @@
 -- ****************** EXPEDIENTES QI ******************;
 -- ***************************************************;
 
--- ************************************** %TABLE_PREFIX%expedientes_pacientes
+-- ************************************** %TABLE_PREFIX%pacientes
 
-CREATE TABLE %TABLE_PREFIX%expedientes_pacientes
+CREATE TABLE %TABLE_PREFIX%pacientes
 (
  id                INT NOT NULL AUTO_INCREMENT,
  fotografia        VARCHAR(500) NOT NULL ,
@@ -26,9 +26,9 @@ PRIMARY KEY (id)
 )%CHARSET_COLLATE%;
 
 
--- ************************************** %TABLE_PREFIX%expedientes_psicotropicos
+-- ************************************** %TABLE_PREFIX%psicotropicos
 
-CREATE TABLE %TABLE_PREFIX%expedientes_psicotropicos
+CREATE TABLE %TABLE_PREFIX%psicotropicos
 (
  id                 INT NOT NULL AUTO_INCREMENT,
  sustancia          VARCHAR(45) NOT NULL ,
@@ -47,13 +47,13 @@ CREATE TABLE %TABLE_PREFIX%expedientes_psicotropicos
 
 PRIMARY KEY (id),
 KEY fkIdx_67 (paciente),
-CONSTRAINT FK_67 FOREIGN KEY fkIdx_67 (paciente) REFERENCES %TABLE_PREFIX%expedientes_pacientes (id)
+CONSTRAINT FK_67 FOREIGN KEY fkIdx_67 (paciente) REFERENCES %TABLE_PREFIX%pacientes (id)
 )%CHARSET_COLLATE%;
 
 
--- ************************************** %TABLE_PREFIX%expedientes_personas_contacto
+-- ************************************** %TABLE_PREFIX%personas_contacto
 
-CREATE TABLE %TABLE_PREFIX%expedientes_personas_contacto
+CREATE TABLE %TABLE_PREFIX%personas_contacto
 (
  id        INT NOT NULL AUTO_INCREMENT,
  nombre    VARCHAR(100) NOT NULL ,
@@ -64,13 +64,13 @@ CREATE TABLE %TABLE_PREFIX%expedientes_personas_contacto
 
 PRIMARY KEY (id),
 KEY fkIdx_49 (paciente),
-CONSTRAINT FK_49 FOREIGN KEY fkIdx_49 (paciente) REFERENCES %TABLE_PREFIX%expedientes_pacientes (id) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT FK_49 FOREIGN KEY fkIdx_49 (paciente) REFERENCES %TABLE_PREFIX%pacientes (id) ON DELETE CASCADE ON UPDATE CASCADE
 )%CHARSET_COLLATE%;
 
 
--- ************************************** %TABLE_PREFIX%expedientes_riesgos_psicosociales
+-- ************************************** %TABLE_PREFIX%riesgos_psicosociales
 
-CREATE TABLE %TABLE_PREFIX%expedientes_riesgos_psicosociales
+CREATE TABLE %TABLE_PREFIX%riesgos_psicosociales
 (
  id            INT NOT NULL AUTO_INCREMENT,
  individual    TEXT ,
@@ -81,6 +81,6 @@ CREATE TABLE %TABLE_PREFIX%expedientes_riesgos_psicosociales
 
 PRIMARY KEY (id),
 KEY fkIdx_39 (paciente),
-CONSTRAINT FK_39 FOREIGN KEY fkIdx_39 (paciente) REFERENCES %TABLE_PREFIX%expedientes_pacientes (id) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT FK_39 FOREIGN KEY fkIdx_39 (paciente) REFERENCES %TABLE_PREFIX%pacientes (id) ON DELETE CASCADE ON UPDATE CASCADE
 )%CHARSET_COLLATE%;
 
