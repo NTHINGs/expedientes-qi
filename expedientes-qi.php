@@ -67,7 +67,6 @@ function expedientes_qi_init() {
 }
 
 // Create Tables
-register_activation_hook( __FILE__, 'create_plugin_database' );
 function create_plugin_database() {
     global $table_prefix;
 
@@ -75,3 +74,4 @@ function create_plugin_database() {
 	require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
 	dbDelta($sql);
 }
+register_activation_hook( __FILE__, 'create_plugin_database' );

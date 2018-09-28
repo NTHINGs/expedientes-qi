@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%expedientes_pacientes`
  `responsable`       VARCHAR(50) NOT NULL ,
 
 PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+)AUTO_INCREMENT=1;
 
 
 -- ************************************** `%TABLE_PREFIX%expedientes_psicotropicos`
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%expedientes_psicotropicos`
 PRIMARY KEY (`id`),
 KEY `fkIdx_67` (`paciente`),
 CONSTRAINT `FK_67` FOREIGN KEY `fkIdx_67` (`paciente`) REFERENCES `%TABLE_PREFIX%expedientes_pacientes` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+)AUTO_INCREMENT=1;
 
 
 -- ************************************** `%TABLE_PREFIX%expedientes_personas_contacto`
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%expedientes_personas_contacto`
 PRIMARY KEY (`id`),
 KEY `fkIdx_49` (`paciente`),
 CONSTRAINT `FK_49` FOREIGN KEY `fkIdx_49` (`paciente`) REFERENCES `%TABLE_PREFIX%expedientes_pacientes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+)AUTO_INCREMENT=1;
 
 
 -- ************************************** `%TABLE_PREFIX%expedientes_riesgos_psicosociales`
@@ -105,5 +105,5 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%expedientes_riesgos_psicosociales`
 PRIMARY KEY (`id`),
 KEY `fkIdx_39` (`paciente`),
 CONSTRAINT `FK_39` FOREIGN KEY `fkIdx_39` (`paciente`) REFERENCES `%TABLE_PREFIX%expedientes_pacientes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+)AUTO_INCREMENT=1;
 
