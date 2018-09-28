@@ -1,20 +1,20 @@
 -- ****************** EXPEDIENTES QI ******************;
 -- ***************************************************;
 
-DROP TABLE IF EXISTS `%TABLE_PREFIX%psicotropicos`;
+DROP TABLE IF EXISTS `%TABLE_PREFIX%expedientes_psicotropicos`;
 
 
-DROP TABLE IF EXISTS `%TABLE_PREFIX%personas_contacto`;
+DROP TABLE IF EXISTS `%TABLE_PREFIX%expedientes_personas_contacto`;
 
 
-DROP TABLE IF EXISTS `%TABLE_PREFIX%riesgos_psicosociales`;
+DROP TABLE IF EXISTS `%TABLE_PREFIX%expedientes_riesgos_psicosociales`;
 
 
-DROP TABLE IF EXISTS `%TABLE_PREFIX%paciente`;
+DROP TABLE IF EXISTS `%TABLE_PREFIX%expedientes_pacientes`;
 
--- ************************************** `%TABLE_PREFIX%paciente`
+-- ************************************** `%TABLE_PREFIX%expedientes_pacientes`
 
-CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%paciente`
+CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%expedientes_pacientes`
 (
  `id`                INT NOT NULL AUTO_INCREMENT,
  `fotografia`        VARCHAR(500) NOT NULL ,
@@ -37,9 +37,9 @@ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
--- ************************************** `%TABLE_PREFIX%psicotropicos`
+-- ************************************** `%TABLE_PREFIX%expedientes_psicotropicos`
 
-CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%psicotropicos`
+CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%expedientes_psicotropicos`
 (
  `id`                 INT NOT NULL AUTO_INCREMENT,
  `sustancia`          VARCHAR(45) NOT NULL ,
@@ -58,13 +58,13 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%psicotropicos`
 
 PRIMARY KEY (`id`),
 KEY `fkIdx_67` (`paciente`),
-CONSTRAINT `FK_67` FOREIGN KEY `fkIdx_67` (`paciente`) REFERENCES `%TABLE_PREFIX%paciente` (`id`)
+CONSTRAINT `FK_67` FOREIGN KEY `fkIdx_67` (`paciente`) REFERENCES `%TABLE_PREFIX%expedientes_pacientes` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
--- ************************************** `%TABLE_PREFIX%personas_contacto`
+-- ************************************** `%TABLE_PREFIX%expedientes_personas_contacto`
 
-CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%personas_contacto`
+CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%expedientes_personas_contacto`
 (
  `id`        INT NOT NULL AUTO_INCREMENT,
  `nombre`    VARCHAR(100) NOT NULL ,
@@ -75,13 +75,13 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%personas_contacto`
 
 PRIMARY KEY (`id`),
 KEY `fkIdx_49` (`paciente`),
-CONSTRAINT `FK_49` FOREIGN KEY `fkIdx_49` (`paciente`) REFERENCES `%TABLE_PREFIX%paciente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT `FK_49` FOREIGN KEY `fkIdx_49` (`paciente`) REFERENCES `%TABLE_PREFIX%expedientes_pacientes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
--- ************************************** `%TABLE_PREFIX%riesgos_psicosociales`
+-- ************************************** `%TABLE_PREFIX%expedientes_riesgos_psicosociales`
 
-CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%riesgos_psicosociales`
+CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%expedientes_riesgos_psicosociales`
 (
  `id`            INT NOT NULL AUTO_INCREMENT,
  `individual`    TEXT ,
@@ -92,6 +92,6 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%riesgos_psicosociales`
 
 PRIMARY KEY (`id`),
 KEY `fkIdx_39` (`paciente`),
-CONSTRAINT `FK_39` FOREIGN KEY `fkIdx_39` (`paciente`) REFERENCES `%TABLE_PREFIX%paciente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT `FK_39` FOREIGN KEY `fkIdx_39` (`paciente`) REFERENCES `%TABLE_PREFIX%expedientes_pacientes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
