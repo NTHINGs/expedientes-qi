@@ -1,29 +1,6 @@
 -- ****************** EXPEDIENTES QI ******************;
 -- ***************************************************;
 
-DROP TABLE IF EXISTS %TABLE_PREFIX%psicotropicos;
-
-
-DROP TABLE IF EXISTS %TABLE_PREFIX%personas_contacto;
-
-
-DROP TABLE IF EXISTS %TABLE_PREFIX%riesgos_psicosociales;
-
-
-DROP TABLE IF EXISTS %TABLE_PREFIX%paciente;
-
-
-DROP TABLE IF EXISTS %TABLE_PREFIX%expedientes_psicotropicos;
-
-
-DROP TABLE IF EXISTS %TABLE_PREFIX%expedientes_personas_contacto;
-
-
-DROP TABLE IF EXISTS %TABLE_PREFIX%expedientes_riesgos_psicosociales;
-
-
-DROP TABLE IF EXISTS %TABLE_PREFIX%expedientes_pacientes;
-
 -- ************************************** %TABLE_PREFIX%expedientes_pacientes
 
 CREATE TABLE IF NOT EXISTS %TABLE_PREFIX%expedientes_pacientes
