@@ -62,7 +62,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 // No se subio una foto
             }
 
-            $table_name = $wpdb->prefix . "paciente";
+            $table_name = $wpdb->prefix . "expedientes_paciente";
             $wpdb->insert( $table_name, array(
                 'fotografia' => $fotografia,
                 'nombre'            => $_POST['nombre'],
