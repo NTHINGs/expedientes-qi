@@ -41,10 +41,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
         }
     
         if ( isset( $_POST['submitted'] ) ) {
-            foreach($_FILES['fotografia'] as $result) {
-                echo $result;
-            }
-            if ( isset(  $_FILES['fotografia'] ) ) {
+            if ($_FILES['fotografia']['size'] == 0 && $_FILES['fotografia']['error'] == 0) {
                 $upload_overrides = array( 'test_form' => false );
                 $movefile = wp_handle_upload( $_FILES['fotografia'], $upload_overrides );
                 if ( $movefile && ! isset( $movefile['error'] ) ) {
@@ -57,6 +54,8 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                      */
                     echo $movefile['error'];
                 }
+            } else {
+                echo "I'M IN THE ELSE";
             }
              
             echo 'NOMBRE RECIBIDO: ' . $_POST['nombre'];
