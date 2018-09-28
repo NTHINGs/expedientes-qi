@@ -71,7 +71,9 @@ function create_plugin_database() {
     global $table_prefix, $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
 	// $sql = str_replace(array("%TABLE_PREFIX%", "%CHARSET_COLLATE%"), array($table_prefix, $charset_collate), file_get_contents( plugin_dir_path(__FILE__) . "/schema.sql" ));
-	$sql = "CREATE TABLE IF NOT EXISTS %TABLE_PREFIX%expedientes_pacientes
+	$table_name = $wpdb->prefix . 'expedientes_pacientes';
+
+	$sql = "CREATE TABLE %TABLE_PREFIX%expedientes_pacientes
 	(
 	 id                INT NOT NULL AUTO_INCREMENT,
 	 fotografia        VARCHAR(500) NOT NULL ,
@@ -96,7 +98,7 @@ function create_plugin_database() {
 	
 	-- ************************************** %TABLE_PREFIX%expedientes_psicotropicos
 	
-	CREATE TABLE IF NOT EXISTS %TABLE_PREFIX%expedientes_psicotropicos
+	CREATE TABLE %TABLE_PREFIX%expedientes_psicotropicos
 	(
 	 id                 INT NOT NULL AUTO_INCREMENT,
 	 sustancia          VARCHAR(45) NOT NULL ,
@@ -121,7 +123,7 @@ function create_plugin_database() {
 	
 	-- ************************************** %TABLE_PREFIX%expedientes_personas_contacto
 	
-	CREATE TABLE IF NOT EXISTS %TABLE_PREFIX%expedientes_personas_contacto
+	CREATE TABLE %TABLE_PREFIX%expedientes_personas_contacto
 	(
 	 id        INT NOT NULL AUTO_INCREMENT,
 	 nombre    VARCHAR(100) NOT NULL ,
@@ -138,7 +140,7 @@ function create_plugin_database() {
 	
 	-- ************************************** %TABLE_PREFIX%expedientes_riesgos_psicosociales
 	
-	CREATE TABLE IF NOT EXISTS %TABLE_PREFIX%expedientes_riesgos_psicosociales
+	CREATE TABLE %TABLE_PREFIX%expedientes_riesgos_psicosociales
 	(
 	 id            INT NOT NULL AUTO_INCREMENT,
 	 individual    TEXT ,
