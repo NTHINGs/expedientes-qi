@@ -81,7 +81,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 'alergias'          => $_POST['alergias'],
                 'responsable'       => $_POST['responsable']
             ), '%s');
-            
+            echo $wpdb->last_error;
             echo $_POST['nombre'] . ' agregado correctamente';
         }
     }
