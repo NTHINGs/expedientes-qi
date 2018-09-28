@@ -72,7 +72,7 @@ function create_plugin_database() {
 	$charset_collate = $wpdb->get_charset_collate();
 	$table_name = $wpdb->prefix . 'expedientes_pacientes';
 	$sql = str_replace(array("%TABLE_PREFIX%", "%CHARSET_COLLATE%"), array($table_prefix, $charset_collate), file_get_contents( plugin_dir_path(__FILE__) . "/schema.sql" ));
-
+	echo $sql;
 	// $sql = "CREATE TABLE $table_name (
 	// 	id INT NOT NULL AUTO_INCREMENT,
 	// 	fotografia        VARCHAR(500) NOT NULL ,
