@@ -79,7 +79,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 'email'             => check_value($_POST['email']),
                 'enfermedades'      => check_value($_POST['enfermedades']),
                 'alergias'          => check_value($_POST['alergias']),
-                'responsable'       => check_value($_POST['responsable')]
+                'responsable'       => check_value($_POST['responsable'])
             ), '%s');
             
             echo $_POST['nombre'] . ' agregado correctamente';
