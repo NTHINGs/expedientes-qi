@@ -8,6 +8,8 @@
  * @since    1.0.0
  */
 
+global $wpdb;
+
 if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 	// Add the action.
 	add_action( 'plugins_loaded', function() {
@@ -41,7 +43,9 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
         }
     
         if ( isset( $_POST['submitted'] ) ) {
-            if ($_FILES['fotografia']['size'] == 0 && $_FILES['fotografia']['error'] == 0) {
+            $fotografia = '/wp-content/plugins/expedientes-qi/default.png';
+            if ($_FILES['fotografia']['size'] > 0 && $_FILES['fotografia']['error'] == 0) {
+                // Se subio una foto
                 $upload_overrides = array( 'test_form' => false );
                 $movefile = wp_handle_upload( $_FILES['fotografia'], $upload_overrides );
                 if ( $movefile && ! isset( $movefile['error'] ) ) {
@@ -55,10 +59,29 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                     echo $movefile['error'];
                 }
             } else {
-                echo "I'M IN THE ELSE";
+                // No se subio una foto
             }
-             
-            echo 'NOMBRE RECIBIDO: ' . $_POST['nombre'];
+
+            $table_name = $wpdb->prefix . "paciente";
+            $wpdb->insert( $table_name, array(
+                'fotografia' => $fotografia,
+                'nombre'            => $_POST['nombre'],
+                'fechadenacimiento' => date($_POST['fechadenacimiento']),
+                'edad'              => $_POST['edad'],
+                'escolaridad'       => $_POST['escolaridad'],
+                'ocupacion'         => $_POST['ocupacion'],
+                'estadocivil'       => $_POST['estadocivil'],
+                'cantidadhijos'     => $_POST['cantidadhijos'],
+                'domicilio'         => $_POST['domicilio'],
+                'ciudaddeorigen'    => $_POST['ciudaddeorigen'],
+                'telefono'          => $_POST['telefono'],
+                'email'             => $_POST['email'],
+                'enfermedades'      => $_POST['enfermedades'],
+                'alergias'          => $_POST['alergias'],
+                'responsable'       => $_POST['responsable']
+            ));
+            
+            echo $_POST['nombre'] . ' agregado correctamente';
         }
     }
 }

@@ -16,7 +16,6 @@
                 <div class="form-group col-sm-8">
                     <label for="fechadenacimiento">Fecha de Nacimiento</label>
                     <input id="fechadenacimiento" name="fechadenacimiento"/>
-                    <!-- <input type="text" class="form-control" id="fechadenacimiento" name="fechadenacimiento"> -->
                 </div>
                 <div class="col-sm-4">
                     <span>Edad:
@@ -80,6 +79,14 @@
     jQuery(document).ready(function( $ ) {
         $('#fechadenacimiento').datepicker({
             uiLibrary: 'bootstrap4'
+        });
+
+        $('#fechadenacimiento').change(function() {
+            let nacimiento = $(this).val().substring(0, 4);
+            let edad = (new Date()).getFullYear() - nacimiento;
+
+            $('#edad').val(edad);
+            $('#edad-span').html(edad);
         });
     });
 </script>
