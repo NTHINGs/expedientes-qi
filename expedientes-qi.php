@@ -3,7 +3,7 @@
  * Plugin Name:       Expedientes QI
  * Plugin URI:        https://github.com/NTHINGs/expedientes-qi
  * Description:       Coding shortcodes in a plugin with maintainable code practices.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Mauricio Martinez
  * Author URI:        https://github.com/NTHINGs
  * License:           MIT
