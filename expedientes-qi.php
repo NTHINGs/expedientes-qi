@@ -73,26 +73,26 @@ function create_plugin_database() {
 	$table_name = $wpdb->prefix . 'expedientes_pacientes';
 	$sql = str_replace(array("%TABLE_PREFIX%", "%CHARSET_COLLATE%"), array($table_prefix, $charset_collate), file_get_contents( plugin_dir_path(__FILE__) . "/schema.sql" ));
 
-	$sql = "CREATE TABLE $table_name (
-		id INT NOT NULL AUTO_INCREMENT,
-		fotografia        VARCHAR(500) NOT NULL ,
-		nombre            VARCHAR(100) NOT NULL ,
-		fechadenacimiento DATE NOT NULL ,
-		edad              INT NOT NULL ,
-		escolaridad       VARCHAR(250) ,
-		ocupacion         VARCHAR(250) ,
-		estadocivil       VARCHAR(50) ,
-		cantidadhijos     INT ,
-		domicilio         VARCHAR(200) ,
-		ciudaddeorigen    VARCHAR(200) ,
-		telefono          VARCHAR(45) ,
-		email             VARCHAR(100) NOT NULL ,
-		enfermedades      TEXT ,
-		alergias          TEXT ,
-		responsable       VARCHAR(50) NOT NULL ,
+	// $sql = "CREATE TABLE $table_name (
+	// 	id INT NOT NULL AUTO_INCREMENT,
+	// 	fotografia        VARCHAR(500) NOT NULL ,
+	// 	nombre            VARCHAR(100) NOT NULL ,
+	// 	fechadenacimiento DATE NOT NULL ,
+	// 	edad              INT NOT NULL ,
+	// 	escolaridad       VARCHAR(250) ,
+	// 	ocupacion         VARCHAR(250) ,
+	// 	estadocivil       VARCHAR(50) ,
+	// 	cantidadhijos     INT ,
+	// 	domicilio         VARCHAR(200) ,
+	// 	ciudaddeorigen    VARCHAR(200) ,
+	// 	telefono          VARCHAR(45) ,
+	// 	email             VARCHAR(100) NOT NULL ,
+	// 	enfermedades      TEXT ,
+	// 	alergias          TEXT ,
+	// 	responsable       VARCHAR(50) NOT NULL ,
 
-		PRIMARY KEY (id)
-		) $charset_collate;";
+	// 	PRIMARY KEY (id)
+	// 	) $charset_collate;";
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta($sql);
 }
