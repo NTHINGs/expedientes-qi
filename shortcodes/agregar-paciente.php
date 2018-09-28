@@ -67,7 +67,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             $wpdb->insert( $table_name, array(
                 'fotografia' => $fotografia,
                 'nombre'            => check_value($_POST['nombre']),
-                'fechadenacimiento' => check_value(date($_POST['fechadenacimiento']),
+                'fechadenacimiento' => check_value(date($_POST['fechadenacimiento'])),
                 'edad'              => check_value($_POST['edad']),
                 'escolaridad'       => check_value($_POST['escolaridad']),
                 'ocupacion'         => check_value($_POST['ocupacion']),
