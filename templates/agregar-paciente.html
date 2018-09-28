@@ -82,8 +82,9 @@
         });
 
         $('#fechadenacimiento').change(function() {
-            let nacimiento = $(this).val().substring(0, 4);
-            let edad = (new Date()).getFullYear() - nacimiento;
+            let nacimiento = new Date($(this).val());
+            let diferenciaMs = new Date(Date.now() - nacimiento.getTime());
+            let edad = Math.abs(diferenciaMs.getUTCFullYear() - 1970);
 
             $('#edad').val(edad);
             $('#edad-span').html(edad);
