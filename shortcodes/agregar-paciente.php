@@ -63,8 +63,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 // No se subio una foto
             }
 
-            // $table_name = $wpdb->prefix . "expedientes_pacientes";
-            $table_name = "wp_expedientes_pacientes";
+            $table_name = $wpdb->prefix . "expedientes_pacientes";
             $values = array(
                 'fotografia'         => $fotografia,
                 'nombre'             => $_POST['nombre'],
@@ -88,11 +87,8 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             echo $table_name;
             $wpdb->show_errors();
             $wpdb->insert( $table_name, $values);
-            $wpdb->last_query;
-            echo $wpdb->last_query;
-            echo $wpdb->last_error;
             $wpdb->print_error();
-            $wpdb->last_error;
+            echo $wpdb->last_query;
             echo $_POST['nombre'] . ' agregado correctamente';
         }
     }
