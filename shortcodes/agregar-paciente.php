@@ -88,7 +88,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             $wpdb->show_errors();
             $wpdb->insert( $table_name, $values);
             $wpdb->print_error();
-            echo $wpdb->last_query;
+            $wpdb->hide_errors();
             echo $_POST['nombre'] . ' agregado correctamente';
         }
     }
