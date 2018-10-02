@@ -1,6 +1,9 @@
 -- ****************** EXPEDIENTES QI ******************;
 -- ***************************************************;
-
+DROP TABLE %TABLE_PREFIX%pacientes;
+DROP TABLE %TABLE_PREFIX%psicotropicos;
+DROP TABLE %TABLE_PREFIX%personas_contacto;
+DROP TABLE %TABLE_PREFIX%riesgos_psicosociales;
 -- ************************************** %TABLE_PREFIX%pacientes
 
 CREATE TABLE %TABLE_PREFIX%pacientes
@@ -17,7 +20,7 @@ CREATE TABLE %TABLE_PREFIX%pacientes
     domicilio          VARCHAR(200) ,
     ciudaddeorigen     VARCHAR(200) ,
     telefono           VARCHAR(45) ,
-    email              VARCHAR(100) NOT NULL ,
+    email              VARCHAR(100) ,
     enfermedades       TEXT ,
     alergias           TEXT ,
     responsable        VARCHAR(50) NOT NULL ,
