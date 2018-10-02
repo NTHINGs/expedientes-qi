@@ -8,8 +8,6 @@
  * @since    1.0.0
  */
 
-global $table_prefix, $wpdb;
-
 if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 	// Add the action.
 	add_action( 'plugins_loaded', function() {
@@ -38,6 +36,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
     }
 
     function guardar_paciente() {
+        global $table_prefix, $wpdb;
         if ( !function_exists( 'wp_handle_upload' ) ){
             require_once( ABSPATH . 'wp-admin/includes/file.php' );
         }
@@ -85,10 +84,10 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             );
             echo '<pre>'; print_r($values); echo '</pre>';
             echo $table_name;
-            // $wpdb->insert( $table_name, $values, '%s');
-            // if($wpdb->last_error !== ''){
-            //     $wpdb->print_error();
-            // }
+            $wpdb->insert( $table_name, $values, '%s');
+            if($wpdb->last_error !== ''){
+                $wpdb->print_error();
+            }
             echo $_POST['nombre'] . ' agregado correctamente';
         }
     }
