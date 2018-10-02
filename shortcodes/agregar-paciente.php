@@ -25,10 +25,8 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 	 */
 	function agregar_paciente_shortcode() {
         ob_start();
-        $wpdb->show_errors();
         guardar_paciente();
         render_html();
-        $wpdb->hide_errors();
         return ob_get_clean();
     }
     
@@ -45,6 +43,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
         }
     
         if ( isset( $_POST['submitted'] ) ) {
+            $wpdb->show_errors();
             $fotografia = '/wp-content/plugins/expedientes-qi/default.png';
             if ($_FILES['fotografia']['size'] > 0 && $_FILES['fotografia']['error'] == 0) {
                 // Se subio una foto
@@ -106,7 +105,9 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 '%s',
                 '%s',
             ));
+            echo "<br>Error is ".$wpdb->last_error;
             echo $_POST['nombre'] . ' agregado correctamente';
+            $wpdb->hide_errors();
         }
     }
 }
