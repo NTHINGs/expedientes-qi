@@ -7,9 +7,6 @@
  * @package	 expedientes-qi
  * @since    1.0.0
  */
-
-global $wpdb;
-
 if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 	// Add the action.
 	add_action( 'plugins_loaded', function() {
@@ -43,6 +40,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
         }
     
         if ( isset( $_POST['submitted'] ) ) {
+            global $wpdb;
             $fotografia = '/wp-content/plugins/expedientes-qi/default.png';
             if ($_FILES['fotografia']['size'] > 0 && $_FILES['fotografia']['error'] == 0) {
                 // Se subio una foto
