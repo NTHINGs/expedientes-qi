@@ -28,7 +28,6 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
         $wpdb->show_errors();
         guardar_paciente();
         render_html();
-        $wpdb->print_error();
         $wpdb->hide_errors();
         return ob_get_clean();
     }
