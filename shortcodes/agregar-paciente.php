@@ -65,21 +65,23 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 
             $table_name = $table_prefix . "expedientes_pacientes";
             $wpdb->insert( $table_name, array(
-                'fotografia' => $fotografia,
-                'nombre'            => $_POST['nombre'],
-                'fechadenacimiento' => date($_POST['fechadenacimiento']),
-                'edad'              => $_POST['edad'],
-                'escolaridad'       => $_POST['escolaridad'],
-                'ocupacion'         => $_POST['ocupacion'],
-                'estadocivil'       => $_POST['estadocivil'],
-                'cantidadhijos'     => $_POST['cantidadhijos'],
-                'domicilio'         => $_POST['domicilio'],
-                'ciudaddeorigen'    => $_POST['ciudaddeorigen'],
-                'telefono'          => $_POST['telefono'],
-                'email'             => $_POST['email'],
-                'enfermedades'      => $_POST['enfermedades'],
-                'alergias'          => $_POST['alergias'],
-                'responsable'       => $_POST['responsable']
+                'fotografia'         => $fotografia,
+                'nombre'             => $_POST['nombre'],
+                'fechadenacimiento'  => date($_POST['fechadenacimiento']),
+                'edad'               => $_POST['edad'],
+                'escolaridad'        => $_POST['escolaridad'],
+                'ocupacion'          => $_POST['ocupacion'],
+                'estadocivil'        => $_POST['estadocivil'],
+                'cantidadhijos'      => $_POST['cantidadhijos'],
+                'domicilio'          => $_POST['domicilio'],
+                'ciudaddeorigen'     => $_POST['ciudaddeorigen'],
+                'telefono'           => $_POST['telefono'],
+                'email'              => $_POST['email'],
+                'enfermedades'       => $_POST['enfermedades'],
+                'alergias'           => $_POST['alergias'],
+                'responsable'        => $_POST['responsable']
+                'fecha_creacion'     => date("Y-m-d h:i:sa"),
+                'fecha_modificacion' => date("Y-m-d h:i:sa"),
             ), '%s');
             echo $wpdb->last_error;
             echo $_POST['nombre'] . ' agregado correctamente';
