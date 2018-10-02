@@ -79,9 +79,9 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 'email'              => $_POST['email'],
                 'enfermedades'       => $_POST['enfermedades'],
                 'alergias'           => $_POST['alergias'],
-                'responsable'        => $_POST['responsable']
+                'responsable'        => $_POST['responsable'],
                 'fecha_creacion'     => date("Y-m-d h:i:sa"),
-                'fecha_modificacion' => date("Y-m-d h:i:sa"),
+                'fecha_modificacion' => date("Y-m-d h:i:sa")
             ), '%s');
             echo $wpdb->last_error;
             echo $_POST['nombre'] . ' agregado correctamente';
