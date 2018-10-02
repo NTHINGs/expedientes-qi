@@ -83,7 +83,6 @@
         });
 
         $('#fechadenacimiento').change(function() {
-            const year = $(this).val()
             let nacimiento = new Date($(this).val());
             let diferenciaMs = new Date(Date.now() - nacimiento.getTime());
             let edad = Math.abs(diferenciaMs.getUTCFullYear() - 1970);
