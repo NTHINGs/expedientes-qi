@@ -86,7 +86,25 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             echo '<pre>'; print_r($values); echo '</pre>';
             echo $table_name;
             $wpdb->show_errors();
-            $wpdb->insert( $table_name, $values);
+            $wpdb->insert( $table_name, $values, array(
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+            ));
             $wpdb->print_error();
             $wpdb->hide_errors();
             echo $_POST['nombre'] . ' agregado correctamente';
