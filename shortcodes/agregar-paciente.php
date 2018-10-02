@@ -64,8 +64,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             }
 
             $table_name = $table_prefix . "expedientes_pacientes";
-            $wpdb->show_errors();
-            $wpdb->insert( $table_name, array(
+            $values = array(
                 'fotografia'         => $fotografia,
                 'nombre'             => $_POST['nombre'],
                 'fechadenacimiento'  => date($_POST['fechadenacimiento']),
@@ -83,10 +82,13 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 'responsable'        => $_POST['responsable'],
                 'fecha_creacion'     => date("Y-m-d h:i:sa"),
                 'fecha_modificacion' => date("Y-m-d h:i:sa")
-            ), '%s');
-            if($wpdb->last_error !== ''){
-                $wpdb->print_error();
-            }
+            );
+            echo '<pre>'; print_r($values); echo '</pre>';
+            echo $table_name;
+            // $wpdb->insert( $table_name, $values, '%s');
+            // if($wpdb->last_error !== ''){
+            //     $wpdb->print_error();
+            // }
             echo $_POST['nombre'] . ' agregado correctamente';
         }
     }
