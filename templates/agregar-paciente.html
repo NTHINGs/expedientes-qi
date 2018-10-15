@@ -81,9 +81,9 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-contactos" role="tabpanel" aria-labelledby="nav-contactos-tab">
-                        <div class="form-group col-12">
-                            <label for="nombrecontacto">Nombrecontacto</label>
-                            <input type="text" class="form-control" id="nombrecontacto" name="nombrecontacto">
+                        <div id="contactos" class="row"></div>
+                        <div class="col-12">
+                            <button class="btn btn-success" id="agregar-contacto">Agregar Otro Contacto</button>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-riesgos-psicosociales" role="tabpanel" aria-labelledby="nav-riesgos-psicosociales-tab">...</div>
@@ -111,5 +111,56 @@
             $('#edad').val(edad);
             $('#edad-span').html(edad);
         });
+        
+        var i = 0;
+        agregarContacto(i);
+        $('#agregar-contacto').on('click', function() {
+            i++;
+            agregarContacto(i);
+        });
+
+        $('#eliminar-contacto').on('click', function() {
+            var index = $(this).data("i");
+            eliminarContacto(i);
+        });
+
+        function agregarContacto(i) {
+            var formulario = '\
+            <div id="contacto' + i + '">\
+                <div class="form-group col-12">\
+                    <label>Nombre</label>\
+                    <input type="text" class="form-control" name="nombrescontacto[]">\
+                </div>\
+                <div class="form-group col-12">\
+                    <label>Relación</label>\
+                    <input type="text" class="form-control" name="relacionescontacto[]">\
+                </div>\
+                <div class="form-group col-12">\
+                    <label>Domicilio</label>\
+                    <input type="text" class="form-control" name="domicilioscontacto[]">\
+                </div>\
+                <div class="form-group col-12">\
+                    <label>Teléfono Celular</label>\
+                    <input type="text" class="form-control" name="celularescontacto[]">\
+                </div>\
+                <div class="form-group col-12">\
+                    <label>Teléfono Casa</label>\
+                    <input type="text" class="form-control" name="telcasacontacto[]">\
+                </div>\
+                <div class="form-group col-12">\
+                    <label>Otro Teléfono</label>\
+                    <input type="text" class="form-control" name="otrostelefonoscontacto[]">\
+                </div>\
+                <div class="col-12">\
+                    <button class="btn btn-success" id="eliminar-contacto" data-i="' + i + '">Agregar Otro Contacto</button>\
+                </div>\
+            </div>';
+
+            $('#contactos').append(formulario);
+        }
+
+        function eliminarContacto(i) {
+            $("#contacto' + i + '").remove();
+        }
     });
 </script>
