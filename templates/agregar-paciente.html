@@ -119,12 +119,6 @@
             agregarContacto(i);
         });
 
-        $('.eliminar-contacto').on('click', function() {
-            var index = $(this).data("i");
-            alert(index);
-            eliminarContacto(index);
-        });
-
         function agregarContacto(index) {
             var formulario = '\
             <div id="contacto' + index + '" class="col-12">\
@@ -153,13 +147,19 @@
                     <input type="text" class="form-control" name="otrostelefonoscontacto[]">\
                 </div>\
                 <div class="col-12" id="eliminar-btn' + index + '">\
-                    <button class="btn btn-danger eliminar-contacto" data-i="' + index + '">Eliminar Contacto</button>\
+                    <button class="btn btn-danger" id="eliminar-contacto' + index + '" data-i="' + index + '">Eliminar Contacto</button>\
                 </div>\
             </div>';
 
 
             $('#contactos').append(formulario);
             $('#eliminar-btn0').remove();
+
+            $('#eliminar-contacto' + index).on('click', function() {
+                var index = $(this).data("i");
+                alert(index);
+                eliminarContacto(index);
+            });
         }
 
         function eliminarContacto(index) {
