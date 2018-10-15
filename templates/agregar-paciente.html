@@ -124,9 +124,9 @@
             eliminarContacto(index);
         });
 
-        function agregarContacto(i) {
+        function agregarContacto(index) {
             var formulario = '\
-            <div id="contacto' + i + '" class="col-12">\
+            <div id="contacto' + index + '" class="col-12">\
                 <div class="form-group col-12">\
                     <label>Nombre</label>\
                     <input type="text" class="form-control" name="nombrescontacto[]">\
@@ -151,8 +151,8 @@
                     <label>Otro Teléfono</label>\
                     <input type="text" class="form-control" name="otrostelefonoscontacto[]">\
                 </div>\
-                <div class="col-12" id="eliminar-btn' + i + '">\
-                    <button class="btn btn-danger eliminar-contacto" data-i="' + i + '">Eliminar Contacto</button>\
+                <div class="col-12" id="eliminar-btn' + index + '">\
+                    <button class="btn btn-danger eliminar-contacto" data-i="' + index + '">Eliminar Contacto</button>\
                 </div>\
             </div>';
 
@@ -161,8 +161,9 @@
             $('#eliminar-btn0').remove();
         }
 
-        function eliminarContacto(i) {
-            $('#contacto' + i).remove();
+        function eliminarContacto(index) {
+            $('#contacto' + index).remove();
+            i--;
         }
     });
 </script>
