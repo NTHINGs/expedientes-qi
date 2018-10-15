@@ -121,12 +121,12 @@
 
         $('#eliminar-contacto').on('click', function() {
             var index = $(this).data("i");
-            eliminarContacto(i);
+            eliminarContacto(index);
         });
 
         function agregarContacto(i) {
             var formulario = '\
-            <div id="contacto' + i + '">\
+            <div id="contacto' + i + '" class="col-12">\
                 <div class="form-group col-12">\
                     <label>Nombre</label>\
                     <input type="text" class="form-control" name="nombrescontacto[]">\
@@ -152,7 +152,7 @@
                     <input type="text" class="form-control" name="otrostelefonoscontacto[]">\
                 </div>\
                 <div class="col-12" id="eliminar-btn' + i + '">\
-                    <button class="btn btn-success eliminar-contacto" data-i="' + i + '">Eliminar Contacto</button>\
+                    <button class="btn btn-danger eliminar-contacto" data-i="' + i + '">Eliminar Contacto</button>\
                 </div>\
             </div>';
 
