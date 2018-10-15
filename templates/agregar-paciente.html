@@ -151,16 +151,18 @@
                     <label>Otro Teléfono</label>\
                     <input type="text" class="form-control" name="otrostelefonoscontacto[]">\
                 </div>\
-                <div class="col-12">\
-                    <button class="btn btn-success" id="eliminar-contacto" data-i="' + i + '">Agregar Otro Contacto</button>\
+                <div class="col-12" id="eliminar-btn' + i + '">\
+                    <button class="btn btn-success eliminar-contacto" data-i="' + i + '">Eliminar Contacto</button>\
                 </div>\
             </div>';
+
+            $('#eliminar-btn0').remove();
 
             $('#contactos').append(formulario);
         }
 
         function eliminarContacto(i) {
-            $("#contacto' + i + '").remove();
+            $('#contacto' + i).remove();
         }
     });
 </script>
