@@ -59,12 +59,14 @@ CONSTRAINT FK_67 FOREIGN KEY fkIdx_67 (paciente) REFERENCES %TABLE_PREFIX%pacien
 
 CREATE TABLE %TABLE_PREFIX%personas_contacto
 (
-    id        INT NOT NULL AUTO_INCREMENT,
-    nombre    VARCHAR(100) NOT NULL ,
-    relacion  VARCHAR(45) ,
-    domicilio VARCHAR(200) ,
-    telefonos VARCHAR(100) ,
-    paciente  INT NOT NULL ,
+    id                INT NOT NULL AUTO_INCREMENT,
+    nombre            VARCHAR(100) NOT NULL ,
+    relacion          VARCHAR(45) ,
+    domicilio         VARCHAR(200) ,
+    telefono_celular  VARCHAR(100) ,
+    telefono_casa     VARCHAR(100) ,
+    telefono_otro     VARCHAR(100) ,
+    paciente          INT NOT NULL ,
 
 PRIMARY KEY (id),
 KEY fkIdx_49 (paciente),

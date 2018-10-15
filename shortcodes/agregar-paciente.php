@@ -62,6 +62,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             }
 
             $table_name = $wpdb->prefix . "expedientes_pacientes";
+            $table_name_contactos = $wpdb->prefix . "expedientes_personas_contacto";
             $values = array(
                 'fotografia'         => $fotografia,
                 'nombre'             => $_POST['nombre'],
@@ -81,9 +82,8 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 'fecha_creacion'     => current_time( 'mysql' ),
                 'fecha_modificacion' => current_time( 'mysql' )
             );
-            echo '<pre>'; print_r($values); echo '</pre>';
-            echo $table_name;
-            $wpdb->insert( $table_name, $values, array(
+
+            $paciente_id = $wpdb->insert( $table_name, $values, array(
                 '%s',
                 '%s',
                 '%s',
@@ -102,6 +102,28 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 '%s',
                 '%s',
             ));
+
+            foreach($_POST['nombrescontacto'] as $key => $value) {
+                $values_contacto = array(
+                    'nombre'             => $_POST['nombrescontacto'][$key], 
+                    'relacion'           => $_POST['relacionescontacto'][$key],
+                    'domicilio'          => $_POST['domicilioscontacto'][$key],
+                    'telefono_celular'   => $_POST['celularescontacto'][$key],
+                    'telefono_casa'      => $_POST['telcasacontacto'][$key],
+                    'telefono_otro'      => $_POST['otrostelefonoscontacto'][$key],
+                    'paciente'           => $paciente_id,
+                );
+
+                $wpdb->insert( $table_name_contactos, $values_contacto, array(
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%d',
+                ));
+            }
             echo $_POST['nombre'] . ' agregado correctamente';
         }
     }
