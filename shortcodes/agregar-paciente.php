@@ -63,6 +63,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 
             $table_name = $wpdb->prefix . "expedientes_pacientes";
             $table_name_contactos = $wpdb->prefix . "expedientes_personas_contacto";
+            $table_name_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
             $values = array(
                 'fotografia'         => $fotografia,
                 'nombre'             => $_POST['nombre'],
@@ -124,6 +125,41 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                     '%d',
                 ));
             }
+
+            $riesgos_individuales = NULL;
+            $riesgos_familiares = NULL;
+            $riesgos_entorno = NULL;
+
+            if (count($_POST['riesgos_individuales']) > 0) {
+                $riesgos_individuales = implode(",", $_POST['riesgos_individuales']);
+            }
+
+            if (count($_POST['riesgos_familiares']) > 0) {
+                $riesgos_familiares = implode(",", $_POST['riesgos_familiares']);
+            }
+
+            if (count($_POST['riesgos_entorno']) > 0) {
+                $riesgos_entorno = implode(",", $_POST['riesgos_entorno']);
+            }
+
+            $wpdb->insert( $table_name_riesgos,
+                array(
+                    'individual'    => $riesgos_individuales,
+                    'familiar'      => $riesgos_familiares,
+                    'entorno'       => $riesgos_entorno,
+                    'observaciones' => $_POST['riesgos_observaciones'] ,
+                    'paciente'      => $paciente_id,
+                ), 
+                array(
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%d',
+                )
+            );
+
+
             echo $_POST['nombre'] . ' agregado correctamente';
         }
     }
