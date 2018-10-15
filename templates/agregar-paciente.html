@@ -3,69 +3,90 @@
 <!-- REQUEST_URI = URL para guardar al paciente -->
 <div class="container">
     <div class="row">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-informacion-personal-tab" data-toggle="tab" href="#nav-informacion-personal"
+                    role="tab" aria-controls="nav-informacion-personal" aria-selected="true">Información Personal</a>
+                <a class="nav-item nav-link" id="nav-contactos-tab" data-toggle="tab" href="#nav-contactos" role="tab" aria-controls="nav-contactos"
+                    aria-selected="false">Personas De Contacto</a>
+                <a class="nav-item nav-link" id="nav-riesgos-psicosociales-tab" data-toggle="tab" href="#nav-riesgos-psicosociales" role="tab"
+                    aria-controls="nav-riesgos-psicosociales" aria-selected="false">Riesgos Psicosociales</a>
+            </div>
+        </nav>
         <div class="col-12">
             <form class="row" action="%REQUEST_URI%" method="POST" enctype="multipart/form-data">
-                <div class="form-group col-12 col-sm-6">
-                    <label for="nombre">Fotografía</label>
-                    <input type="file" class="form-control" name="fotografia" id="fotografia">
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" required>
-                </div>
-                <div class="form-group col-sm-8">
-                    <label for="fechadenacimiento">Fecha de Nacimiento</label>
-                    <input id="fechadenacimiento" name="fechadenacimiento"/ required>
-                </div>
-                <div class="col-sm-4">
-                    <span>Edad:
-                        <span id="edad-span"></span>
-                    </span>
-                    <input type="hidden" id="edad" name="edad">
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="escolaridad">Escolaridad</label>
-                    <input type="text" class="form-control" id="escolaridad" name="escolaridad">
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="ocupacion">Ocupación</label>
-                    <input type="text" class="form-control" id="ocupacion" name="ocupacion">
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="estadocivil">Estado Civil</label>
-                    <input type="text" class="form-control" id="estadocivil" name="estadocivil">
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="cantidadhijos">Cantidad de Hijos</label>
-                    <input type="number" class="form-control" id="cantidadhijos" name="cantidadhijos">
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="domicilio">Domicilio</label>
-                    <input type="text" class="form-control" id="domicilio" name="domicilio">
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="ciudaddeorigen">Ciudad de Origen</label>
-                    <input type="text" class="form-control" id="ciudaddeorigen" name="ciudaddeorigen">
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="telefono">Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono">
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="text" class="form-control" id="email" name="email">
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="enfermedades">Enfermedades</label>
-                    <textarea class="form-control" id="enfermedades" name="enfermedades"></textarea>
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                    <label for="alergias">Alergias</label>
-                    <textarea class="form-control" id="alergias" name="alergias"></textarea>
-                </div>
-                <div class="form-group col-12">
-                    <label for="responsable">Responsable</label>
-                    <input type="text" class="form-control" id="responsable" name="responsable" value="%CURRENT_USER%" readonly>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-informacion-personal" role="tabpanel" aria-labelledby="nav-informacion-personal-tab">
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="nombre">Fotografía</label>
+                            <input type="file" class="form-control" name="fotografia" id="fotografia">
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group col-sm-8">
+                            <label for="fechadenacimiento">Fecha de Nacimiento</label>
+                            <input id="fechadenacimiento" name="fechadenacimiento" / required>
+                        </div>
+                        <div class="col-sm-4">
+                            <span>Edad:
+                                <span id="edad-span"></span>
+                            </span>
+                            <input type="hidden" id="edad" name="edad">
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="escolaridad">Escolaridad</label>
+                            <input type="text" class="form-control" id="escolaridad" name="escolaridad">
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="ocupacion">Ocupación</label>
+                            <input type="text" class="form-control" id="ocupacion" name="ocupacion">
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="estadocivil">Estado Civil</label>
+                            <input type="text" class="form-control" id="estadocivil" name="estadocivil">
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="cantidadhijos">Cantidad de Hijos</label>
+                            <input type="number" class="form-control" id="cantidadhijos" name="cantidadhijos">
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="domicilio">Domicilio</label>
+                            <input type="text" class="form-control" id="domicilio" name="domicilio">
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="ciudaddeorigen">Ciudad de Origen</label>
+                            <input type="text" class="form-control" id="ciudaddeorigen" name="ciudaddeorigen">
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="telefono">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" name="telefono">
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="text" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="enfermedades">Enfermedades</label>
+                            <textarea class="form-control" id="enfermedades" name="enfermedades"></textarea>
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="alergias">Alergias</label>
+                            <textarea class="form-control" id="alergias" name="alergias"></textarea>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="responsable">Responsable</label>
+                            <input type="text" class="form-control" id="responsable" name="responsable" value="%CURRENT_USER%" readonly>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-contactos" role="tabpanel" aria-labelledby="nav-contactos-tab">
+                        <div class="form-group col-12">
+                            <label for="nombrecontacto">Nombrecontacto</label>
+                            <input type="text" class="form-control" id="nombrecontacto" name="nombrecontacto">
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-riesgos-psicosociales" role="tabpanel" aria-labelledby="nav-riesgos-psicosociales-tab">...</div>
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary" name="submitted">Guardar</button>
@@ -76,13 +97,13 @@
 </div>
 
 <script>
-    jQuery(document).ready(function( $ ) {
+    jQuery(document).ready(function ($) {
         $('#fechadenacimiento').datepicker({
             uiLibrary: 'bootstrap4',
             format: 'yyyy-mm-dd'
         });
 
-        $('#fechadenacimiento').change(function() {
+        $('#fechadenacimiento').change(function () {
             let nacimiento = new Date($(this).val());
             let diferenciaMs = new Date(Date.now() - nacimiento.getTime());
             let edad = Math.abs(diferenciaMs.getUTCFullYear() - 1970);
