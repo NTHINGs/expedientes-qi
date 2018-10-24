@@ -64,6 +64,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             $table_name = $wpdb->prefix . "expedientes_pacientes";
             $table_name_contactos = $wpdb->prefix . "expedientes_personas_contacto";
             $table_name_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
+            $table_name_psicotropicos = $wpdb->prefix . "expedientes_psicotropicos";
 
             // PACIENTE
 
@@ -170,6 +171,56 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             echo $_POST['nombre'] . ' agregado correctamente';
 
             // PSICOTROPICOS
+            foreach($_POST['sustancia'] as $key => $value) {
+                $sustancia = $_POST['sustancia'][$key];
+                if($_POST['sustancia'][$key] == 'Otro') {
+                    $sustancia = $_POST['otrasustancia'][$key]
+                }
+                $values_psicotropicos = array(
+                    'sustancia'          => $sustancia,
+                    'añoprimeruso'       => $_POST['añoprimeruso'][$key],
+                    'edadprimeruso'      => $_POST['edadprimeruso'][$key],
+                    'usoregular'         => $_POST['usoregular'][$key],
+                    'unidadespordia'     => $_POST['unidadespordia'][$key],
+                    'unidad'             => $_POST['unidad'][$key],
+                    'vecespordia'        => $_POST['vecespordia'][$key],
+                    'periodo'            => $_POST['periodo'][$key],
+                    'abstinenciamaxima'  => $_POST['abstinenciamaxima'][$key],
+                    'abstinenciaactual'  => $_POST['abstinenciamaxima'][$key],
+                    'viadeuso'           => $_POST['viadeuso'][$key],
+                    'fechaultimoconsumo' => $_POST['fechaultimoconsumo'][$key],
+                    'paciente'           => $paciente_id,
+                );
+                // sustancia          VARCHAR(100) NOT NULL ,
+                // añoprimeruso       INT,
+                // edadprimeruso      INT,
+                // usoregular         VARCHAR(45),
+                // unidadespordia     INT,
+                // unidad             VARCHAR(45),
+                // vecespordia        INT,
+                // periodo            VARCHAR(45),
+                // abstinenciamaxima  VARCHAR(45),
+                // abstinenciaactual  VARCHAR(45),
+                // viadeuso           VARCHAR(45),
+                // fechaultimoconsumo DATE ,
+                // paciente           INT NOT NULL ,
+
+                $wpdb->insert( $table_name_psicotropicos, $values_psicotropicos, array(
+                    '%s',
+                    '%d',
+                    '%d',
+                    '%s',
+                    '%d',
+                    '%s',
+                    '%d',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%d',
+                ));
+            }
         }
     }
 }
