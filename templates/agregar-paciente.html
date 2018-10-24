@@ -336,6 +336,7 @@
                         <option>Nicotína</option>\
                         <option>Disolventes Volátiles</option>\
                         <option>Antiparkinsónicos</option>\
+                        <option>Otro</option>\
                     </select>\
                 </div>\
                 <div class="form-group col-12 col-sm-4">\
@@ -426,6 +427,20 @@
             $('#eliminar-sustancia' + index).on('click', function () {
                 var index = $(this).data("i");
                 eliminarSustancia(index);
+            });
+
+            $('#sustancia' + index).change(function() {
+                $('#sustancia' + index + 'option:selected').each(function() {
+                    if ($( this ).text() === 'Otro') {
+                        $('#sustancia' + index).append('\
+                            <div id="otrasustanciadiv' + index + '" class="form-group col-12">\
+                                <label for="otrasustancia' + index + '">Otra Sustancia</label>\
+                                <input type="text" class="form-control" id="otrasustancia' + index + '" name="otrasustancia[]">\
+                            </div>');
+                    } else {
+                        $('otrasustanciadiv' + index).remove();
+                    }
+                });
             });
         }
 
