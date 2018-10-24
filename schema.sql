@@ -35,7 +35,7 @@ PRIMARY KEY (id)
 CREATE TABLE %TABLE_PREFIX%psicotropicos
 (
     id                 INT NOT NULL AUTO_INCREMENT,
-    sustancia          VARCHAR(45) NOT NULL ,
+    sustancia          VARCHAR(100) NOT NULL ,
     añoprimeruso       INT,
     edadprimeruso      INT,
     usoregular         VARCHAR(45),

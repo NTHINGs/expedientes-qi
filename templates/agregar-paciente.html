@@ -22,9 +22,10 @@
                         aria-labelledby="nav-informacion-personal-tab">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="form-group col-12 col-sm-6">
+                                <div class="form-group col-12 col-sm-6 custom-file">
                                     <label for="nombre">Fotografía</label>
-                                    <input type="file" class="form-control" name="fotografia" id="fotografia">
+                                    <input type="file" class="custom-file-input" name="fotografia" id="fotografia">
+                                    <label class="custom-file-label" for="fotografia">Elegir Archivo</label>
                                 </div>
                                 <div class="form-group col-12 col-sm-6">
                                     <label for="nombre">Nombre</label>
@@ -226,19 +227,43 @@
                     </div>
                     <div class="tab-pane fade" id="nav-psicotropicos" role="tabpanel" aria-labelledby="nav-psicotropicos-tab">
                         <div class="container">
-                            <table class="table">
-                                <tr>
-                                    <td colspan="2"></td>
-                                    <td colspan="4">USO EN EL ÚLTIMO AÑO</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"></td>
-                                    <td>DOSIS Y PERIODO MAXIMO DEL CONSUMO</td>
-                                    <td>ABSTINENCIA</td>
-                                    <td>ADMINISTRACION</td>
-                                    <td>FECHA ULTIMO CONSUMO</td>
-                                </tr>
-                            </table>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label for="sustancia">Sustancia</label>
+                                    <select class="form-control" id="sustancia" name="sustancias[]">
+                                        <option>Alcohol Fermentado (Vino, cerveza, pulque)</option>
+                                        <option>Alcohol Destilado (Brandy, Vodka, Ron)</option>
+                                        <option>Alcohol 96</option>
+                                        <option>Opiáceos, Heroína u Otros</option>
+                                        <option>Marihuana</option>
+                                        <option>Sedantes, Hipnóticos y Ansiolíticos</option>
+                                        <option>Cocaína</option>
+                                        <option>Anfetamínicos, Éxtasis</option>
+                                        <option>Cafeína</option>
+                                        <option>Alucinógenos</option>
+                                        <option>Fenilciclidina PCP</option>
+                                        <option>Nicotína</option>
+                                        <option>Disolventes Volátiles</option>
+                                        <option>Antiparkinsónicos</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="añoprimeruso">Año Del Primer Uso</label>
+                                    <input type="text" class="form-control" id="añoprimeruso" name="añoprimeruso">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="edadprimeruso">Edad Del Primer Uso</label>
+                                    <input type="text" class="form-control" id="edadprimeruso" name="edadprimeruso">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="usoregular">Uso Regular</label>
+                                    <input type="text" class="form-control" id="usoregular" name="usoregular">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="unidadespordia">Unidades Por Día</label>
+                                    <input type="text" class="form-control" id="unidadespordia" name="unidadespordia">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
