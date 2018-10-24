@@ -339,7 +339,7 @@
                         <option>Otro</option>\
                     </select>\
                 </div>\
-                <div id="otrasustanciacontainer' + index + '" class="row"></div>\
+                <div id="otrasustanciacontainer' + index + '" class="col-12"></div>\
                 <div class="form-group col-12 col-sm-4">\
                     <label for="añoprimeruso' + index + '">Año Del Primer Uso</label>\
                     <input type="number" class="form-control" id="añoprimeruso' + index + '" name="añoprimeruso[]">\
@@ -431,9 +431,7 @@
             });
 
             $('#sustancia' + index).change(function() {
-                console.log('ESTOY AQUI');
                 $('#sustancia' + index + ' option:selected').each(function() {
-                    console.log($( this ).text());
                     if ($( this ).text() === 'Otro') {
                         $('#otrasustanciacontainer' + index).append('\
                             <div id="otrasustanciadiv' + index + '" class="form-group col-12">\
