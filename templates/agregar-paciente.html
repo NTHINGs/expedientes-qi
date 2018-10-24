@@ -430,7 +430,9 @@
             });
 
             $('#sustancia' + index).change(function() {
+                console.log('ESTOY AQUI');
                 $('#sustancia' + index + 'option:selected').each(function() {
+                    console.log($( this ).text());
                     if ($( this ).text() === 'Otro') {
                         $('#sustancia' + index).append('\
                             <div id="otrasustanciadiv' + index + '" class="form-group col-12">\
