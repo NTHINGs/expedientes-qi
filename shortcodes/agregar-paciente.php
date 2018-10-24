@@ -64,6 +64,9 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             $table_name = $wpdb->prefix . "expedientes_pacientes";
             $table_name_contactos = $wpdb->prefix . "expedientes_personas_contacto";
             $table_name_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
+
+            // PACIENTE
+
             $values = array(
                 'fotografia'         => $fotografia,
                 'nombre'             => $_POST['nombre'],
@@ -104,6 +107,8 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                 '%s',
             ));
 
+            // CONTACTOS
+
             foreach($_POST['nombrescontacto'] as $key => $value) {
                 $values_contacto = array(
                     'nombre'             => $_POST['nombrescontacto'][$key], 
@@ -125,6 +130,8 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
                     '%d',
                 ));
             }
+
+            // RIESGOS PSICOSOCIALES
 
             $riesgos_individuales = NULL;
             $riesgos_familiares = NULL;
@@ -161,6 +168,8 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
 
 
             echo $_POST['nombre'] . ' agregado correctamente';
+
+            // PSICOTROPICOS
         }
     }
 }
