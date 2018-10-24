@@ -225,100 +225,9 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-psicotropicos" role="tabpanel" aria-labelledby="nav-psicotropicos-tab">
-                        <div class="container">
-                            <div class="row">
-                                <div class="form-group col-12">
-                                    <label for="sustancia">Sustancia</label>
-                                    <select class="form-control" id="sustancia" name="sustancia[]">
-                                        <option>Alcohol Fermentado (Vino, cerveza, pulque)</option>
-                                        <option>Alcohol Destilado (Brandy, Vodka, Ron)</option>
-                                        <option>Alcohol 96</option>
-                                        <option>Opiáceos, Heroína u Otros</option>
-                                        <option>Marihuana</option>
-                                        <option>Sedantes, Hipnóticos y Ansiolíticos</option>
-                                        <option>Cocaína</option>
-                                        <option>Anfetamínicos, Éxtasis</option>
-                                        <option>Cafeína</option>
-                                        <option>Alucinógenos</option>
-                                        <option>Fenilciclidina PCP</option>
-                                        <option>Nicotína</option>
-                                        <option>Disolventes Volátiles</option>
-                                        <option>Antiparkinsónicos</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-12 col-sm-4">
-                                    <label for="añoprimeruso">Año Del Primer Uso</label>
-                                    <input type="number" class="form-control" id="añoprimeruso" name="añoprimeruso[]">
-                                </div>
-                                <div class="form-group col-12 col-sm-4">
-                                    <label for="edadprimeruso">Edad Del Primer Uso</label>
-                                    <input type="number" class="form-control" id="edadprimeruso" name="edadprimeruso[]">
-                                </div>
-                                <div class="form-group col-12 col-sm-4">
-                                    <label for="usoregular">Uso Regular</label>
-                                    <input type="number" class="form-control" id="usoregular" name="usoregular[]">
-                                </div>
-                                <div class="form-group col-12 col-sm-6">
-                                    <label for="unidad">Unidad</label>
-                                    <select class="form-control" id="unidad" name="unidad[]">
-                                        <option>Copas</option>
-                                        <option>Botellas</option>
-                                        <option>Ampolletas</option>
-                                        <option>Comprimidos</option>
-                                        <option>Cigarros</option>
-                                        <option>Comprimidos</option>
-                                        <option>Cápsulas</option>
-                                        <option>Grageas</option>
-                                        <option>Grapa</option>
-                                        <option>Envoltorio</option>
-                                        <option>Tazas</option>
-                                        <option>Hongos</option>
-                                        <option>Cigarros</option>
-                                        <option>Estopa, Bolsa, etc.</option>
-                                        <option>Tabletas</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-12 col-sm-6">
-                                    <label for="unidadespordia">Unidades Por Día</label>
-                                    <input type="number" class="form-control" id="unidadespordia" name="unidadespordia[]">
-                                </div>
-                                <div class="form-group col-12 col-sm-6">
-                                    <label for="vecespordia">Veces Por Día</label>
-                                    <input type="number" class="form-control" id="vecespordia" name="vecespordia[]">
-                                </div>
-                                <div class="form-group col-12 col-sm-6">
-                                    <label for="periodo">Unidad</label>
-                                    <select class="form-control" id="periodo" name="periodo[]">
-                                        <option>1 Al Día</option>
-                                        <option>2-3/Día</option>
-                                        <option>+ 3/Día</option>
-                                        <option>1/ Semana</option>
-                                        <option>2-3/ Semana</option>
-                                        <option>+ 3/ Semana</option>
-                                        <option>1/ Mes</option>
-                                        <option>2-3/ Mes</option>
-                                        <option>+ 3/ Mes</option>
-                                        <option>No Procede</option>
-                                        <option>Otro</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-12 col-sm-6">
-                                    <label for="abstinenciamaxima">Abstinencia Máxima</label>
-                                    <input type="text" class="form-control" id="abstinenciamaxima" name="abstinenciamaxima[]">
-                                </div>
-                                <div class="form-group col-12 col-sm-6">
-                                    <label for="abstinenciaactual">Abstinencia Actual</label>
-                                    <input type="text" class="form-control" id="abstinenciaactual" name="abstinenciaactual[]">
-                                </div>
-                                <div class="form-group col-12 col-sm-6">
-                                    <label for="viadeuso">Via de Uso / Administración</label>
-                                    <input type="text" class="form-control" id="viadeuso" name="viadeuso[]">
-                                </div>
-                                <div class="form-group col-12 col-sm-6">
-                                    <label for="fechaultimoconsumo">Fecha del Último Consumo</label>
-                                    <input id="fechaultimoconsumo" name="fechaultimoconsumo[]">
-                                </div>
-                            </div>
+                        <div class="container" id="sustancias"></div>
+                        <div class="col-12">
+                            <button class="btn btn-success" id="agregar-sustancia">Agregar Otro Psicotrópico</button>
                         </div>
                     </div>
                 </div>
@@ -336,10 +245,6 @@
             uiLibrary: 'bootstrap4',
             format: 'yyyy-mm-dd'
         });
-        $('#fechaultimoconsumo').datepicker({
-            uiLibrary: 'bootstrap4',
-            format: 'yyyy-mm-dd'
-        });
 
         $('#fechadenacimiento').change(function () {
             let nacimiento = new Date($(this).val());
@@ -350,11 +255,11 @@
             $('#edad-span').html(edad);
         });
 
-        var i = 0;
-        agregarContacto(i);
+        var contador_contactos = 0;
+        agregarContacto(contador_contactos);
         $('#agregar-contacto').on('click', function () {
-            i++;
-            agregarContacto(i);
+            contador_contactos++;
+            agregarContacto(contador_contactos);
         });
 
         function agregarContacto(index) {
@@ -401,7 +306,132 @@
 
         function eliminarContacto(index) {
             $('#contacto' + index).remove();
-            i--;
+            contador_contactos--;
+        }
+
+        var contador_sustancias = 0;
+        agregarSustancia(contador_contactos);
+        $('#agregar-sustancia').on('click', function () {
+            contador_sustancias++;
+            agregarSustancia(contador_contactos);
+        });
+
+        function agregarSustancia(index) {
+            var formulario = '\
+            <div id="sustanciadiv' + index + '" class="row">\
+                <div class="form-group col-12">\
+                    <label for="sustancia' + index + '">Sustancia</label>\
+                    <select class="form-control" id="sustancia' + index + '" name="sustancia[]">\
+                        <option>Alcohol Fermentado (Vino, cerveza, pulque)</option>\
+                        <option>Alcohol Destilado (Brandy, Vodka, Ron)</option>\
+                        <option>Alcohol 96</option>\
+                        <option>Opiáceos, Heroína u Otros</option>\
+                        <option>Marihuana</option>\
+                        <option>Sedantes, Hipnóticos y Ansiolíticos</option>\
+                        <option>Cocaína</option>\
+                        <option>Anfetamínicos, Éxtasis</option>\
+                        <option>Cafeína</option>\
+                        <option>Alucinógenos</option>\
+                        <option>Fenilciclidina PCP</option>\
+                        <option>Nicotína</option>\
+                        <option>Disolventes Volátiles</option>\
+                        <option>Antiparkinsónicos</option>\
+                    </select>\
+                </div>\
+                <div class="form-group col-12 col-sm-4">\
+                    <label for="añoprimeruso' + index + '">Año Del Primer Uso</label>\
+                    <input type="number" class="form-control" id="añoprimeruso' + index + '" name="añoprimeruso[]">\
+                </div>\
+                <div class="form-group col-12 col-sm-4">\
+                    <label for="edadprimeruso' + index + '">Edad Del Primer Uso</label>\
+                    <input type="number" class="form-control" id="edadprimeruso' + index + '" name="edadprimeruso[]">\
+                </div>\
+                <div class="form-group col-12 col-sm-4">\
+                    <label for="usoregular' + index + '">Uso Regular</label>\
+                    <input type="number" class="form-control" id="usoregular' + index + '" name="usoregular[]">\
+                </div>\
+                <div class="form-group col-12 col-sm-6">\
+                    <label for="unidad' + index + '">Unidad</label>\
+                    <select class="form-control" id="unidad' + index + '" name="unidad[]">\
+                        <option>Copas</option>\
+                        <option>Botellas</option>\
+                        <option>Ampolletas</option>\
+                        <option>Comprimidos</option>\
+                        <option>Cigarros</option>\
+                        <option>Comprimidos</option>\
+                        <option>Cápsulas</option>\
+                        <option>Grageas</option>\
+                        <option>Grapa</option>\
+                        <option>Envoltorio</option>\
+                        <option>Tazas</option>\
+                        <option>Hongos</option>\
+                        <option>Cigarros</option>\
+                        <option>Estopa, Bolsa, etc.</option>\
+                        <option>Tabletas</option>\
+                    </select>\
+                </div>\
+                <div class="form-group col-12 col-sm-6">\
+                    <label for="unidadespordia' + index + '">Unidades Por Día</label>\
+                    <input type="number" class="form-control" id="unidadespordia' + index + '" name="unidadespordia[]">\
+                </div>\
+                <div class="form-group col-12 col-sm-6">\
+                    <label for="vecespordia' + index + '">Veces Por Día</label>\
+                    <input type="number" class="form-control" id="vecespordia' + index + '" name="vecespordia[]">\
+                </div>\
+                <div class="form-group col-12 col-sm-6">\
+                    <label for="periodo' + index + '">Unidad</label>\
+                    <select class="form-control" id="periodo' + index + '" name="periodo[]">\
+                        <option>1 Al Día</option>\
+                        <option>2-3/Día</option>\
+                        <option>+ 3/Día</option>\
+                        <option>1/ Semana</option>\
+                        <option>2-3/ Semana</option>\
+                        <option>+ 3/ Semana</option>\
+                        <option>1/ Mes</option>\
+                        <option>2-3/ Mes</option>\
+                        <option>+ 3/ Mes</option>\
+                        <option>No Procede</option>\
+                        <option>Otro</option>\
+                    </select>\
+                </div>\
+                <div class="form-group col-12 col-sm-6">\
+                    <label for="abstinenciamaxima' + index + '">Abstinencia Máxima</label>\
+                    <input type="text" class="form-control" id="abstinenciamaxima' + index + '" name="abstinenciamaxima[]">\
+                </div>\
+                <div class="form-group col-12 col-sm-6">\
+                    <label for="abstinenciaactual' + index + '">Abstinencia Actual</label>\
+                    <input type="text" class="form-control" id="abstinenciaactual' + index + '" name="abstinenciaactual[]">\
+                </div>\
+                <div class="form-group col-12 col-sm-6">\
+                    <label for="viadeuso' + index + '">Via de Uso / Administración</label>\
+                    <input type="text" class="form-control" id="viadeuso' + index + '" name="viadeuso[]">\
+                </div>\
+                <div class="form-group col-12 col-sm-6">\
+                    <label for="fechaultimoconsumo' + index + '">Fecha del Último Consumo</label>\
+                    <input id="fechaultimoconsumo' + index + '" name="fechaultimoconsumo[]">\
+                </div>\
+                <div class="col-12" id="eliminar-sustancia-btn' + index + '">\
+                    <button class="btn btn-danger" id="eliminar-sustancia' + index + '" data-i="' + index + '">Eliminar Psicotrópico</button>\
+                </div>\
+            </div>\
+            ';
+
+            $('#sustancias').append(formulario);
+            $('#fechaultimoconsumo' + index).datepicker({
+                uiLibrary: 'bootstrap4',
+                format: 'yyyy-mm-dd'
+            });
+            $('#eliminar-sustancia-btn0').remove();
+
+            $('#eliminar-sustancia' + index).on('click', function () {
+                var index = $(this).data("i");
+                eliminarSustancia(index);
+            });
+        }
+
+        function eliminarSustancia(index) {
+            $('#sustanciadiv' + index).remove();
+            contador_sustancias--;
         }
     });
 </script>
