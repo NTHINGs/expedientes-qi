@@ -7,79 +7,85 @@
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-informacion-personal-tab" data-toggle="tab" href="#nav-informacion-personal"
                     role="tab" aria-controls="nav-informacion-personal" aria-selected="true">Información Personal</a>
-                <a class="nav-item nav-link" id="nav-contactos-tab" data-toggle="tab" href="#nav-contactos" role="tab" aria-controls="nav-contactos"
-                    aria-selected="false">Personas De Contacto</a>
-                <a class="nav-item nav-link" id="nav-riesgos-psicosociales-tab" data-toggle="tab" href="#nav-riesgos-psicosociales" role="tab"
-                    aria-controls="nav-riesgos-psicosociales" aria-selected="false">Riesgos Psicosociales</a>
-                <a class="nav-item nav-link" id="nav-psicotropicos-tab" data-toggle="tab" href="#nav-psicotropicos" role="tab"
-                    aria-controls="nav-psicotropicos" aria-selected="false">Psicotropicos</a>
+                <a class="nav-item nav-link" id="nav-contactos-tab" data-toggle="tab" href="#nav-contactos" role="tab"
+                    aria-controls="nav-contactos" aria-selected="false">Personas De Contacto</a>
+                <a class="nav-item nav-link" id="nav-riesgos-psicosociales-tab" data-toggle="tab" href="#nav-riesgos-psicosociales"
+                    role="tab" aria-controls="nav-riesgos-psicosociales" aria-selected="false">Riesgos Psicosociales</a>
+                <a class="nav-item nav-link" id="nav-psicotropicos-tab" data-toggle="tab" href="#nav-psicotropicos"
+                    role="tab" aria-controls="nav-psicotropicos" aria-selected="false">Psicotropicos</a>
             </div>
         </nav>
         <div class="col-12">
             <form class="row" action="%REQUEST_URI%" method="POST" enctype="multipart/form-data">
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-informacion-personal" role="tabpanel" aria-labelledby="nav-informacion-personal-tab">
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="nombre">Fotografía</label>
-                            <input type="file" class="form-control" name="fotografia" id="fotografia">
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" required>
-                        </div>
-                        <div class="form-group col-sm-8">
-                            <label for="fechadenacimiento">Fecha de Nacimiento</label>
-                            <input id="fechadenacimiento" name="fechadenacimiento" / required>
-                        </div>
-                        <div class="col-sm-4">
-                            <span>Edad:
-                                <span id="edad-span"></span>
-                            </span>
-                            <input type="hidden" id="edad" name="edad">
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="escolaridad">Escolaridad</label>
-                            <input type="text" class="form-control" id="escolaridad" name="escolaridad">
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="ocupacion">Ocupación</label>
-                            <input type="text" class="form-control" id="ocupacion" name="ocupacion">
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="estadocivil">Estado Civil</label>
-                            <input type="text" class="form-control" id="estadocivil" name="estadocivil">
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="cantidadhijos">Cantidad de Hijos</label>
-                            <input type="number" class="form-control" id="cantidadhijos" name="cantidadhijos">
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="domicilio">Domicilio</label>
-                            <input type="text" class="form-control" id="domicilio" name="domicilio">
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="ciudaddeorigen">Ciudad de Origen</label>
-                            <input type="text" class="form-control" id="ciudaddeorigen" name="ciudaddeorigen">
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="telefono">Teléfono</label>
-                            <input type="text" class="form-control" id="telefono" name="telefono">
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="email">Correo Electrónico</label>
-                            <input type="text" class="form-control" id="email" name="email">
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="enfermedades">Enfermedades</label>
-                            <textarea class="form-control" id="enfermedades" name="enfermedades"></textarea>
-                        </div>
-                        <div class="form-group col-12 col-sm-6">
-                            <label for="alergias">Alergias</label>
-                            <textarea class="form-control" id="alergias" name="alergias"></textarea>
-                        </div>
-                        <div class="form-group col-12">
-                            <label for="responsable">Responsable</label>
-                            <input type="text" class="form-control" id="responsable" name="responsable" value="%CURRENT_USER%" readonly>
+                    <div class="tab-pane fade show active" id="nav-informacion-personal" role="tabpanel"
+                        aria-labelledby="nav-informacion-personal-tab">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="nombre">Fotografía</label>
+                                    <input type="file" class="form-control" name="fotografia" id="fotografia">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                </div>
+                                <div class="form-group col-sm-8">
+                                    <label for="fechadenacimiento">Fecha de Nacimiento</label>
+                                    <input id="fechadenacimiento" name="fechadenacimiento" / required>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>Edad:
+                                        <span id="edad-span"></span>
+                                    </span>
+                                    <input type="hidden" id="edad" name="edad">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="escolaridad">Escolaridad</label>
+                                    <input type="text" class="form-control" id="escolaridad" name="escolaridad">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="ocupacion">Ocupación</label>
+                                    <input type="text" class="form-control" id="ocupacion" name="ocupacion">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="estadocivil">Estado Civil</label>
+                                    <input type="text" class="form-control" id="estadocivil" name="estadocivil">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="cantidadhijos">Cantidad de Hijos</label>
+                                    <input type="number" class="form-control" id="cantidadhijos" name="cantidadhijos">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="domicilio">Domicilio</label>
+                                    <input type="text" class="form-control" id="domicilio" name="domicilio">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="ciudaddeorigen">Ciudad de Origen</label>
+                                    <input type="text" class="form-control" id="ciudaddeorigen" name="ciudaddeorigen">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="telefono">Teléfono</label>
+                                    <input type="text" class="form-control" id="telefono" name="telefono">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="email">Correo Electrónico</label>
+                                    <input type="text" class="form-control" id="email" name="email">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="enfermedades">Enfermedades</label>
+                                    <textarea class="form-control" id="enfermedades" name="enfermedades"></textarea>
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="alergias">Alergias</label>
+                                    <textarea class="form-control" id="alergias" name="alergias"></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="responsable">Responsable</label>
+                                    <input type="text" class="form-control" id="responsable" name="responsable" value="%CURRENT_USER%"
+                                        readonly>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-contactos" role="tabpanel" aria-labelledby="nav-contactos-tab">
@@ -95,43 +101,50 @@
                                     <h3>Individuales</h3>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="1" name="riesgos_individuales[]" id="check_individual_1">
+                                    <input class="form-check-input" type="checkbox" value="1" name="riesgos_individuales[]"
+                                        id="check_individual_1">
                                     <label class="form-check-label" for="check_individual_1">
                                         INICIO TEMPRANO AL TRABAJO INFANTIL
                                     </label>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="2" name="riesgos_individuales[]" id="check_individual_2">
+                                    <input class="form-check-input" type="checkbox" value="2" name="riesgos_individuales[]"
+                                        id="check_individual_2">
                                     <label class="form-check-label" for="check_individual_2">
                                         AUSENTISMO ESCOLAR PRESENTE
                                     </label>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="3" name="riesgos_individuales[]" id="check_individual_3">
+                                    <input class="form-check-input" type="checkbox" value="3" name="riesgos_individuales[]"
+                                        id="check_individual_3">
                                     <label class="form-check-label" for="check_individual_3">
                                         CAPACIDADES DIFERENTES
                                     </label>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="4" name="riesgos_individuales[]" id="check_individual_4">
+                                    <input class="form-check-input" type="checkbox" value="4" name="riesgos_individuales[]"
+                                        id="check_individual_4">
                                     <label class="form-check-label" for="check_individual_4">
                                         AISLAMIENTO O TIMIDEZ
                                     </label>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="5" name="riesgos_individuales[]" id="check_individual_5">
+                                    <input class="form-check-input" type="checkbox" value="5" name="riesgos_individuales[]"
+                                        id="check_individual_5">
                                     <label class="form-check-label" for="check_individual_5">
                                         AGRESIVO
                                     </label>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="6" name="riesgos_individuales[]" id="check_individual_6">
+                                    <input class="form-check-input" type="checkbox" value="6" name="riesgos_individuales[]"
+                                        id="check_individual_6">
                                     <label class="form-check-label" for="check_individual_6">
                                         CONSUMO DE DROGAS
                                     </label>
                                 </div>
                                 <div class="form-check col-12 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="7" name="riesgos_individuales[]" id="check_individual_7">
+                                    <input class="form-check-input" type="checkbox" value="7" name="riesgos_individuales[]"
+                                        id="check_individual_7">
                                     <label class="form-check-label" for="check_individual_7">
                                         INTENTO SUICIDA
                                     </label>
@@ -142,31 +155,36 @@
                                     <h3>Familiares</h3>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="1" name="riesgos_familiares[]" id="check_familiar_1">
+                                    <input class="form-check-input" type="checkbox" value="1" name="riesgos_familiares[]"
+                                        id="check_familiar_1">
                                     <label class="form-check-label" for="check_familiar_1">
                                         MALTRATO PSICOLOGICO O FISICO DE LOS PADRES
                                     </label>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="2" name="riesgos_familiares[]" id="check_familiar_2">
+                                    <input class="form-check-input" type="checkbox" value="2" name="riesgos_familiares[]"
+                                        id="check_familiar_2">
                                     <label class="form-check-label" for="check_familiar_2">
                                         CONSUMO DE ALCOHOL DE LOS PADRES
                                     </label>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="3" name="riesgos_familiares[]" id="check_familiar_3">
+                                    <input class="form-check-input" type="checkbox" value="3" name="riesgos_familiares[]"
+                                        id="check_familiar_3">
                                     <label class="form-check-label" for="check_familiar_3">
                                         PADRES QUE HUMILLAN Y HACEN SENTIR CULPA A LOS HIJOS
                                     </label>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="4" name="riesgos_familiares[]" id="check_familiar_4">
+                                    <input class="form-check-input" type="checkbox" value="4" name="riesgos_familiares[]"
+                                        id="check_familiar_4">
                                     <label class="form-check-label" for="check_familiar_4">
                                         PADRES AUSENTES
                                     </label>
                                 </div>
                                 <div class="form-check col-12 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="5" name="riesgos_familiares[]" id="check_familiar_5">
+                                    <input class="form-check-input" type="checkbox" value="5" name="riesgos_familiares[]"
+                                        id="check_familiar_5">
                                     <label class="form-check-label" for="check_familiar_5">
                                         EMBARAZO ADOLESCENTE
                                     </label>
@@ -177,19 +195,22 @@
                                     <h3>Entorno</h3>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="1" name="riesgos_entorno[]" id="check_entorno_1">
+                                    <input class="form-check-input" type="checkbox" value="1" name="riesgos_entorno[]"
+                                        id="check_entorno_1">
                                     <label class="form-check-label" for="check_entorno_1">
                                         EXPUESTO A PANDILLAS O VENTA DE DROGA EN SU COLONIA
                                     </label>
                                 </div>
                                 <div class="form-check col-12 col-sm-6 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="2" name="riesgos_entorno[]" id="check_entorno_2">
+                                    <input class="form-check-input" type="checkbox" value="2" name="riesgos_entorno[]"
+                                        id="check_entorno_2">
                                     <label class="form-check-label" for="check_entorno_2">
                                         BAJO NIVEL SOCIO ECONOMICO
                                     </label>
                                 </div>
                                 <div class="form-check col-12 pb-3">
-                                    <input class="form-check-input" type="checkbox" value="3" name="riesgos_entorno[]" id="check_entorno_3">
+                                    <input class="form-check-input" type="checkbox" value="3" name="riesgos_entorno[]"
+                                        id="check_entorno_3">
                                     <label class="form-check-label" for="check_entorno_3">
                                         PARTICIPACION EN ACTOS DELICTIVOS
                                     </label>
