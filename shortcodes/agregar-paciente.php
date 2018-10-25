@@ -174,7 +174,7 @@ if ( ! function_exists( 'agregar_paciente_shortcode' ) ) {
             foreach($_POST['sustancia'] as $key => $value) {
                 $sustancia = $_POST['sustancia'][$key];
                 if($_POST['sustancia'][$key] == 'Otro') {
-                    $sustancia = $_POST['otrasustancia'][$key]
+                    $sustancia = $_POST['otrasustancia'][$key];
                 }
                 $values_psicotropicos = array(
                     'sustancia'          => $sustancia,
