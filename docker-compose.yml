@@ -1,0 +1,21 @@
+web:
+  image: wordpress:4.9.8-php7.0-apache
+  links:
+  - mysql
+  environment:
+  - WORDPRESS_DB_PASSWORD=12345
+  ports:
+  - "127.0.0.3:8080:80"
+  volumes:
+  - C:\Users\Ardilla\Documents\Proyectos\qi-theme\:/var/www/html/wp-content/themes/qi-theme
+  - C:\Users\Ardilla\Documents\Proyectos\cesqt-qi\:/var/www/html/wp-content/plugins/cest-qi
+  - C:\Users\Ardilla\Documents\Proyectos\expedientes-qi\:/var/www/html/wp-content/plugins/expedientes-qi
+  - C:\Users\Ardilla\Documents\Proyectos\resiliencia-qi\:/var/www/html/wp-content/plugins/resiliencia-qi
+  - C:\Users\Ardilla\Documents\Proyectos\areasorg-qi\:/var/www/html/wp-content/plugins/areasorg-qi
+mysql:
+  image: mysql:5.7
+  environment:
+  - MYSQL_ROOT_PASSWORD=12345
+  - MYSQL_DATABASE=wordpress
+  ports:
+  - 3306:3306

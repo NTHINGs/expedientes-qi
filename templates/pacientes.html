@@ -1,0 +1,45 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Fotografía</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Fecha de Nacimiento</th>
+            <th scope="col">Edad</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Fecha de Creación</th>
+            <th scope="col">Fecha de Modificación</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<script>
+jQuery(document).ready(function ($) {
+    var pacientes = JSON.parse('%PACIENTES%');
+    for (var paciente of pacientes) {
+        var fila = '<tr>\
+            <th scope="row">' + paciente.id + '</th>';
+        
+        if (paciente.fotografia) {
+            fila += '<td><img src="' + paciente.fotografia + '" width="100px"></td>';
+        } else {
+            fila += '<td>No hay fotografía</td>';
+        }
+        fila += '<td>' + paciente.nombre + '</td>\
+            <td>' + paciente.fechadenacimiento + '</td>\
+            <td>' + paciente.edad + '</td>\
+            <td>' + paciente.telefono + '</td>\
+            <td>' + paciente.fecha_creacion + '</td>\
+            <td>' + paciente.fecha_modificacion + '</td>\
+            <td>\
+                <a href="">Editar</a>\
+                <a href="">Eliminar</a>\
+            </td>\
+        </tr>';
+        $('tbody').append(fila);
+    }
+    
+});
+</script>

@@ -37,10 +37,6 @@ if ( ! defined( 'ABS_DIR' ) ) {
 	define( 'ABS_DIR', WP_PLUGIN_DIR . '/' . ABS_NAME );
 }
 
-if ( ! defined( 'ABS_URL' ) ) {
-	define( 'ABS_URL', WP_PLUGIN_URL . '/' . ABS_NAME );
-}
-
 /**
  * Link.
  *
@@ -51,6 +47,9 @@ if ( file_exists( ABS_DIR . '/shortcodes/shortcode-print.php' ) ) {
 }
 if ( file_exists( ABS_DIR . '/shortcodes/agregar-paciente.php' ) ) {
 	require_once( ABS_DIR . '/shortcodes/agregar-paciente.php' );
+}
+if ( file_exists( ABS_DIR . '/shortcodes/pacientes.php' ) ) {
+	require_once( ABS_DIR . '/shortcodes/pacientes.php' );
 }
 
 add_action('wp_enqueue_scripts','expedientes_qi_init');
