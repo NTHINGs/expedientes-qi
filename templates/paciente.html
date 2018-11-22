@@ -1,6 +1,8 @@
 <!-- PHP VARIABLES -->
 <!-- %CURRENT_USER% = Usuario Loggeado -->
 <!-- REQUEST_URI = URL para guardar al paciente -->
+<h1 class="entry-title" id="nombre_title"></h1>
+<h1 class="entry-title" id="error_title"></h1>
 <div class="container">
     <div class="row">
         <nav>
@@ -12,7 +14,7 @@
                 <a class="nav-item nav-link" id="nav-riesgos-psicosociales-tab" data-toggle="tab" href="#nav-riesgos-psicosociales"
                     role="tab" aria-controls="nav-riesgos-psicosociales" aria-selected="false">Riesgos Psicosociales</a>
                 <a class="nav-item nav-link" id="nav-psicotropicos-tab" data-toggle="tab" href="#nav-psicotropicos"
-                    role="tab" aria-controls="nav-psicotropicos" aria-selected="false">Psicotropicos</a>
+                    role="tab" aria-controls="nav-psicotropicos" aria-selected="false">Uso de Sustancias</a>
             </div>
         </nav>
         <div class="col-12">
@@ -22,11 +24,17 @@
                         aria-labelledby="nav-informacion-personal-tab">
                         <div class="container-fluid">
                             <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <label for="nombre">Fotografía Actual</label>
+                                    <br>
+                                    <img src="/wp-content/plugins/expedientes-qi/default.png" id="fotografia_element"
+                                        width="150px">
+                                </div>
                                 <div class="form-group col-12 col-sm-6">
                                     <label for="nombre">Fotografía</label>
                                     <input type="file" class="form-control" name="fotografia" id="fotografia">
                                 </div>
-                                <div class="form-group col-12 col-sm-6">
+                                <div class="form-group col-12">
                                     <label for="nombre">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre" required>
                                 </div>
@@ -219,7 +227,7 @@
                                     <h3>Observaciones</h3>
                                 </div>
                                 <div class="form-group col-12">
-                                    <textarea name="riesgos_observaciones" class="form-control" cols="30" rows="10"></textarea>
+                                    <textarea id="riesgos_observaciones" name="riesgos_observaciones" class="form-control" cols="30" rows="10"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -227,11 +235,15 @@
                     <div class="tab-pane fade" id="nav-psicotropicos" role="tabpanel" aria-labelledby="nav-psicotropicos-tab">
                         <div class="container" id="sustancias"></div>
                         <div class="col-12">
-                            <button type="button" class="btn btn-success" id="agregar-sustancia">Agregar Otro Psicotrópico</button>
+                            <button type="button" class="btn btn-success" id="agregar-sustancia">Agregar Otra Sustancia</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
+                    <input type="hidden" id="editmode" name="editmode">
+                    <input type="hidden" value="%RAND%" name="randcheck" />
+                    <input type="hidden" id="contactos-delete" name="contactos_delete" />
+                    <input type="hidden" id="sustancias-delete" name="sustancias_delete" />
                     <button type="submit" class="btn btn-primary" name="submitted">Guardar</button>
                 </div>
             </form>
@@ -241,6 +253,16 @@
 
 <script>
     jQuery(document).ready(function ($) {
+        var contactos_delete = [];
+        var sustancias_delete = [];
+        $( document ).on( 'contactos_delete', function(event) {
+            console.log(contactos_delete);
+            $('#contactos-delete').val(contactos_delete.join(','));
+        });
+        $( document ).on( 'sustancias_delete', function(event) {
+            console.log(sustancias_delete);
+            $('#sustancias-delete').val(sustancias_delete.join(','));
+        });
         $('#fechadenacimiento').datepicker({
             uiLibrary: 'bootstrap4',
             format: 'yyyy-mm-dd'
@@ -256,7 +278,7 @@
         });
 
         var contador_contactos = 0;
-        agregarContacto(contador_contactos);
+        // agregarContacto(contador_contactos);
         $('#agregar-contacto').on('click', function () {
             contador_contactos++;
             agregarContacto(contador_contactos);
@@ -267,27 +289,28 @@
             <div id="contacto' + index + '" class="row border">\
                 <div class="form-group col-12 col-sm-6">\
                     <label>Nombre</label>\
-                    <input type="text" class="form-control" name="nombrescontacto[]">\
+                    <input type="text" class="form-control" id="nombre-' + index + '" name="nombrescontacto[]" required>\
+                    <input type="text" class="form-control" id="id-' + index + '" name="idscontacto[]">\
                 </div>\
                 <div class="form-group col-12 col-sm-6">\
                     <label>Relación</label>\
-                    <input type="text" class="form-control" name="relacionescontacto[]">\
+                    <input type="text" class="form-control" id="relacion-' + index + '" name="relacionescontacto[]">\
                 </div>\
                 <div class="form-group col-12 col-sm-6">\
                     <label>Domicilio</label>\
-                    <input type="text" class="form-control" name="domicilioscontacto[]">\
+                    <input type="text" class="form-control" id="domicilio-' + index + '" name="domicilioscontacto[]">\
                 </div>\
                 <div class="form-group col-12 col-sm-6">\
                     <label>Teléfono Celular</label>\
-                    <input type="text" class="form-control" name="celularescontacto[]">\
+                    <input type="text" class="form-control" id="telefono_celular-' + index + '" name="celularescontacto[]">\
                 </div>\
                 <div class="form-group col-12 col-sm-6">\
                     <label>Teléfono Casa</label>\
-                    <input type="text" class="form-control" name="telcasacontacto[]">\
+                    <input type="text" class="form-control" id="telefono_casa-' + index + '" name="telcasacontacto[]">\
                 </div>\
                 <div class="form-group col-12 col-sm-6">\
                     <label>Otro Teléfono</label>\
-                    <input type="text" class="form-control" name="otrostelefonoscontacto[]">\
+                    <input type="text" class="form-control" id="telefono_otro-' + index + '" name="otrostelefonoscontacto[]">\
                 </div>\
                 <div class="col-12" id="eliminar-btn' + index + '">\
                     <button type="button" class="btn btn-danger" id="eliminar-contacto' + index + '" data-i="' + index + '">Eliminar Contacto</button>\
@@ -305,12 +328,17 @@
         }
 
         function eliminarContacto(index) {
+            var id = $('#id-'+index).val();
+            if (id) {
+                contactos_delete.push(id);
+                $( document ).trigger( 'contactos_delete');
+            }
             $('#contacto' + index).remove();
             contador_contactos--;
         }
 
         var contador_sustancias = 0;
-        agregarSustancia(contador_sustancias);
+        // agregarSustancia(contador_sustancias);
         $('#agregar-sustancia').on('click', function () {
             contador_sustancias++;
             agregarSustancia(contador_sustancias);
@@ -319,6 +347,7 @@
         function agregarSustancia(index) {
             var formulario = '\
             <div id="sustanciadiv' + index + '" class="row border">\
+                <input type="hidden" class="form-control" id="id' + index + '" name="idssustancias[]">\
                 <div class="form-group col-12">\
                     <label for="sustancia' + index + '">Sustancia</label>\
                     <select class="form-control" id="sustancia' + index + '" name="sustancia[]">\
@@ -350,7 +379,23 @@
                 </div>\
                 <div class="form-group col-12 col-sm-4">\
                     <label for="usoregular' + index + '">Uso Regular</label>\
-                    <input type="number" class="form-control" id="usoregular' + index + '" name="usoregular[]">\
+                    <input type="text" class="form-control" id="usoregular' + index + '" name="usoregular[]">\
+                </div>\
+                <div class="form-group col-12 col-sm-6">\
+                    <label for="periodo' + index + '">Periodo</label>\
+                    <select class="form-control" id="periodo' + index + '" name="periodo[]">\
+                        <option>1 Al Día</option>\
+                        <option>2-3/Día</option>\
+                        <option>+ 3/Día</option>\
+                        <option>1/ Semana</option>\
+                        <option>2-3/ Semana</option>\
+                        <option>+ 3/ Semana</option>\
+                        <option>1/ Mes</option>\
+                        <option>2-3/ Mes</option>\
+                        <option>+ 3/ Mes</option>\
+                        <option>No Procede</option>\
+                        <option>Otro</option>\
+                    </select>\
                 </div>\
                 <div class="form-group col-12 col-sm-6">\
                     <label for="unidad' + index + '">Unidad</label>\
@@ -370,32 +415,11 @@
                         <option>Cigarros</option>\
                         <option>Estopa, Bolsa, etc.</option>\
                         <option>Tabletas</option>\
-                    </select>\
-                </div>\
-                <div class="form-group col-12 col-sm-6">\
-                    <label for="unidadespordia' + index + '">Unidades Por Día</label>\
-                    <input type="number" class="form-control" id="unidadespordia' + index + '" name="unidadespordia[]">\
-                </div>\
-                <div class="form-group col-12 col-sm-6">\
-                    <label for="vecespordia' + index + '">Veces Por Día</label>\
-                    <input type="number" class="form-control" id="vecespordia' + index + '" name="vecespordia[]">\
-                </div>\
-                <div class="form-group col-12 col-sm-6">\
-                    <label for="periodo' + index + '">Unidad</label>\
-                    <select class="form-control" id="periodo' + index + '" name="periodo[]">\
-                        <option>1 Al Día</option>\
-                        <option>2-3/Día</option>\
-                        <option>+ 3/Día</option>\
-                        <option>1/ Semana</option>\
-                        <option>2-3/ Semana</option>\
-                        <option>+ 3/ Semana</option>\
-                        <option>1/ Mes</option>\
-                        <option>2-3/ Mes</option>\
-                        <option>+ 3/ Mes</option>\
-                        <option>No Procede</option>\
                         <option>Otro</option>\
                     </select>\
                 </div>\
+                <div id="otraperiodocontainer' + index + '" class="col-12"></div>\
+                <div id="otraunidadcontainer' + index + '" class="col-12"></div>\
                 <div class="form-group col-12 col-sm-6">\
                     <label for="abstinenciamaxima' + index + '">Abstinencia Máxima</label>\
                     <input type="text" class="form-control" id="abstinenciamaxima' + index + '" name="abstinenciamaxima[]">\
@@ -413,7 +437,7 @@
                     <input id="fechaultimoconsumo' + index + '" name="fechaultimoconsumo[]">\
                 </div>\
                 <div class="col-12" id="eliminar-sustancia-btn' + index + '">\
-                    <button type="button" class="btn btn-danger" id="eliminar-sustancia' + index + '" data-i="' + index + '">Eliminar Psicotrópico</button>\
+                    <button type="button" class="btn btn-danger" id="eliminar-sustancia' + index + '" data-i="' + index + '">Eliminar Sustancia</button>\
                 </div>\
             </div>\
             ';
@@ -430,9 +454,9 @@
                 eliminarSustancia(index);
             });
 
-            $('#sustancia' + index).change(function() {
-                $('#sustancia' + index + ' option:selected').each(function() {
-                    if ($( this ).text() === 'Otro') {
+            $('#sustancia' + index).change(function () {
+                $('#sustancia' + index + ' option:selected').each(function () {
+                    if ($(this).text() === 'Otro') {
                         $('#otrasustanciacontainer' + index).append('\
                             <div id="otrasustanciadiv' + index + '" class="form-group col-12">\
                                 <label for="otrasustancia' + index + '">Otra Sustancia</label>\
@@ -443,11 +467,138 @@
                     }
                 });
             });
+
+            $('#periodo' + index).change(function () {
+                $('#periodo' + index + ' option:selected').each(function () {
+                    if ($(this).text() === 'Otro') {
+                        $('#otraperiodocontainer' + index).append('\
+                            <div id="otraperiododiv' + index + '" class="form-group col-12">\
+                                <label for="otraperiodo' + index + '">Otro Periodo</label>\
+                                <input type="text" class="form-control" id="otraperiodo' + index + '" name="otraperiodo[]">\
+                            </div>');
+                    } else {
+                        $('#otraperiodocontainer' + index).remove();
+                    }
+                });
+            });
+
+            $('#unidad' + index).change(function () {
+                $('#unidad' + index + ' option:selected').each(function () {
+                    if ($(this).text() === 'Otro') {
+                        $('#otraunidadcontainer' + index).append('\
+                            <div id="otraunidaddiv' + index + '" class="form-group col-12">\
+                                <label for="otraunidad' + index + '">Otra Unidad</label>\
+                                <input type="text" class="form-control" id="otraunidad' + index + '" name="otraunidad[]">\
+                            </div>');
+                    } else {
+                        $('#otraunidadcontainer' + index).remove();
+                    }
+                });
+            });
         }
 
         function eliminarSustancia(index) {
+            var id = $('#id'+index).val();
+            if (id) {
+                sustancias_delete.push(id);
+                $( document ).trigger( 'sustancias_delete');
+            }
             $('#sustanciadiv' + index).remove();
             contador_sustancias--;
+        }
+        
+        $("#fotografia").change(function() {
+            previsualizarFoto(this);
+        });
+        function previsualizarFoto(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#fotografia_element').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        var paciente = null;
+        try {
+            paciente = JSON.parse('%PACIENTE%');
+        } catch (e) {
+        }
+
+        console.log(paciente);
+        if (paciente && !paciente['error']) {
+            $('#editmode').val('1');
+            // Titulo
+            $('#nombre_title').html(paciente.nombre);
+
+            // Llenar Informacion Personal
+            $('#fotografia_element').attr("src", paciente.fotografia);
+            for (var key of Object.keys(paciente)) {
+                var element = $(`#${key}`);
+                if (element.hasClass('form-control') && key !== 'fotografia') {
+                    element.val(paciente[key]);
+                    if (key === 'fechadenacimiento') {
+                        element.trigger('change');
+                    }
+                }
+            }
+
+            // Llenar Contactos
+            for (var [index, contacto] of paciente.contactos.entries()) {
+                contador_contactos++;
+                agregarContacto(contador_contactos);
+                for (var key of Object.keys(contacto)) {
+                    var element = $(`#${key}-${index+1}`);
+                    if (element.hasClass('form-control')) {
+                        element.val(contacto[key]);
+                    }
+                }
+            }
+
+            // Llenar Riesgos
+            function checkRiesgos(tipo, valores) {
+                for(var valor of valores.split(',')) {
+                    $(`#check_${tipo}_${valor}`).prop('checked', true);
+                }
+            }
+            if (paciente.riesgos) {
+                if(paciente.riesgos.individual) {
+                    checkRiesgos('individual', paciente.riesgos.individual);
+                }
+                if(paciente.riesgos.familiar) {
+                    checkRiesgos('familiar', paciente.riesgos.familiar);
+                }
+                if(paciente.riesgos.entorno) {
+                    checkRiesgos('entorno', paciente.riesgos.entorno);
+                }
+                $('#riesgos_observaciones').val(paciente.riesgos.observaciones);
+            }
+            
+            // Llenar sustancias
+            for (var [index, sustancia] of paciente.sustancias.entries()) {
+                contador_sustancias++;
+                agregarSustancia(contador_sustancias);
+                for (var key of Object.keys(sustancia)) {
+                    var element = $(`#${key}${index+1}`);
+                    if (element.hasClass('form-control') || element.hasClass('form-check-input')) {
+                        element.val(sustancia[key]);
+                        if((key === 'periodo' || key === 'unidad' || key === 'sustancia') && !element.val()) {
+                            // & sustancia[key] === 'Otro'
+                            element.val('Otro');
+                            element.trigger('change');
+                            $('#otra'+ key + (index+1)).val(sustancia[key]);
+                        }
+                    }
+                }
+            }
+
+        } else if(paciente && paciente['error']){
+            $('#error_title').html('PACIENTE NO ENCONTRADO<br><a href="/pacientes">Volver a la lista</a>');
+            $('.container').hide();
         }
     });
 </script>

@@ -45,8 +45,8 @@ if ( ! defined( 'ABS_DIR' ) ) {
 if ( file_exists( ABS_DIR . '/shortcodes/shortcode-print.php' ) ) {
 	require_once( ABS_DIR . '/shortcodes/shortcode-print.php' );
 }
-if ( file_exists( ABS_DIR . '/shortcodes/agregar-paciente.php' ) ) {
-	require_once( ABS_DIR . '/shortcodes/agregar-paciente.php' );
+if ( file_exists( ABS_DIR . '/shortcodes/paciente.php' ) ) {
+	require_once( ABS_DIR . '/shortcodes/paciente.php' );
 }
 if ( file_exists( ABS_DIR . '/shortcodes/pacientes.php' ) ) {
 	require_once( ABS_DIR . '/shortcodes/pacientes.php' );

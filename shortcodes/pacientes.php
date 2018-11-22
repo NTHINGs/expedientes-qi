@@ -12,7 +12,41 @@ if ( ! function_exists( 'mostrar_pacientes_shortcode' ) ) {
 	add_action( 'plugins_loaded', function() {
 		// Add the shortcode.
 		add_shortcode( 'mostrar-pacientes', 'mostrar_pacientes_shortcode' );
-	});
+    });
+    
+    add_action( 'wp_ajax_nopriv_expedientes_eliminar_paciente', 'expedientes_eliminar_paciente' );
+    add_action( 'wp_ajax_expedientes_eliminar_paciente', 'expedientes_eliminar_paciente' );
+
+    function expedientes_eliminar_paciente() {
+        global $wpdb;
+        $id = $_POST['id'];
+        $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
+        $table_contactos = $wpdb->prefix . "expedientes_personas_contacto";
+        $table_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
+        $table_sustancias = $wpdb->prefix . "expedientes_psicotropicos";
+        $wpdb->delete(
+            $table_sustancias,
+            [ 'paciente' => $id ],
+            [ '%d' ]
+        );
+        $wpdb->delete(
+            $table_riesgos,
+            [ 'paciente' => $id ],
+            [ '%d' ]
+        );
+        $wpdb->delete(
+            $table_contactos,
+            [ 'paciente' => $id ],
+            [ '%d' ]
+        );
+        $wpdb->delete(
+            $table_pacientes,
+            [ 'id' => $id ],
+            [ '%d' ]
+        );
+        echo 'ok';
+        die();
+    }
 
 	/**
 	 * mostrar-pacientes shortcode.
@@ -36,9 +70,11 @@ if ( ! function_exists( 'mostrar_pacientes_shortcode' ) ) {
         );
         $variables = array(
             '%PACIENTES%',
+            '%AJAX_URL%'
         );
         $values = array(
-            json_encode($pacientes), 
+            json_encode($pacientes),
+            admin_url( 'admin-ajax.php' )
         );
         echo str_replace($variables, $values, file_get_contents(  plugin_dir_path( __DIR__ ) . "templates/pacientes.html" ));
     }

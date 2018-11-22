@@ -1,3 +1,4 @@
+<a href="/paciente" class="btn btn-success my-2">Agregar Paciente</a>
 <table class="table">
     <thead>
         <tr>
@@ -15,31 +16,80 @@
     <tbody>
     </tbody>
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmLabel">Confirmación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de querer eliminar a <span id="nombre"></span>?
+                <input type="hidden" id="id">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="eliminar" class="btn btn-danger">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-jQuery(document).ready(function ($) {
-    var pacientes = JSON.parse('%PACIENTES%');
-    for (var paciente of pacientes) {
-        var fila = '<tr>\
+    jQuery(document).ready(function ($) {
+        var pacientes = JSON.parse('%PACIENTES%');
+        for (var paciente of pacientes) {
+            var fila = '<tr>\
             <th scope="row">' + paciente.id + '</th>';
-        
-        if (paciente.fotografia) {
-            fila += '<td><img src="' + paciente.fotografia + '" width="100px"></td>';
-        } else {
-            fila += '<td>No hay fotografía</td>';
-        }
-        fila += '<td>' + paciente.nombre + '</td>\
+
+            if (paciente.fotografia) {
+                fila += '<td><img src="' + paciente.fotografia + '" width="100px"></td>';
+            } else {
+                fila += '<td>No hay fotografía</td>';
+            }
+            fila += '<td>' + paciente.nombre + '</td>\
             <td>' + paciente.fechadenacimiento + '</td>\
             <td>' + paciente.edad + '</td>\
             <td>' + paciente.telefono + '</td>\
             <td>' + paciente.fecha_creacion + '</td>\
             <td>' + paciente.fecha_modificacion + '</td>\
             <td>\
-                <a href="">Editar</a>\
-                <a href="">Eliminar</a>\
+                <a class="btn btn-info btn-block" href="/paciente/?paciente=' + paciente.id + '">Editar</a>\
+                <a class="btn btn-danger btn-block" href="" data-toggle="modal" data-target="#deleteConfirm" data-id="' + paciente.id + '" data-nombre="' + paciente.nombre + '">Eliminar</a>\
             </td>\
         </tr>';
-        $('tbody').append(fila);
-    }
-    
-});
+            $('tbody').append(fila);
+        }
+
+        $('#deleteConfirm').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var nombre = button.data('nombre')
+            $('#nombre').html(nombre);
+            $('#id').val(id);
+        });
+
+        $('#deleteConfirm').on('hidden.bs.modal', function (event) {
+            location.reload(true);
+        });
+
+        $('#eliminar').click(function(event) {
+            $.ajax({
+                url : '%AJAX_URL%',
+                type : 'post',
+                data : {
+                    action : 'expedientes_eliminar_paciente',
+                    id : $('#id').val()
+                },
+                success : function( response ) {
+                    console.log(response);
+                    $('#deleteConfirm').modal('hide');
+                }
+            });
+        })
+
+    });
 </script>
