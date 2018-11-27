@@ -88,3 +88,19 @@ KEY fkIdx_39 (paciente),
 CONSTRAINT FK_39 FOREIGN KEY fkIdx_39 (paciente) REFERENCES %TABLE_PREFIX%pacientes (id) ON DELETE CASCADE ON UPDATE CASCADE
 )%CHARSET_COLLATE%;
 
+-- ************************************** %TABLE_PREFIX%esquema_fases
+
+CREATE TABLE %TABLE_PREFIX%esquema_fases
+(
+    id             INT NOT NULL AUTO_INCREMENT,
+    adaptabilidad  TEXT,
+    cohesion       TEXT,
+    rigidez        TEXT,
+    apego          TEXT,
+    caos           TEXT,
+    desapego       TEXT,
+    paciente       INT NOT NULL ,
+PRIMARY KEY (id),
+KEY fkIdx_35 (paciente),
+CONSTRAINT FK_35 FOREIGN KEY fkIdx_35 (paciente) REFERENCES %TABLE_PREFIX%pacientes (id) ON DELETE CASCADE ON UPDATE CASCADE
+)
