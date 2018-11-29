@@ -47,6 +47,9 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             $table_contactos = $wpdb->prefix . "expedientes_personas_contacto";
             $table_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
             $table_sustancias = $wpdb->prefix . "expedientes_psicotropicos";
+            $table_name_esquema_fases = $wpdb->prefix . "expedientes_esquema_fases";
+            $table_name_fad = $wpdb->prefix . "expedientes_fad";
+
             $paciente = $wpdb->get_results(
                 "SELECT * FROM $table_pacientes WHERE id = '{$paciente_id}'", 
                 'ARRAY_A'
@@ -64,6 +67,19 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                     "SELECT * FROM $table_sustancias WHERE paciente = '{$paciente_id}'", 
                     'ARRAY_A'
                 );
+                $paciente['fases'] = $wpdb->get_results(
+                    "SELECT * FROM $table_name_esquema_fases WHERE paciente = '{$paciente_id}'", 
+                    'ARRAY_A'
+                )[0];
+                unset( $paciente['fases']['id']);
+                unset( $paciente['fases']['paciente']);
+                foreach( $paciente['fases'] as $key => $value) {
+                    $paciente['fases'][$key] = json_decode($paciente['fases'][$key]);
+                }
+                $paciente['fad'] = $wpdb->get_results(
+                    "SELECT * FROM $table_name_fad WHERE paciente = '{$paciente_id}'", 
+                    'ARRAY_A'
+                )[0];
             } else {
                 $paciente = array('error' => true);
             }
@@ -85,6 +101,8 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
         $table_name_contactos = $wpdb->prefix . "expedientes_personas_contacto";
         $table_name_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
         $table_name_psicotropicos = $wpdb->prefix . "expedientes_psicotropicos";
+        $table_name_esquema_fases = $wpdb->prefix . "expedientes_esquema_fases";
+        $table_name_fad = $wpdb->prefix . "expedientes_fad";
         // Nuevo Paciente
         if ($_FILES['fotografia']['size'] > 0 && $_FILES['fotografia']['error'] == 0) {
             // Se subio una foto
@@ -354,6 +372,94 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             }
         }
 
+        if(!empty($_POST['adaptabilidad'])) {
+            $adaptabilidad = fases_procesar($_POST['adaptabilidad'], $_POST['adaptabilidad-name']);
+            $cohesion = fases_procesar($_POST['cohesion'],  $_POST['cohesion-name']);
+            $rigidez = fases_procesar($_POST['rigidez'], $_POST['rigidez-name']);
+            $apego = fases_procesar($_POST['apego'], $_POST['apego-name']);
+            $caos = fases_procesar($_POST['caos'], $_POST['caos-name']);
+            $desapego = fases_procesar($_POST['desapego'], $_POST['desapego-name']);
+
+            $values_fases = array(
+                'adaptabilidad'      => json_encode($adaptabilidad, JSON_NUMERIC_CHECK),
+                'cohesion'           => json_encode($cohesion, JSON_NUMERIC_CHECK),
+                'rigidez'            => json_encode($rigidez, JSON_NUMERIC_CHECK),
+                'apego'              => json_encode($apego, JSON_NUMERIC_CHECK),
+                'caos'               => json_encode($caos, JSON_NUMERIC_CHECK),
+                'desapego'           => json_encode($desapego, JSON_NUMERIC_CHECK),
+                'paciente'           => $paciente_id,
+            );
+            if ($_POST['editmode'] != '1') {
+                $wpdb->insert( $table_name_esquema_fases, $values_fases, array(
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%d',
+                ));
+            } else {
+                $wpdb->update( $table_name_esquema_fases, $values_fases, array('paciente' => $paciente_id ), array(
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%d',
+                ), '%d');
+            }
+        }
+
+        $values_fad = array(
+            'solucion_problemas'           => $_POST['solucion_problemas'],
+            'comunicacion'                 => $_POST['comunicacion'],
+            'respuesta_afectiva'           => $_POST['respuesta_afectiva'],
+            'involucramiento_afectivo'     => $_POST['involucramiento_afectivo'],
+            'control_del_comportamiento'   => $_POST['control_del_comportamiento'],
+            'funcionamiento_general'       => $_POST['funcionamiento_general'],
+            'interpretacion_general'       => $_POST['interpretacion_general'],
+            'paciente'                     => $paciente_id,
+        );
+        if ($_POST['editmode'] != '1') {
+            $wpdb->insert( $table_name_fad, $values_fad, array(
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+            ));
+        } else {
+            $wpdb->update( $table_name_fad, $values_fad, array('paciente' => $paciente_id ), array(
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+            ), '%d');
+        }
+
         echo $_POST['nombre'] . ' guardado correctamente.<br><br><a href="/paciente/?paciente=' . $paciente_id . '">Ver</a><br><br><a href="/pacientes">Ver Todos Los Pacientes</a>';
+    }
+
+    function fases_procesar($array, $extras) {
+        $new = array();
+        foreach($array as $index => $value) {
+            if ($index > 2) {
+                foreach($extras as $extra_index => $extra) {
+                    $new[$index + $extra_index] = array('nombre' => $extra, 'valor' => $value);
+                }
+            } else {
+                $new[$index] = $value;
+            }
+        }
+        return $new;
     }
 }

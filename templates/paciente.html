@@ -17,6 +17,8 @@
                     role="tab" aria-controls="nav-psicotropicos" aria-selected="false">Uso de Sustancias</a>
                 <a class="nav-item nav-link" id="nav-fases-tab" data-toggle="tab" href="#nav-fases" role="tab"
                     aria-controls="nav-fases" aria-selected="false">Fases</a>
+                <a class="nav-item nav-link" id="nav-fad-tab" data-toggle="tab" href="#nav-fad" role="tab"
+                    aria-controls="nav-fad" aria-selected="false">FAD</a>
             </div>
         </nav>
         <div class="col-12">
@@ -252,33 +254,45 @@
                                         <div class="col-12">
                                             <label for="adaptabilidad-papa">Papá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="6" max="30" id="adaptabilidad-papa" name="adaptabilidad-papa" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="6" max="30" id="adaptabilidad-papa"
+                                                name="adaptabilidad[]" required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="6" max="30" id="adaptabilidad-papa-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="6" max="30" id="adaptabilidad-papa-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="adaptabilidad-mama">Mamá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="6" max="30" id="adaptabilidad-mama" name="adaptabilidad-mama" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="6" max="30" id="adaptabilidad-mama"
+                                                name="adaptabilidad[]" required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="6" max="30" id="adaptabilidad-mama-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="6" max="30" id="adaptabilidad-mama-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="adaptabilidad-hijo">Hijo</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="6" max="30" id="adaptabilidad-hijo" name="adaptabilidad-hijo" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="6" max="30" id="adaptabilidad-hijo"
+                                                name="adaptabilidad[]" required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="6" max="30" id="adaptabilidad-hijo-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="6" max="30" id="adaptabilidad-hijo-value"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
+                                                Miembro</button>
                                         </div>
                                     </div>
                                 </div>
@@ -290,33 +304,45 @@
                                         <div class="col-12">
                                             <label for="cohesion-papa">Papá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="6" max="30" id="cohesion-papa" name="cohesion-papa" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="6" max="30" id="cohesion-papa" name="cohesion[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="6" max="30" id="cohesion-papa-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="6" max="30" id="cohesion-papa-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="cohesion-mama">Mamá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="6" max="30" id="cohesion-mama" name="cohesion-mama" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="6" max="30" id="cohesion-mama" name="cohesion[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="6" max="30" id="cohesion-mama-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="6" max="30" id="cohesion-mama-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="cohesion-hijo">Hijo</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="6" max="30" id="cohesion-hijo" name="cohesion-hijo" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="6" max="30" id="cohesion-hijo" name="cohesion[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="6" max="30" id="cohesion-hijo-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="6" max="30" id="cohesion-hijo-value"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
+                                                Miembro</button>
                                         </div>
                                     </div>
                                 </div>
@@ -328,33 +354,45 @@
                                         <div class="col-12">
                                             <label for="rigidez-papa">Papá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="rigidez-papa" name="rigidez-papa" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="rigidez-papa" name="rigidez[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="rigidez-papa-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="rigidez-papa-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="rigidez-mama">Mamá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="rigidez-mama" name="rigidez-mama" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="rigidez-mama" name="rigidez[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="rigidez-mama-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="rigidez-mama-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="rigidez-hijo">Hijo</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="rigidez-hijo" name="rigidez-hijo" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="rigidez-hijo" name="rigidez[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="rigidez-hijo-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="rigidez-hijo-value"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
+                                                Miembro</button>
                                         </div>
                                     </div>
                                 </div>
@@ -366,33 +404,45 @@
                                         <div class="col-12">
                                             <label for="apego-papa">Papá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="apego-papa" name="apego-papa" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="apego-papa" name="apego[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="apego-papa-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="apego-papa-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="apego-mama">Mamá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="apego-mama" name="apego-mama" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="apego-mama" name="apego[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="apego-mama-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="apego-mama-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="apego-hijo">Hijo</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="apego-hijo" name="apego-hijo" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="apego-hijo" name="apego[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="apego-hijo-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="apego-hijo-value"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
+                                                Miembro</button>
                                         </div>
                                     </div>
                                 </div>
@@ -404,33 +454,45 @@
                                         <div class="col-12">
                                             <label for="caos-papa">Papá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="caos-papa" name="caos-papa" required>    
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="caos-papa" name="caos[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="caos-papa-value" required>   
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="caos-papa-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="caos-mama">Mamá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="caos-mama" name="caos-mama" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="caos-mama" name="caos[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="caos-mama-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="caos-mama-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="caos-hijo">Hijo</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="caos-hijo" name="caos-hijo" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="caos-hijo" name="caos[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="caos-hijo-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="caos-hijo-value"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
+                                                Miembro</button>
                                         </div>
                                     </div>
                                 </div>
@@ -442,38 +504,87 @@
                                         <div class="col-12">
                                             <label for="desapego-papa">Papá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="desapego-papa" name="desapego-papa" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="desapego-papa" name="desapego[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="desapego-papa-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="desapego-papa-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="desapego-mama">Mamá</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="desapego-mama" name="desapego-mama" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="desapego-mama" name="desapego[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="desapego-mama-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="desapego-mama-value"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="desapego-hijo">Hijo</label>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="range" class="slider" min="5" max="25" id="desapego-hijo" name="desapego-hijo" required>
+                                        <div class="col-12 col-sm-10">
+                                            <input type="range" class="slider" min="5" max="25" id="desapego-hijo" name="desapego[]"
+                                                required>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <input type="number" class="form-control" min="5" max="25" id="desapego-hijo-value" required>
+                                        <div class="col-12 col-sm-2">
+                                            <input type="number" class="form-control" min="5" max="25" id="desapego-hijo-value"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
+                                                Miembro</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-fad" role="tabpanel" aria-labelledby="nav-fad-tab">
+                        <div class="container" id="fad">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>FAD</h3>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="solucion_problemas">Solución De Problemas</label>
+                                    <textarea class="form-control" rows="3" id="solucion_problemas" name="solucion_problemas"></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="comunicacion">Comunicación</label>
+                                    <textarea class="form-control" rows="3" id="comunicacion" name="comunicacion"></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="respuesta_afectiva">Respuesta Afectiva</label>
+                                    <textarea class="form-control" rows="3" id="respuesta_afectiva" name="respuesta_afectiva"></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="involucramiento_afectivo">Involucramiento Afectivo</label>
+                                    <textarea class="form-control" rows="3" id="involucramiento_afectivo" name="involucramiento_afectivo"></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="control_del_comportamiento">Control Del Comportamiento</label>
+                                    <textarea class="form-control" rows="3" id="control_del_comportamiento" name="control_del_comportamiento"></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="funcionamiento_general">Funcionamiento General</label>
+                                    <textarea class="form-control" rows="3" id="funcionamiento_general" name="funcionamiento_general"></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="interpretacion_general">Interpretación General</label>
+                                    <textarea class="form-control" rows="3" id="interpretacion_general" name="interpretacion_general"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -761,10 +872,91 @@
             }
         }
 
+        function sliders() {
+            $('input[type="range"]').each(function (index) {
+                var slider = $('#' + $(this).attr('id'));
+                var value = $('#' + $(this).attr('id') + '-value');
+
+                value.val(slider.val());
+                slider.on('change', function () {
+                    value.val($(this).val());
+                });
+
+                value.on('change', function () {
+                    slider.val($(this).val());
+                });
+            });
+        }
+        sliders();
+
+        var rangos = {
+            'adaptabilidad': {
+                min: 6,
+                max: 30,
+            },
+            'cohesion': {
+                min: 6,
+                max: 30,
+            },
+            'rigidez': {
+                min: 5,
+                max: 25,
+            },
+            'apego': {
+                min: 5,
+                max: 25,
+            },
+            'caos': {
+                min: 5,
+                max: 25,
+            },
+            'desapego': {
+                min: 5,
+                max: 25,
+            },
+        };
+        var fases = [];
+        $('.fases-agregar-miembro').each(function (index) {
+            fases[index] = {
+                i: 0
+            };
+            $(this).on('click', function () {
+                var container = $(this).parent().parent().parent();
+                fases[index].fase = container.attr('id');
+                var div = '\
+                <div class="form-group row">\
+                    <div class="col-12 col-sm-8">\
+                        <input type="text" class="form-control" placeholder="Nombre" id="' + fases[index].fase + fases[index].i + '-name" name="' + fases[index].fase + '-name[]" required>\
+                    </div>\
+                    <div class="col-12 col-sm-4 text-center">\
+                        <button type="button" class="btn btn-danger" id="fases-eliminar-miembro-' + fases[index].fase + '-' + fases[index].i + '">Eliminar Miembro</button>\
+                    </div>\
+                    <div class="col-12 col-sm-10">\
+                        <input type="range" class="slider" min="' + rangos[fases[index].fase].min + '" max="' + rangos[fases[index].fase].max + '" id="' + fases[index].fase + fases[index].i + '" name="' + fases[index].fase + '[]" required>\
+                    </div>\
+                    <div class="col-12 col-sm-2">\
+                        <input type="number" class="form-control" min="' + rangos[fases[index].fase].min + '" max="' + rangos[fases[index].fase].max + '" id="' + fases[index].fase + fases[index].i + '-value" required>\
+                    </div>\
+                </div>';
+
+                container.append(div);
+
+                $('#fases-eliminar-miembro-' + fases[index].fase + '-' + fases[index].i).on('click', function () {
+                    $(this).parent().parent().remove();
+                    fases[index].i--;
+                    sliders();
+                });
+
+                fases[index].i++;
+                sliders();
+            });
+        });
+
         var paciente = null;
         try {
             paciente = JSON.parse('%PACIENTE%');
         } catch (e) {
+            console.error(e);
         }
 
         console.log(paciente);
@@ -834,19 +1026,37 @@
                 }
             }
 
+            // Llenar Fases
+            if (paciente.fases) {
+                for (var key of Object.keys(paciente.fases)) {
+                    if (paciente.fases[key].length > 3) {
+                        var elementos_extra = paciente.fases[key].length - 3;
+                        for (let index = 0; index < elementos_extra; index++) {
+                            $('#' + key).find('.fases-agregar-miembro')[0].click();
+                        }
+                    }
+                    $('input[name="' + key + '[]"]').each(function (index) {
+                        if (index < 3) {
+                            $(this).val(paciente.fases[key][index]);
+                        } else {
+                            $(this).val(paciente.fases[key][index].valor);
+                            $('#' + key + $(this).attr('id').replace(key, '') + '-name').val(paciente.fases[key][index].nombre);
+                        }
+                    });
+                }
+                sliders();
+            }
+
+            // Llenar FAD
+            if (paciente.fad) {
+                for (var key of Object.keys(paciente.fad)) {
+                    $('#' + key).val(paciente.fad[key]);
+                }
+            }
+
         } else if (paciente && paciente['error']) {
             $('#error_title').html('PACIENTE NO ENCONTRADO<br><a href="/pacientes">Volver a la lista</a>');
             $('.container').hide();
         }
-
-        $('input[type="range"]').each(function( index ) {
-            var slider = $('#' + $(this).attr('name'));
-            var value = $('#' + $(this).attr('name') + '-value');
-
-            value.val(slider.val());
-            slider.on('change', function () {
-                value.val($(this).val());
-            });
-        });
     });
 </script>

@@ -21,24 +21,6 @@ if ( ! function_exists( 'mostrar_pacientes_shortcode' ) ) {
         global $wpdb;
         $id = $_POST['id'];
         $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
-        $table_contactos = $wpdb->prefix . "expedientes_personas_contacto";
-        $table_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
-        $table_sustancias = $wpdb->prefix . "expedientes_psicotropicos";
-        $wpdb->delete(
-            $table_sustancias,
-            [ 'paciente' => $id ],
-            [ '%d' ]
-        );
-        $wpdb->delete(
-            $table_riesgos,
-            [ 'paciente' => $id ],
-            [ '%d' ]
-        );
-        $wpdb->delete(
-            $table_contactos,
-            [ 'paciente' => $id ],
-            [ '%d' ]
-        );
         $wpdb->delete(
             $table_pacientes,
             [ 'id' => $id ],
