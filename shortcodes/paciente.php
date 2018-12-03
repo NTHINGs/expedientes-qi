@@ -15,6 +15,39 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
 		add_shortcode( 'paciente', 'paciente_shortcode' );
     });
 
+    add_action( 'wp_ajax_nopriv_expedientes_eliminar_nota_progreso', 'expedientes_eliminar_nota_progreso' );
+    add_action( 'wp_ajax_expedientes_eliminar_nota_progreso', 'expedientes_eliminar_nota_progreso' );
+
+    function expedientes_eliminar_nota_progreso() {
+        global $wpdb;
+        $id = $_POST['id'];
+        $table_notas_progreso = $wpdb->prefix . "expedientes_notas_progreso";
+        $wpdb->delete(
+            $table_notas_progreso,
+            [ 'id' => $id ],
+            [ '%d' ]
+        );
+        echo 'ok';
+        die();
+    }
+    add_action( 'wp_ajax_nopriv_expedientes_eliminar_archivo_adjunto', 'expedientes_eliminar_archivo_adjunto' );
+    add_action( 'wp_ajax_expedientes_eliminar_archivo_adjunto', 'expedientes_eliminar_archivo_adjunto' );
+
+    function expedientes_eliminar_archivo_adjunto() {
+        global $wpdb;
+        $path = $_POST['path'];
+        $id = $_POST['id'];
+        $table_archivos_adjuntos = $wpdb->prefix . "expedientes_archivos_adjuntos";
+        $wpdb->delete(
+            $table_archivos_adjuntos,
+            [ 'id' => $id ],
+            [ '%d' ]
+        );
+        unlink(get_home_path() . $path);
+        echo 'ok';
+        die();
+    }
+    
 	/**
 	 * imprimir-expediente shortcode.
 	 *
@@ -49,6 +82,8 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             $table_sustancias = $wpdb->prefix . "expedientes_psicotropicos";
             $table_name_esquema_fases = $wpdb->prefix . "expedientes_esquema_fases";
             $table_name_fad = $wpdb->prefix . "expedientes_fad";
+            $table_notas_progreso = $wpdb->prefix . "expedientes_notas_progreso";
+            $table_archivos_adjuntos = $wpdb->prefix . "expedientes_archivos_adjuntos";
 
             $paciente = $wpdb->get_results(
                 "SELECT * FROM $table_pacientes WHERE id = '{$paciente_id}'", 
@@ -80,16 +115,25 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                     "SELECT * FROM $table_name_fad WHERE paciente = '{$paciente_id}'", 
                     'ARRAY_A'
                 )[0];
+                $paciente['notas_progreso'] = $wpdb->get_results(
+                    "SELECT * FROM $table_notas_progreso WHERE paciente = '{$paciente_id}'",
+                    'ARRAY_A'
+                );
+                $paciente['archivos_adjuntos'] = $wpdb->get_results(
+                    "SELECT * FROM $table_archivos_adjuntos WHERE paciente = '{$paciente_id}'",
+                    'ARRAY_A'
+                );
             } else {
                 $paciente = array('error' => true);
             }
         }
-        $variables = array("%CURRENT_USER%", "%REQUEST_URI%", "%PACIENTE%", "%RAND%");
-        $values = array($responsable, esc_url( $_SERVER['REQUEST_URI'] ), json_encode($paciente), rand());
+        $variables = array("%CURRENT_USER%", "%REQUEST_URI%", "%PACIENTE%", "%RAND%", "%AJAX_URL%");
+        $values = array($responsable, esc_url( $_SERVER['REQUEST_URI'] ), json_encode($paciente), rand(), admin_url( 'admin-ajax.php' ));
         echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/paciente.html" ));
     }
 
     function guardar_paciente($paciente_id) {
+        $error = false;
         if ( !function_exists( 'wp_handle_upload' ) ){
             require_once( ABSPATH . 'wp-admin/includes/file.php' );
         }
@@ -103,6 +147,8 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
         $table_name_psicotropicos = $wpdb->prefix . "expedientes_psicotropicos";
         $table_name_esquema_fases = $wpdb->prefix . "expedientes_esquema_fases";
         $table_name_fad = $wpdb->prefix . "expedientes_fad";
+        $table_notas_progreso = $wpdb->prefix . "expedientes_notas_progreso";
+        $table_archivos_adjuntos = $wpdb->prefix . "expedientes_archivos_adjuntos";
         // Nuevo Paciente
         if ($_FILES['fotografia']['size'] > 0 && $_FILES['fotografia']['error'] == 0) {
             // Se subio una foto
@@ -118,6 +164,7 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                  * @see _wp_handle_upload() in wp-admin/includes/file.php
                  */
                 echo $movefile['error'];
+                $error = true;
             }
         } else {
             // No se subio una foto
@@ -412,41 +459,94 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             }
         }
 
-        $values_fad = array(
-            'solucion_problemas'           => $_POST['solucion_problemas'],
-            'comunicacion'                 => $_POST['comunicacion'],
-            'respuesta_afectiva'           => $_POST['respuesta_afectiva'],
-            'involucramiento_afectivo'     => $_POST['involucramiento_afectivo'],
-            'control_del_comportamiento'   => $_POST['control_del_comportamiento'],
-            'funcionamiento_general'       => $_POST['funcionamiento_general'],
-            'interpretacion_general'       => $_POST['interpretacion_general'],
-            'paciente'                     => $paciente_id,
-        );
-        if ($_POST['editmode'] != '1') {
-            $wpdb->insert( $table_name_fad, $values_fad, array(
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
+        if(!empty($_POST['solucion_problemas'])) {
+            $values_fad = array(
+                'solucion_problemas'           => $_POST['solucion_problemas'],
+                'comunicacion'                 => $_POST['comunicacion'],
+                'respuesta_afectiva'           => $_POST['respuesta_afectiva'],
+                'involucramiento_afectivo'     => $_POST['involucramiento_afectivo'],
+                'control_del_comportamiento'   => $_POST['control_del_comportamiento'],
+                'funcionamiento_general'       => $_POST['funcionamiento_general'],
+                'interpretacion_general'       => $_POST['interpretacion_general'],
+                'paciente'                     => $paciente_id,
+            );
+            if ($_POST['editmode'] != '1') {
+                $wpdb->insert( $table_name_fad, $values_fad, array(
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%d',
+                ));
+            } else {
+                $wpdb->update( $table_name_fad, $values_fad, array('paciente' => $paciente_id ), array(
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%d',
+                ), '%d');
+            }
+        }
+
+        if(!empty($_POST['nota_progreso'])) {
+            $values_notas = array(
+                'nota_progreso'                => $_POST['nota_progreso'],
+                'fecha'                        => current_time( 'mysql' ),
+                'paciente'                     => $paciente_id,
+            );
+            $wpdb->insert( $table_notas_progreso, $values_notas, array(
                 '%s',
                 '%s',
                 '%d',
             ));
-        } else {
-            $wpdb->update( $table_name_fad, $values_fad, array('paciente' => $paciente_id ), array(
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-            ), '%d');
         }
 
-        echo $_POST['nombre'] . ' guardado correctamente.<br><br><a href="/paciente/?paciente=' . $paciente_id . '">Ver</a><br><br><a href="/pacientes">Ver Todos Los Pacientes</a>';
+        // echo print_r($_FILES['archivos']);
+        // if ($_FILES['archivos']['size'] > 0 && $_FILES['archivos']['error'] == 0) {
+            foreach ($_FILES['archivos']['name'] as $key => $value) {
+                if ($_FILES['archivos']['name'][$key]) {
+                    $file = array(
+                        'name'     => $_FILES['archivos']['name'][$key],
+                        'type'     => $_FILES['archivos']['type'][$key],
+                        'tmp_name' => $_FILES['archivos']['tmp_name'][$key],
+                        'error'    => $_FILES['archivos']['error'][$key],
+                        'size'     => $_FILES['archivos']['size'][$key]
+                    );
+                    $movefile = wp_handle_upload($file, array('test_form' => FALSE));
+                    if ( $movefile && ! isset( $movefile['error'] ) ) {
+                        $url = parse_url($movefile['url'])['path'];
+                        $values_archivos_adjuntos = array(
+                            'nombre'                       => $file['name'],
+                            'archivo_adjunto'              => $url,
+                            'fecha'                        => current_time( 'mysql' ),
+                            'paciente'                     => $paciente_id,
+                        );
+                        $wpdb->insert( $table_archivos_adjuntos, $values_archivos_adjuntos, array(
+                            '%s',
+                            '%s',
+                            '%s',
+                            '%d',
+                        ));
+                    } else {
+                        echo $movefile['error'];
+                        $error = true;
+                    }
+                }
+            }
+        // }
+
+        if ($error != true) {
+            echo $_POST['nombre'] . ' guardado correctamente.<br><br><a href="/paciente/?paciente=' . $paciente_id . '">Ver</a><br><br><a href="/pacientes">Ver Todos Los Pacientes</a>';
+        } else {
+            echo '<br><br><a href="/paciente/?paciente=' . $paciente_id . '">Ver</a><br><br><a href="/pacientes">Ver Todos Los Pacientes</a>';
+        }
     }
 
     function fases_procesar($array, $extras) {

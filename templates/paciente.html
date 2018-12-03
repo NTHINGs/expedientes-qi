@@ -19,6 +19,10 @@
                     aria-controls="nav-fases" aria-selected="false">Fases</a>
                 <a class="nav-item nav-link" id="nav-fad-tab" data-toggle="tab" href="#nav-fad" role="tab"
                     aria-controls="nav-fad" aria-selected="false">FAD</a>
+                <a class="nav-item nav-link" id="nav-notas-tab" data-toggle="tab" href="#nav-notas" role="tab"
+                    aria-controls="nav-notas" aria-selected="false">Notas de Progreso</a>
+                <a class="nav-item nav-link" id="nav-archivos-adjuntos-tab" data-toggle="tab" href="#nav-archivos-adjuntos" role="tab"
+                    aria-controls="nav-archivos-adjuntos" aria-selected="false">Archivos Adjuntos</a>
             </div>
         </nav>
         <div class="col-12">
@@ -587,6 +591,48 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane fade" id="nav-notas" role="tabpanel" aria-labelledby="nav-notas-tab">
+                        <div class="container" id="notas-progreso">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Notas de Progreso</h3>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <div class="form-group col-12">
+                                        <label for="nota_progreso">Nueva Nota de Progreso</label>
+                                        <textarea class="form-control" rows="3" id="nota_progreso" name="nota_progreso"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <div class="col-12">
+                                        <h4>Notas de Progreso Anteriores</h4>
+                                    </div>
+                                    <div id="notas-anteriores" class="container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-archivos-adjuntos" role="tabpanel" aria-labelledby="nav-archivos-adjuntos-tab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Archivos Adjuntos</h3>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <div class="form-group col-12">
+                                        <label for="archivos">Nuevo Archivo Adjunto</label>
+                                        <input type="file" class="form-control" name="archivos[]" id="archivos" multiple>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <div class="col-12">
+                                        <h4>Archivos Adjuntos Guardados</h4>
+                                    </div>
+                                    <div id="archivos-anteriores" class="container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-12">
                     <input type="hidden" id="editmode" name="editmode">
@@ -600,16 +646,75 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="notaProgreso" tabindex="-1" role="dialog" aria-labelledby="notaProgresoTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notaProgresoTitle">Nota de Progreso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+             <p id="nota-body"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="eliminarNota" tabindex="-1" role="dialog" aria-labelledby="eliminarNotaTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarNotaTitle">Confirmación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de querer eliminar ésta nota de progreso?</p>
+                <input type="hidden" id="nota_id">
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="eliminar-nota-btn" class="btn btn-danger">Eliminar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="eliminarArchivo" tabindex="-1" role="dialog" aria-labelledby="eliminarArchivoTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarArchivoTitle">Confirmación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de querer eliminar éste archivo adjunto?</p>
+                <input type="hidden" id="archivo_path">
+                <input type="hidden" id="archivo_id">
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="eliminar-archivo-btn" class="btn btn-danger">Eliminar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     jQuery(document).ready(function ($) {
         var contactos_delete = [];
         var sustancias_delete = [];
         $(document).on('contactos_delete', function (event) {
-            console.log(contactos_delete);
             $('#contactos-delete').val(contactos_delete.join(','));
         });
         $(document).on('sustancias_delete', function (event) {
-            console.log(sustancias_delete);
             $('#sustancias-delete').val(sustancias_delete.join(','));
         });
         $('#fechadenacimiento').datepicker({
@@ -952,6 +1057,71 @@
             });
         });
 
+        var reload = false;
+
+        $('#notaProgreso').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var nota = button.data('nota');
+            $('#nota-body').html(nota);
+        });
+    
+        $('#eliminarNota').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            $('#nota_id').val(id);
+        });
+
+        $('#eliminar-nota-btn').click(function(event) {
+            $.ajax({
+                url : '%AJAX_URL%',
+                type : 'post',
+                data : {
+                    action : 'expedientes_eliminar_nota_progreso',
+                    id : $('#nota_id').val()
+                },
+                success : function( response ) {
+                    reload = true;
+                    $('#eliminarNota').modal('hide');
+                }
+            });
+        });
+
+        $('#eliminarNota').on('hidden.bs.modal', function (event) {
+            if(reload) {
+                location.reload(true);
+            }
+        });
+
+        $('#eliminarArchivo').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var path = button.data('path');
+            $('#archivo_id').val(id);
+            $('#archivo_path').val(path);
+        });
+
+        $('#eliminarArchivo').on('hidden.bs.modal', function (event) {
+            if(reload) {
+                location.reload(true);
+            }
+        });
+
+        $('#eliminar-archivo-btn').click(function(event) {
+            $.ajax({
+                url : '%AJAX_URL%',
+                type : 'post',
+                data : {
+                    action : 'expedientes_eliminar_archivo_adjunto',
+                    path : $('#archivo_path').val(),
+                    id: $('#archivo_id').val()
+                },
+                success : function( response ) {
+                    reload = true;
+                    $('#eliminarArchivo').modal('hide');
+                }
+            });
+        });
+
         var paciente = null;
         try {
             paciente = JSON.parse('%PACIENTE%');
@@ -1052,6 +1222,42 @@
                 for (var key of Object.keys(paciente.fad)) {
                     $('#' + key).val(paciente.fad[key]);
                 }
+            }
+
+            //Llenar Notas de progreso
+            if (paciente.notas_progreso) {
+                paciente.notas_progreso.forEach(function (nota_progreso, index) {
+                    var nota = '<div class="row">\
+                        <div class="col-sm-4 col-12">\
+                            <p>' + nota_progreso.fecha + '</p>\
+                        </div>\
+                        <div class="col-sm-4 col-6">\
+                            <button type="button" class="btn btn-info" id="ver-nota' + index + '" data-toggle="modal" data-target="#notaProgreso" data-nota="' + nota_progreso.nota_progreso + '">Ver Nota</button>\
+                        </div>\
+                        <div class="col-sm-4 col-6">\
+                            <button type="button" class="btn btn-danger" id="eliminar-nota' + index + '" data-toggle="modal" data-target="#eliminarNota" data-id="' + nota_progreso.id + '">Eliminar Nota</button>\
+                        </div>\
+                    </div>';
+                    $('#notas-anteriores').append(nota);
+                });
+            }
+
+            //Llenar Archivos adjuntos
+            if (paciente.archivos_adjuntos) {
+                paciente.archivos_adjuntos.forEach(function (archivo_adjunto, index) {
+                    var archivo = '<div class="row">\
+                        <div class="col-sm-4 col-12">\
+                            <p>' + archivo_adjunto.nombre + '</p>\
+                        </div>\
+                        <div class="col-sm-4 col-6">\
+                            <a href="' + archivo_adjunto.archivo_adjunto + '" target="_blank" class="btn btn-info">Descargar Archivo</a>\
+                        </div>\
+                        <div class="col-sm-4 col-6">\
+                            <button type="button" class="btn btn-danger" id="eliminar-archivo' + index + '" data-toggle="modal" data-target="#eliminarArchivo" data-path="' + archivo_adjunto.archivo_adjunto + '" data-id="' + archivo_adjunto.id + '">Eliminar Archivo</button>\
+                        </div>\
+                    </div>';
+                    $('#archivos-anteriores').append(archivo);
+                });
             }
 
         } else if (paciente && paciente['error']) {
