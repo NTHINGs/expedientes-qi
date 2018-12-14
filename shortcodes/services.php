@@ -5,7 +5,20 @@
  * @package	 expedientes-qi
  * @since    1.0.1
  */
-
+function array_flatten($array) { 
+    if (!is_array($array)) { 
+      return false; 
+    } 
+    $result = array(); 
+    foreach ($array as $key => $value) { 
+      if (is_array($value)) { 
+        $result = array_merge($result, array_flatten($value)); 
+      } else { 
+        $result[$key] = $value; 
+      } 
+    } 
+    return $result; 
+  }
 //  Servicio para reporte de todos los pacientes
 if ( ! function_exists( 'expedientes_reporte_pacientes' ) ) {
     add_action( 'wp_ajax_nopriv_expedientes_reporte_pacientes', 'expedientes_reporte_pacientes' );
@@ -17,7 +30,7 @@ if ( ! function_exists( 'expedientes_reporte_pacientes' ) ) {
         $table_responsables = $wpdb->prefix . "expedientes_responsables";
         $current_user = wp_get_current_user();
         $isAdmin = current_user_can('expedientes') && current_user_can('expedientes_admin');
-        $sql = "SELECT $table_pacientes.* FROM $table_pacientes, $table_responsables WHERE $table_responsables.paciente=$table_pacientes.id AND $table_responsables.responsable = '{$current_user->display_name}'";
+        $sql = "SELECT $table_pacientes.* FROM $table_pacientes, $table_responsables WHERE $table_responsables.paciente=$table_pacientes.id AND $table_responsables.responsable = '{$current_user->user_login}'";
         if ($isAdmin == true) {
             $sql = "SELECT * FROM $table_pacientes";
         } 
@@ -25,6 +38,27 @@ if ( ! function_exists( 'expedientes_reporte_pacientes' ) ) {
             $sql, 
             'ARRAY_A'
         );
+
+        foreach( $pacientes as $key => $value) {
+            $id = $pacientes[$key]['id'];
+            $responsables = $wpdb->get_results(
+                "SELECT responsable FROM $table_responsables WHERE paciente = $id", 
+                'ARRAY_N'
+            );
+            $usuarios = array();
+            $responsables = array_flatten($responsables);
+            foreach( $responsables as $key_responsable => $responsable) {
+                $query = new WP_User_Query( 
+                    array(
+                        'search'         => '*'.esc_attr( $responsable ).'*',
+                        'search_columns' => array( 'user_login', 'user_nicename' )
+                    )
+                );
+                $usuario = $query->get_results()[0];
+                array_push($usuarios, get_user_meta($usuario->ID, 'first_name', true) . ' ' . get_user_meta($usuario->ID, 'last_name', true));
+            }
+            $pacientes[$key]['responsables'] = implode('<br/>', $usuarios);
+        }
 		
 		wp_send_json($pacientes);
     }
@@ -114,7 +148,7 @@ if ( ! function_exists( 'expedientes_get_responsables' ) ) {
         $query = new WP_User_Query( 
             array(
                 'search'         => '*'.esc_attr( $search ).'*',
-                'search_columns' => array( 'display_name', 'user_nicename' )
+                'search_columns' => array( 'user_login', 'user_nicename' )
             )
         );
 
@@ -140,8 +174,8 @@ if ( ! function_exists( 'expedientes_get_responsables' ) ) {
         $data = array();
         $index = 0;
         foreach ( array_unique($results, SORT_REGULAR) as $user ) {
-            $data[$index]['Value'] = $user->display_name;
-            $data[$index]['Label'] = $user->display_name . ' - ' . get_user_meta($user->ID, 'first_name', true) . ' ' . get_user_meta($user->ID, 'last_name', true);
+            $data[$index]['Value'] = $user->user_login;
+            $data[$index]['Label'] = $user->user_login . ' - ' . get_user_meta($user->ID, 'first_name', true) . ' ' . get_user_meta($user->ID, 'last_name', true);
             $index++;
         }
         wp_send_json($data);

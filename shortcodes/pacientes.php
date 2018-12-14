@@ -33,7 +33,7 @@ if ( ! function_exists( 'mostrar_pacientes_shortcode' ) ) {
         $current_user = wp_get_current_user();
 
         $isAdmin = current_user_can('expedientes') && current_user_can('expedientes_admin');
-        $sql = "SELECT $table_pacientes.* FROM $table_pacientes, $table_responsables WHERE $table_responsables.paciente=$table_pacientes.id AND $table_responsables.responsable = '{$current_user->display_name}'";
+        $sql = "SELECT $table_pacientes.* FROM $table_pacientes, $table_responsables WHERE $table_responsables.paciente=$table_pacientes.id AND $table_responsables.responsable = '{$current_user->user_login}'";
         if ($isAdmin == true) {
             $sql = "SELECT * FROM $table_pacientes";
         } 

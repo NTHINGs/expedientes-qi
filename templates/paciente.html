@@ -104,7 +104,12 @@
                                 </div>
                                 <div class="form-group col-12">
                                     <table id="responsables" class="table table-responsive">
-                                        <th>Responsables</th>
+                                        <thead>
+                                            <th>Responsables</th>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
                                     </table>
                                 </div>
                                 <div class="form-group col-12">
@@ -859,7 +864,9 @@
                 responsables_delete.push(id);
                 $(document).trigger('responsables_delete');
             }
+            console.log(responsables);
             responsables.splice(responsablePos($('#responsable-value' + index).html()), 1);
+            console.log(responsables);
             $('#responsable-' + index).remove();
         }
 
@@ -1299,6 +1306,7 @@
         });
 
         function fillResponsables() {
+            $('#responsables tbody').empty();
             responsables.forEach(function (obj, index) {
                 var row = '<tr id="responsable-' + index + '">\
                     <td>\
@@ -1312,14 +1320,14 @@
                     row += '<td>\
                         <button type="button" class="btn btn-danger" id="eliminar-responsable' + index + '" data-i="' + index + '">Eliminar Responsable</button>\
                     </td>';
-                    $('#eliminar-responsable' + index).on('click', function () {
-                        var index = $(this).data("i");
-                        eliminarResponsable(index);
-                    });
                 }
                 row += '</tr>';
-
+                
                 $('#responsables tbody').append(row);
+                $('#eliminar-responsable' + index).on('click', function () {
+                    var index = $(this).data("i");
+                    eliminarResponsable(index);
+                });
 
             });
         }

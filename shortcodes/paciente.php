@@ -103,7 +103,7 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
         }
         $current_user = wp_get_current_user();
         $variables = array("%IS_ADMIN%", "%REQUEST_URI%", "%PACIENTE%", "%RAND%", "%AJAX_URL%", "%CURRENT_USER%");
-        $values = array(current_user_can('expedientes_admin'), esc_url( $_SERVER['REQUEST_URI'] ), json_encode($paciente), rand(), admin_url( 'admin-ajax.php' ), $current_user->display_name);
+        $values = array(current_user_can('expedientes_admin'), esc_url( $_SERVER['REQUEST_URI'] ), json_encode($paciente), rand(), admin_url( 'admin-ajax.php' ), $current_user->user_login);
         echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/paciente.html" ));
     }
 
