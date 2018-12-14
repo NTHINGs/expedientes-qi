@@ -26,11 +26,21 @@ if ( ! function_exists( 'imprimir_expediente_shortcode' ) ) {
 		// Get mode
         $_atts = shortcode_atts( array(
 			'mode'  => 'default',
+			'paciente_id' => null,
 		), $atts );
 
 		// Query for patient
 		global $wpdb;
-		$result = $wpdb->get_results('SELECT * FROM wp_participants_database WHERE id = ' . $_GET['pdb']);
+		$table_pacientes = $wpdb->prefix . "expedientes_pacientes";
+		$table_contactos = $wpdb->prefix . "expedientes_personas_contacto";
+		$table_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
+		$table_sustancias = $wpdb->prefix . "expedientes_psicotropicos";
+		$table_name_esquema_fases = $wpdb->prefix . "expedientes_esquema_fases";
+		$table_name_fad = $wpdb->prefix . "expedientes_fad";
+		$table_notas_progreso = $wpdb->prefix . "expedientes_notas_progreso";
+		$table_archivos_adjuntos = $wpdb->prefix . "expedientes_archivos_adjuntos";
+
+		$result = $wpdb->get_results("SELECT * FROM $table_pacientes WHERE id = {$_atts['paciente_id']}", 'ARRAY_A');
 		
 		// Escape quotes from json
 		$patient = base64_encode(json_encode($result));

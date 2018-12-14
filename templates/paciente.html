@@ -1,6 +1,9 @@
 <!-- PHP VARIABLES -->
-<!-- %CURRENT_USER% = Usuario Loggeado -->
-<!-- REQUEST_URI = URL para guardar al paciente -->
+<!-- %IS_ADMIN% = Usuario Es Admin -->
+<!-- %REQUEST_URI% = URL para guardar al paciente -->
+<!-- %PACIENTE% = Objeto del paciente existente -->
+<!-- %RAND% = Hash para prevenir volver a hacer POST al actualizar -->
+<!-- %AJAX_URL% = Url para llamadas AJAX -->
 <h1 class="entry-title" id="nombre_title"></h1>
 <h1 class="entry-title" id="error_title"></h1>
 <div class="container">
@@ -11,6 +14,9 @@
                     role="tab" aria-controls="nav-informacion-personal" aria-selected="true">Información Personal</a>
                 <a class="nav-item nav-link" id="nav-contactos-tab" data-toggle="tab" href="#nav-contactos" role="tab"
                     aria-controls="nav-contactos" aria-selected="false">Personas De Contacto</a>
+                <a class="nav-item nav-link" id="nav-evaluaciones-psicologicas-tab" data-toggle="tab" href="#nav-evaluaciones-psicologicas"
+                    role="tab" aria-controls="nav-evaluaciones-psicologicas" aria-selected="false">Evaluaciones
+                    Psicológicas</a>
                 <a class="nav-item nav-link" id="nav-riesgos-psicosociales-tab" data-toggle="tab" href="#nav-riesgos-psicosociales"
                     role="tab" aria-controls="nav-riesgos-psicosociales" aria-selected="false">Riesgos Psicosociales</a>
                 <a class="nav-item nav-link" id="nav-psicotropicos-tab" data-toggle="tab" href="#nav-psicotropicos"
@@ -21,8 +27,8 @@
                     aria-controls="nav-fad" aria-selected="false">FAD</a>
                 <a class="nav-item nav-link" id="nav-notas-tab" data-toggle="tab" href="#nav-notas" role="tab"
                     aria-controls="nav-notas" aria-selected="false">Notas de Progreso</a>
-                <a class="nav-item nav-link" id="nav-archivos-adjuntos-tab" data-toggle="tab" href="#nav-archivos-adjuntos" role="tab"
-                    aria-controls="nav-archivos-adjuntos" aria-selected="false">Archivos Adjuntos</a>
+                <a class="nav-item nav-link" id="nav-archivos-adjuntos-tab" data-toggle="tab" href="#nav-archivos-adjuntos"
+                    role="tab" aria-controls="nav-archivos-adjuntos" aria-selected="false">Archivos Adjuntos</a>
             </div>
         </nav>
         <div class="col-12">
@@ -97,9 +103,13 @@
                                     <textarea class="form-control" id="alergias" name="alergias"></textarea>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="responsable">Responsable</label>
-                                    <input type="text" class="form-control" id="responsable" name="responsable" value="%CURRENT_USER%"
-                                        readonly>
+                                    <table id="responsables" class="table table-responsive">
+                                        <th>Responsables</th>
+                                    </table>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label id="responsable-label" for="responsable">Agregar Responsable</label>
+                                    <input type="text" class="form-control" id="responsable">
                                 </div>
                             </div>
                         </div>
@@ -108,6 +118,27 @@
                         <div id="contactos" class="container-fluid"></div>
                         <div class="col-12">
                             <button type="button" class="btn btn-success" id="agregar-contacto">Agregar Otro Contacto</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-evaluaciones-psicologicas" role="tabpanel" aria-labelledby="nav-evaluaciones-psicologicas-tab">
+                        <div class="container" id="evaluaciones-psicologicas">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Evaluaciones Psicológicas</h3>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <div class="form-group col-12">
+                                        <label for="evaluacion_psicologica">Nueva Evaluación Psicológica</label>
+                                        <textarea class="form-control" rows="3" id="evaluacion_psicologica" name="evaluacion_psicologica"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <div class="col-12">
+                                        <h4>Evaluaciones Psicológicas Anteriores</h4>
+                                    </div>
+                                    <div id="evaluaciones-psicologicas-anteriores" class="container"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-riesgos-psicosociales" role="tabpanel" aria-labelledby="nav-riesgos-psicosociales-tab">
@@ -621,7 +652,8 @@
                                 <div class="col-sm-6 col-12">
                                     <div class="form-group col-12">
                                         <label for="archivos">Nuevo Archivo Adjunto</label>
-                                        <input type="file" class="form-control" name="archivos[]" id="archivos" multiple>
+                                        <input type="file" class="form-control" name="archivos[]" id="archivos"
+                                            multiple>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-12">
@@ -639,6 +671,7 @@
                     <input type="hidden" value="%RAND%" name="randcheck" />
                     <input type="hidden" id="contactos-delete" name="contactos_delete" />
                     <input type="hidden" id="sustancias-delete" name="sustancias_delete" />
+                    <input type="hidden" id="responsables-delete" name="responsables_delete" />
                     <button type="submit" class="btn btn-primary" name="submitted">Guardar</button>
                 </div>
             </form>
@@ -657,7 +690,26 @@
                 </button>
             </div>
             <div class="modal-body">
-             <p id="nota-body"></p>
+                <p id="nota-body"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="evaluacionPsicologica" tabindex="-1" role="dialog" aria-labelledby="evaluacionPsicologicaTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="evaluacionPsicologicaTitle">Evaluación Psicológica</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="evaluacion-psicologica-body"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -685,7 +737,51 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="eliminarArchivo" tabindex="-1" role="dialog" aria-labelledby="eliminarArchivoTitle" aria-hidden="true">
+<div class="modal fade" id="eliminarArchivo" tabindex="-1" role="dialog" aria-labelledby="eliminarArchivoTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarArchivoTitle">Confirmación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de querer eliminar éste archivo adjunto?</p>
+                <input type="hidden" id="archivo_path">
+                <input type="hidden" id="archivo_id">
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="eliminar-archivo-btn" class="btn btn-danger">Eliminar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="eliminarEvaluacionPsicologica" tabindex="-1" role="dialog" aria-labelledby="eliminarEvaluacionPsicologicaTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarEvaluacionPsicologicaTitle">Confirmación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de querer eliminar ésta evaluación psicológica?</p>
+                <input type="hidden" id="evaluacion_id">
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="eliminar-evaluacion-psicologica-btn" class="btn btn-danger">Eliminar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="eliminarArchivo" tabindex="-1" role="dialog" aria-labelledby="eliminarArchivoTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -709,6 +805,10 @@
 
 <script>
     jQuery(document).ready(function ($) {
+        var responsables = [];
+        var responsables_delete = [];
+        var isAdmin = !!+"%IS_ADMIN%";
+
         var contactos_delete = [];
         var sustancias_delete = [];
         $(document).on('contactos_delete', function (event) {
@@ -716,6 +816,9 @@
         });
         $(document).on('sustancias_delete', function (event) {
             $('#sustancias-delete').val(sustancias_delete.join(','));
+        });
+        $(document).on('responsables_delete', function (event) {
+            $('#responsables-delete').val(responsables_delete.join(','));
         });
         $('#fechadenacimiento').datepicker({
             uiLibrary: 'bootstrap4',
@@ -729,6 +832,46 @@
 
             $('#edad').val(edad);
             $('#edad-span').html(edad);
+        });
+
+        // Responsables
+        AutoComplete({
+            HttpMethod: "POST",
+            QueryArg: "search",
+            Url: "%AJAX_URL%",
+            _Select: function (item) {
+                const selected = $(item).data('autocomplete-value');
+                if (responsablePos(selected) === -1) {
+                    responsables.push({ responsable: selected });
+
+                    fillResponsables();
+                    $('#responsable').val('');
+                }
+            },
+            _EmptyMessage: function () {
+                return "No hay usuarios para la búsqueda";
+            }
+        }, '#responsable');
+
+        function eliminarResponsable(index) {
+            var id = $('#responsable-id' + index).val();
+            if (id) {
+                responsables_delete.push(id);
+                $(document).trigger('responsables_delete');
+            }
+            responsables.splice(responsablePos($('#responsable-value' + index).html()), 1);
+            $('#responsable-' + index).remove();
+        }
+
+        function responsablePos(responsable) {
+            return responsables.map(function (obj) { return obj.responsable; }).indexOf(responsable);
+        }
+
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
         });
 
         var contador_contactos = 0;
@@ -1064,22 +1207,22 @@
             var nota = button.data('nota');
             $('#nota-body').html(nota);
         });
-    
+
         $('#eliminarNota').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var id = button.data('id');
             $('#nota_id').val(id);
         });
 
-        $('#eliminar-nota-btn').click(function(event) {
+        $('#eliminar-nota-btn').click(function (event) {
             $.ajax({
-                url : '%AJAX_URL%',
-                type : 'post',
-                data : {
-                    action : 'expedientes_eliminar_nota_progreso',
-                    id : $('#nota_id').val()
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    action: 'expedientes_eliminar_nota_progreso',
+                    id: $('#nota_id').val()
                 },
-                success : function( response ) {
+                success: function (response) {
                     reload = true;
                     $('#eliminarNota').modal('hide');
                 }
@@ -1087,7 +1230,40 @@
         });
 
         $('#eliminarNota').on('hidden.bs.modal', function (event) {
-            if(reload) {
+            if (reload) {
+                location.reload(true);
+            }
+        });
+
+        $('#evaluacionPsicologica').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var evaluacion = button.data('evaluacion');
+            $('#evaluacion-psicologica-body').html(evaluacion);
+        });
+
+        $('#eliminarEvaluacionPsicologica').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            $('#evaluacion_id').val(id);
+        });
+
+        $('#eliminar-evaluacion-psicologica-btn').click(function (event) {
+            $.ajax({
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    action: 'expedientes_eliminar_evaluacion_psicologica',
+                    id: $('#evaluacion_id').val()
+                },
+                success: function (response) {
+                    reload = true;
+                    $('#eliminarEvaluacionPsicologica').modal('hide');
+                }
+            });
+        });
+
+        $('#eliminarEvaluacionPsicologica').on('hidden.bs.modal', function (event) {
+            if (reload) {
                 location.reload(true);
             }
         });
@@ -1101,26 +1277,52 @@
         });
 
         $('#eliminarArchivo').on('hidden.bs.modal', function (event) {
-            if(reload) {
+            if (reload) {
                 location.reload(true);
             }
         });
 
-        $('#eliminar-archivo-btn').click(function(event) {
+        $('#eliminar-archivo-btn').click(function (event) {
             $.ajax({
-                url : '%AJAX_URL%',
-                type : 'post',
-                data : {
-                    action : 'expedientes_eliminar_archivo_adjunto',
-                    path : $('#archivo_path').val(),
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    action: 'expedientes_eliminar_archivo_adjunto',
+                    path: $('#archivo_path').val(),
                     id: $('#archivo_id').val()
                 },
-                success : function( response ) {
+                success: function (response) {
                     reload = true;
                     $('#eliminarArchivo').modal('hide');
                 }
             });
         });
+
+        function fillResponsables() {
+            responsables.forEach(function (obj, index) {
+                var row = '<tr id="responsable-' + index + '">\
+                    <td>\
+                        <span id="responsable-value' + index + '">' + obj.responsable + '</span>\
+                        <input type="hidden" name="responsables[]" value="' + obj.responsable + '">';
+                if (obj.id) {
+                    row += '<input type="hidden" id="responsable-id' + index + '" value="' + obj.id + '" name="id-responsables[]">';
+                }
+                row += '</td>';
+                if (isAdmin) {
+                    row += '<td>\
+                        <button type="button" class="btn btn-danger" id="eliminar-responsable' + index + '" data-i="' + index + '">Eliminar Responsable</button>\
+                    </td>';
+                    $('#eliminar-responsable' + index).on('click', function () {
+                        var index = $(this).data("i");
+                        eliminarResponsable(index);
+                    });
+                }
+                row += '</tr>';
+
+                $('#responsables tbody').append(row);
+
+            });
+        }
 
         var paciente = null;
         try {
@@ -1129,7 +1331,6 @@
             console.error(e);
         }
 
-        console.log(paciente);
         if (paciente && !paciente['error']) {
             $('#editmode').val('1');
             // Titulo
@@ -1241,6 +1442,23 @@
                     $('#notas-anteriores').append(nota);
                 });
             }
+            //Llenar Evaluaciones Psicologicas
+            if (paciente.evaluaciones_psicologicas) {
+                paciente.evaluaciones_psicologicas.forEach(function (evaluacion_psicologica, index) {
+                    var nota = '<div class="row">\
+                        <div class="col-sm-4 col-12">\
+                            <p>' + evaluacion_psicologica.fecha + '</p>\
+                        </div>\
+                        <div class="col-sm-4 col-6">\
+                            <button type="button" class="btn btn-info" id="ver-evaluacion-psicologica' + index + '" data-toggle="modal" data-target="#evaluacionPsicologica" data-evaluacion="' + evaluacion_psicologica.evaluacion_psicologica + '">Ver Evaluación</button>\
+                        </div>\
+                        <div class="col-sm-4 col-6">\
+                            <button type="button" class="btn btn-danger" id="eliminar-evaluacion-psicologica' + index + '" data-toggle="modal" data-target="#eliminarEvaluacionPsicologica" data-id="' + evaluacion_psicologica.id + '">Eliminar Evaluación</button>\
+                        </div>\
+                    </div>';
+                    $('#evaluaciones-psicologicas-anteriores').append(nota);
+                });
+            }
 
             //Llenar Archivos adjuntos
             if (paciente.archivos_adjuntos) {
@@ -1258,6 +1476,21 @@
                     </div>';
                     $('#archivos-anteriores').append(archivo);
                 });
+            }
+
+            if (paciente.responsables) {
+                responsables = paciente.responsables;
+                if (!isAdmin) {
+                    $('#responsable').remove();
+                    $('#responsable-label').remove();
+                    var current_user = "%CURRENT_USER%"
+                    if (current_user.length && responsablePos(current_user) === -1) {
+                        responsables.push({ responsable: current_user });
+
+                        fillResponsables();
+                    }
+                }
+                fillResponsables();
             }
 
         } else if (paciente && paciente['error']) {

@@ -13,22 +13,6 @@ if ( ! function_exists( 'mostrar_pacientes_shortcode' ) ) {
 		// Add the shortcode.
 		add_shortcode( 'mostrar-pacientes', 'mostrar_pacientes_shortcode' );
     });
-    
-    add_action( 'wp_ajax_nopriv_expedientes_eliminar_paciente', 'expedientes_eliminar_paciente' );
-    add_action( 'wp_ajax_expedientes_eliminar_paciente', 'expedientes_eliminar_paciente' );
-
-    function expedientes_eliminar_paciente() {
-        global $wpdb;
-        $id = $_POST['id'];
-        $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
-        $wpdb->delete(
-            $table_pacientes,
-            [ 'id' => $id ],
-            [ '%d' ]
-        );
-        echo 'ok';
-        die();
-    }
 
 	/**
 	 * mostrar-pacientes shortcode.
@@ -45,9 +29,16 @@ if ( ! function_exists( 'mostrar_pacientes_shortcode' ) ) {
     function mostrar_pacientes_render_html() {
         global $wpdb;
         $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
+        $table_responsables = $wpdb->prefix . "expedientes_responsables";
         $current_user = wp_get_current_user();
+
+        $isAdmin = current_user_can('expedientes') && current_user_can('expedientes_admin');
+        $sql = "SELECT $table_pacientes.* FROM $table_pacientes, $table_responsables WHERE $table_responsables.paciente=$table_pacientes.id AND $table_responsables.responsable = '{$current_user->display_name}'";
+        if ($isAdmin == true) {
+            $sql = "SELECT * FROM $table_pacientes";
+        } 
         $pacientes = $wpdb->get_results(
-            "SELECT * FROM $table_pacientes WHERE responsable = '{$current_user->display_name}'", 
+            $sql,
             'ARRAY_A'
         );
         $variables = array(

@@ -1,4 +1,5 @@
 <a href="/paciente" class="btn btn-success my-2">Agregar Paciente</a>
+<button class="btn btn-info pull-right" id="imprimir">Imprimir</button>
 <table class="table">
     <thead>
         <tr>
@@ -39,10 +40,11 @@
     </div>
 </div>
 <script>
+
     jQuery(document).ready(function ($) {
-        var pacientes = JSON.parse('%PACIENTES%');
-        for (var paciente of pacientes) {
-            var fila = '<tr>\
+        let pacientes = JSON.parse('%PACIENTES%');
+        for (let paciente of pacientes) {
+            let fila = '<tr>\
             <th scope="row">' + paciente.id + '</th>';
 
             if (paciente.fotografia) {
@@ -65,9 +67,9 @@
         }
 
         $('#deleteConfirm').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
-            var nombre = button.data('nombre')
+            let button = $(event.relatedTarget)
+            let id = button.data('id')
+            let nombre = button.data('nombre')
             $('#nombre').html(nombre);
             $('#id').val(id);
         });
@@ -76,17 +78,36 @@
             location.reload(true);
         });
 
-        $('#eliminar').click(function(event) {
+        $('#eliminar').click(function (event) {
             $.ajax({
-                url : '%AJAX_URL%',
-                type : 'post',
-                data : {
-                    action : 'expedientes_eliminar_paciente',
-                    id : $('#id').val()
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    action: 'expedientes_eliminar_paciente',
+                    id: $('#id').val()
                 },
-                success : function( response ) {
-                    console.log(response);
+                success: function (response) {
                     $('#deleteConfirm').modal('hide');
+                }
+            });
+        });
+
+        $("#imprimir").on('click', function () {
+            $.ajax({
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    action: 'expedientes_reporte_pacientes',
+                },
+                success: function (response) {
+                    getTemplate('/wp-content/plugins/expedientes-qi/templates/tabla_pacientes.html')
+                        .then(function (template) {
+                            buildTemplate(template, ['paciente'], pacientes).then(
+                                (builded_template) => {
+                                    createPDF(builded_template, 'pacientes', 'landscape');
+                                }
+                            )
+                        });
                 }
             });
         });

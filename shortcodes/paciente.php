@@ -14,39 +14,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
 		// Add the shortcode.
 		add_shortcode( 'paciente', 'paciente_shortcode' );
     });
-
-    add_action( 'wp_ajax_nopriv_expedientes_eliminar_nota_progreso', 'expedientes_eliminar_nota_progreso' );
-    add_action( 'wp_ajax_expedientes_eliminar_nota_progreso', 'expedientes_eliminar_nota_progreso' );
-
-    function expedientes_eliminar_nota_progreso() {
-        global $wpdb;
-        $id = $_POST['id'];
-        $table_notas_progreso = $wpdb->prefix . "expedientes_notas_progreso";
-        $wpdb->delete(
-            $table_notas_progreso,
-            [ 'id' => $id ],
-            [ '%d' ]
-        );
-        echo 'ok';
-        die();
-    }
-    add_action( 'wp_ajax_nopriv_expedientes_eliminar_archivo_adjunto', 'expedientes_eliminar_archivo_adjunto' );
-    add_action( 'wp_ajax_expedientes_eliminar_archivo_adjunto', 'expedientes_eliminar_archivo_adjunto' );
-
-    function expedientes_eliminar_archivo_adjunto() {
-        global $wpdb;
-        $path = $_POST['path'];
-        $id = $_POST['id'];
-        $table_archivos_adjuntos = $wpdb->prefix . "expedientes_archivos_adjuntos";
-        $wpdb->delete(
-            $table_archivos_adjuntos,
-            [ 'id' => $id ],
-            [ '%d' ]
-        );
-        unlink(get_home_path() . $path);
-        echo 'ok';
-        die();
-    }
     
 	/**
 	 * imprimir-expediente shortcode.
@@ -71,10 +38,7 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
     function render_html($paciente_id) {
         $responsable = null;
         $paciente = null;
-        if($paciente_id == null) {
-            $current_user = wp_get_current_user();
-            $responsable = $current_user->user_login;
-        } else {
+        if($paciente_id != null) {
             global $wpdb;
             $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
             $table_contactos = $wpdb->prefix . "expedientes_personas_contacto";
@@ -84,6 +48,8 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             $table_name_fad = $wpdb->prefix . "expedientes_fad";
             $table_notas_progreso = $wpdb->prefix . "expedientes_notas_progreso";
             $table_archivos_adjuntos = $wpdb->prefix . "expedientes_archivos_adjuntos";
+            $table_evaluaciones_psicologicas = $wpdb->prefix . "expedientes_evaluaciones_psicologicas";
+            $table_responsables = $wpdb->prefix . "expedientes_responsables";
 
             $paciente = $wpdb->get_results(
                 "SELECT * FROM $table_pacientes WHERE id = '{$paciente_id}'", 
@@ -123,12 +89,21 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                     "SELECT * FROM $table_archivos_adjuntos WHERE paciente = '{$paciente_id}'",
                     'ARRAY_A'
                 );
+                $paciente['evaluaciones_psicologicas'] = $wpdb->get_results(
+                    "SELECT * FROM $table_evaluaciones_psicologicas WHERE paciente = '{$paciente_id}'",
+                    'ARRAY_A'
+                );
+                $paciente['responsables'] = $wpdb->get_results(
+                    "SELECT * FROM $table_responsables WHERE paciente = '{$paciente_id}'",
+                    'ARRAY_A'
+                );
             } else {
                 $paciente = array('error' => true);
             }
         }
-        $variables = array("%CURRENT_USER%", "%REQUEST_URI%", "%PACIENTE%", "%RAND%", "%AJAX_URL%");
-        $values = array($responsable, esc_url( $_SERVER['REQUEST_URI'] ), json_encode($paciente), rand(), admin_url( 'admin-ajax.php' ));
+        $current_user = wp_get_current_user();
+        $variables = array("%IS_ADMIN%", "%REQUEST_URI%", "%PACIENTE%", "%RAND%", "%AJAX_URL%", "%CURRENT_USER%");
+        $values = array(current_user_can('expedientes_admin'), esc_url( $_SERVER['REQUEST_URI'] ), json_encode($paciente), rand(), admin_url( 'admin-ajax.php' ), $current_user->display_name);
         echo str_replace($variables, $values, file_get_contents( plugin_dir_path( __DIR__ ) . "/templates/paciente.html" ));
     }
 
@@ -149,6 +124,8 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
         $table_name_fad = $wpdb->prefix . "expedientes_fad";
         $table_notas_progreso = $wpdb->prefix . "expedientes_notas_progreso";
         $table_archivos_adjuntos = $wpdb->prefix . "expedientes_archivos_adjuntos";
+        $table_evaluaciones_psicologicas = $wpdb->prefix . "expedientes_evaluaciones_psicologicas";
+        $table_responsables = $wpdb->prefix . "expedientes_responsables";
         // Nuevo Paciente
         if ($_FILES['fotografia']['size'] > 0 && $_FILES['fotografia']['error'] == 0) {
             // Se subio una foto
@@ -193,7 +170,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             'email'              => $_POST['email'],
             'enfermedades'       => $_POST['enfermedades'],
             'alergias'           => $_POST['alergias'],
-            'responsable'        => $_POST['responsable'],
             'fecha_creacion'     => current_time( 'mysql' ),
             'fecha_modificacion' => current_time( 'mysql' )
         );
@@ -506,6 +482,42 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                 '%s',
                 '%d',
             ));
+        }
+        if(!empty($_POST['evaluacion_psicologica'])) {
+            $values_evaluaciones_psicologicas = array(
+                'evaluacion_psicologica'       => $_POST['evaluacion_psicologica'],
+                'fecha'                        => current_time( 'mysql' ),
+                'paciente'                     => $paciente_id,
+            );
+            $wpdb->insert( $table_evaluaciones_psicologicas, $values_evaluaciones_psicologicas, array(
+                '%s',
+                '%s',
+                '%d',
+            ));
+        }
+        
+        if(!empty($_POST['responsables'])) {
+            foreach($_POST['responsables'] as $key => $value) {
+                $values_responsable = array(
+                    'responsable'       => $_POST['responsables'][$key],
+                    'paciente'          => $paciente_id,
+                );
+                if (empty($_POST['id-responsables'][$key])) {
+                    $wpdb->insert( $table_responsables, $values_responsable, array(
+                        '%s',
+                        '%d',
+                    ));
+                }
+            }
+        }
+        if (!empty($_POST['responsables_delete'])) {
+            foreach( explode(",", $_POST['responsables_delete']) as $key => $id) {
+                $wpdb->delete(
+                    $table_responsables,
+                    [ 'id' => $id ],
+                    [ '%d' ]
+                );
+            }
         }
 
         // echo print_r($_FILES['archivos']);

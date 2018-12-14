@@ -23,7 +23,6 @@ CREATE TABLE %TABLE_PREFIX%pacientes
     email              VARCHAR(100) ,
     enfermedades       TEXT ,
     alergias           TEXT ,
-    responsable        VARCHAR(50) NOT NULL ,
     fecha_creacion     DATETIME NOT NULL,
     fecha_modificacion DATETIME,
 PRIMARY KEY (id)
@@ -137,6 +136,19 @@ KEY fkIdx_37 (paciente),
 CONSTRAINT FK_37 FOREIGN KEY fkIdx_37 (paciente) REFERENCES %TABLE_PREFIX%pacientes (id) ON DELETE CASCADE ON UPDATE CASCADE
 )%CHARSET_COLLATE%;
 
+-- ************************************** %TABLE_PREFIX%evaluaciones_psicologicas
+
+CREATE TABLE %TABLE_PREFIX%evaluaciones_psicologicas
+(
+    id                           INT NOT NULL AUTO_INCREMENT,
+    evaluacion_psicologica       TEXT,
+    fecha                        DATETIME,
+    paciente                     INT NOT NULL ,
+PRIMARY KEY (id),
+KEY fkIdx_40 (paciente),
+CONSTRAINT FK_40 FOREIGN KEY fkIdx_40 (paciente) REFERENCES %TABLE_PREFIX%pacientes (id) ON DELETE CASCADE ON UPDATE CASCADE
+)%CHARSET_COLLATE%;
+
 -- ************************************** %TABLE_PREFIX%archivos_adjuntos
 
 CREATE TABLE %TABLE_PREFIX%archivos_adjuntos
@@ -149,4 +161,16 @@ CREATE TABLE %TABLE_PREFIX%archivos_adjuntos
 PRIMARY KEY (id),
 KEY fkIdx_38 (paciente),
 CONSTRAINT FK_38 FOREIGN KEY fkIdx_38 (paciente) REFERENCES %TABLE_PREFIX%pacientes (id) ON DELETE CASCADE ON UPDATE CASCADE
+)%CHARSET_COLLATE%;
+
+-- ************************************** %TABLE_PREFIX%responsables
+
+CREATE TABLE %TABLE_PREFIX%responsables
+(
+    id                           INT NOT NULL AUTO_INCREMENT,
+    responsable                  VARCHAR(100) ,
+    paciente                     INT NOT NULL ,
+PRIMARY KEY (id),
+KEY fkIdx_41 (paciente),
+CONSTRAINT FK_41 FOREIGN KEY fkIdx_41 (paciente) REFERENCES %TABLE_PREFIX%pacientes (id) ON DELETE CASCADE ON UPDATE CASCADE
 )%CHARSET_COLLATE%;

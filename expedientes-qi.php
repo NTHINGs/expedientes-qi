@@ -42,8 +42,8 @@ if ( ! defined( 'ABS_DIR' ) ) {
  *
  * @since 1.0.0
  */
-if ( file_exists( ABS_DIR . '/shortcodes/shortcode-print.php' ) ) {
-	require_once( ABS_DIR . '/shortcodes/shortcode-print.php' );
+if ( file_exists( ABS_DIR . '/shortcodes/services.php' ) ) {
+	require_once( ABS_DIR . '/shortcodes/services.php' );
 }
 if ( file_exists( ABS_DIR . '/shortcodes/paciente.php' ) ) {
 	require_once( ABS_DIR . '/shortcodes/paciente.php' );
@@ -60,10 +60,13 @@ function expedientes_qi_init() {
 	wp_register_script( 'popper', '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array( 'jquery' ), '3.3.1', false );
 	wp_enqueue_script( 'bootstrap', '//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', array( 'jquery', 'popper' ), '3.3.1', false );
 	wp_enqueue_script( 'gijgo', '//cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js', array( 'jquery' ), '3.3.1', false );
+	wp_enqueue_script( 'autocomplete', plugins_url( '/js/autocomplete.js', __FILE__ ));
+	wp_enqueue_style( 'autocomplete', plugins_url( '/css/autocomplete.css', __FILE__ ));
 	wp_enqueue_style( 'gijgo', '//cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css');
 	wp_enqueue_style( 'rangeslider', plugins_url( '/css/slider.css', __FILE__));
-    wp_register_script( 'jspdf', plugins_url( '/js/jspdf.min.js', __FILE__ ));
-	wp_register_script( 'expedientes_qi', plugins_url( '/js/expedientes_qi.js', __FILE__ ));
+    wp_enqueue_script( 'jspdf', plugins_url( '/js/jspdf.min.js', __FILE__ ));
+    wp_enqueue_script( 'jspdf-tables', plugins_url( '/js/jspdf.plugin.autotable.js', __FILE__ ));
+	wp_enqueue_script( 'expedientes_qi', plugins_url( '/js/expedientes_qi.js', __FILE__ ));
 }
 
 // Create Tables
@@ -73,5 +76,16 @@ function create_plugin_database() {
 	$sql = str_replace(array("%TABLE_PREFIX%", "%CHARSET_COLLATE%"), array($table_prefix . "expedientes_", $charset_collate), file_get_contents( plugin_dir_path(__FILE__) . "/schema.sql" ));
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta($sql);
+
+	add_role( 'clinica', 'Clínica', 
+		array( 
+			'expedientes' => true
+		)
+	);
+	add_role( 'director-clinica', 'Director Clínica', 
+		array( 
+			'expedientes_admin'=> true
+		)
+	);
 }
 register_activation_hook( __FILE__, 'create_plugin_database' );

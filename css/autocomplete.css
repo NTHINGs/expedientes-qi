@@ -1,0 +1,73 @@
+input[data-autocomplete] {
+  border-color: #808080!important;
+  border-style: none none solid none!important;
+  border-width: 0px 0px 1px 0px!important;
+  margin: 0px!important;
+  padding: 5px!important;
+  width: 100%!important;
+}
+.autocomplete {
+  position: absolute!important;
+  transition: all 0.5s ease 0s!important;
+  max-height: 0!important;
+  overflow-y: hidden!important;
+  transition-duration: 0.3s!important;
+  transition-property: all!important;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1)!important;
+}
+.autocomplete:active,
+.autocomplete:focus,
+.autocomplete:hover {
+  background-color: #FAFAFA!important;
+  transition: all 0.5s ease 0s!important;
+}
+.autocomplete:empty {
+  display: none!important;
+}
+.autocomplete > ul {
+  list-style-type: none!important;
+  margin: 0!important;
+  padding: 0!important;
+}
+.autocomplete > ul > li {
+  cursor: pointer!important;
+  padding: 5px 0 5px 10px!important;
+}
+.autocomplete > ul > li.active,
+.autocomplete > ul > li:active,
+.autocomplete > ul > li:focus,
+.autocomplete > ul > li:hover {
+  background-color: #EEEEEE!important;
+  transition: all 0.5s ease 0s!important;
+}
+.autocomplete > ul > li.active a:active,
+.autocomplete > ul > li:active a:active,
+.autocomplete > ul > li:focus a:active,
+.autocomplete > ul > li:hover a:active,
+.autocomplete > ul > li.active a:focus,
+.autocomplete > ul > li:active a:focus,
+.autocomplete > ul > li:focus a:focus,
+.autocomplete > ul > li:hover a:focus,
+.autocomplete > ul > li.active a:hover,
+.autocomplete > ul > li:active a:hover,
+.autocomplete > ul > li:focus a:hover,
+.autocomplete > ul > li:hover a:hover {
+  text-decoration: none!important;
+}
+.autocomplete > ul > li.locked {
+  cursor: inherit!important;
+}
+.autocomplete.open {
+  display: block!important;
+  transition: all 0.5s ease 0s!important;
+  background-color: #FAFAFA!important;
+  max-height: 500px!important;
+  overflow-y: auto!important;
+  transition-duration: 0.3s!important;
+  transition-property: all!important;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1)!important;
+  z-index: 100!important;
+}
+.autocomplete.open:empty {
+  display: none!important;
+}
