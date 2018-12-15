@@ -19,6 +19,7 @@ CREATE TABLE %TABLE_PREFIX%pacientes
     cantidadhijos      INT ,
     domicilio          VARCHAR(200) ,
     ciudaddeorigen     VARCHAR(200) ,
+    ciudadactual       VARCHAR(200) ,
     telefono           VARCHAR(45) ,
     email              VARCHAR(100) ,
     enfermedades       TEXT ,

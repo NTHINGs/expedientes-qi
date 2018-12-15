@@ -22,7 +22,7 @@
                 <a class="nav-item nav-link" id="nav-psicotropicos-tab" data-toggle="tab" href="#nav-psicotropicos"
                     role="tab" aria-controls="nav-psicotropicos" aria-selected="false">Uso de Sustancias</a>
                 <a class="nav-item nav-link" id="nav-fases-tab" data-toggle="tab" href="#nav-fases" role="tab"
-                    aria-controls="nav-fases" aria-selected="false">Fases</a>
+                    aria-controls="nav-fases" aria-selected="false">Faces</a>
                 <a class="nav-item nav-link" id="nav-fad-tab" data-toggle="tab" href="#nav-fad" role="tab"
                     aria-controls="nav-fad" aria-selected="false">FAD</a>
                 <a class="nav-item nav-link" id="nav-notas-tab" data-toggle="tab" href="#nav-notas" role="tab"
@@ -38,6 +38,10 @@
                         aria-labelledby="nav-informacion-personal-tab">
                         <div class="container-fluid">
                             <div class="row">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-info pull-right imprimir_ficha_identificacion">Imprimir
+                                        Ficha de Identificación</button>
+                                </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="nombre">Fotografía Actual</label>
                                     <br>
@@ -78,13 +82,17 @@
                                     <label for="cantidadhijos">Cantidad de Hijos</label>
                                     <input type="number" class="form-control" id="cantidadhijos" name="cantidadhijos">
                                 </div>
-                                <div class="form-group col-12 col-sm-6">
+                                <div class="form-group col-12">
                                     <label for="domicilio">Domicilio</label>
                                     <input type="text" class="form-control" id="domicilio" name="domicilio">
                                 </div>
                                 <div class="form-group col-12 col-sm-6">
                                     <label for="ciudaddeorigen">Ciudad de Origen</label>
                                     <input type="text" class="form-control" id="ciudaddeorigen" name="ciudaddeorigen">
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="ciudaddeorigen">Ciudad Actual</label>
+                                    <input type="text" class="form-control" id="ciudadactual" name="ciudadactual">
                                 </div>
                                 <div class="form-group col-12 col-sm-6">
                                     <label for="telefono">Teléfono</label>
@@ -108,7 +116,7 @@
                                             <th>Responsables</th>
                                         </thead>
                                         <tbody>
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -120,6 +128,12 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-contactos" role="tabpanel" aria-labelledby="nav-contactos-tab">
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-info pull-right imprimir_ficha_identificacion">Imprimir
+                                    Ficha de Identificación</button>
+                            </div>
+                        </div>
                         <div id="contactos" class="container-fluid"></div>
                         <div class="col-12">
                             <button type="button" class="btn btn-success" id="agregar-contacto">Agregar Otro Contacto</button>
@@ -149,6 +163,10 @@
                     <div class="tab-pane fade" id="nav-riesgos-psicosociales" role="tabpanel" aria-labelledby="nav-riesgos-psicosociales-tab">
                         <div class="container-fluid">
                             <div class="row">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-info pull-right imprimir_ficha_identificacion">Imprimir
+                                        Ficha de Identificación</button>
+                                </div>
                                 <div class="col-12">
                                     <h3>Individuales</h3>
                                 </div>
@@ -278,6 +296,12 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-psicotropicos" role="tabpanel" aria-labelledby="nav-psicotropicos-tab">
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-info pull-right imprimir_ficha_identificacion">Imprimir
+                                    Ficha de Identificación</button>
+                            </div>
+                        </div>
                         <div class="container" id="sustancias"></div>
                         <div class="col-12">
                             <button type="button" class="btn btn-success" id="agregar-sustancia">Agregar Otra Sustancia</button>
@@ -810,6 +834,7 @@
 
 <script>
     jQuery(document).ready(function ($) {
+        $('.imprimir_ficha_identificacion').hide();
         var responsables = [];
         var responsables_delete = [];
         var isAdmin = !!+"%IS_ADMIN%";
@@ -864,9 +889,7 @@
                 responsables_delete.push(id);
                 $(document).trigger('responsables_delete');
             }
-            console.log(responsables);
             responsables.splice(responsablePos($('#responsable-value' + index).html()), 1);
-            console.log(responsables);
             $('#responsable-' + index).remove();
         }
 
@@ -894,7 +917,7 @@
                 <div class="form-group col-12 col-sm-6">\
                     <label>Nombre</label>\
                     <input type="text" class="form-control" id="nombre-' + index + '" name="nombrescontacto[]" required>\
-                    <input type="text" class="form-control" id="id-' + index + '" name="idscontacto[]">\
+                    <input type="hidden" class="form-control" id="id-' + index + '" name="idscontacto[]">\
                 </div>\
                 <div class="form-group col-12 col-sm-6">\
                     <label>Relación</label>\
@@ -1322,7 +1345,7 @@
                     </td>';
                 }
                 row += '</tr>';
-                
+
                 $('#responsables tbody').append(row);
                 $('#eliminar-responsable' + index).on('click', function () {
                     var index = $(this).data("i");
@@ -1501,9 +1524,28 @@
                 fillResponsables();
             }
 
+            // Llenar id en los botones de reportes
+            $('.imprimir_ficha_identificacion').show();
+            $('.imprimir_ficha_identificacion').attr('data-id', paciente.id);
+
         } else if (paciente && paciente['error']) {
             $('#error_title').html('PACIENTE NO ENCONTRADO<br><a href="/pacientes">Volver a la lista</a>');
             $('.container').hide();
         }
+
+        $(".imprimir_ficha_identificacion").on('click', function () {
+            $.ajax({
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    id: $(this).data('id'),
+                    action: 'expedientes_reporte_ficha_identificacion',
+                },
+                success: function (data) {
+                    console.log(data);
+                    createFichaIdentificacion(data);
+                }
+            });
+        });
     });
 </script>

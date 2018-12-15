@@ -55,12 +55,56 @@ if ( ! function_exists( 'expedientes_reporte_pacientes' ) ) {
                     )
                 );
                 $usuario = $query->get_results()[0];
-                array_push($usuarios, get_user_meta($usuario->ID, 'first_name', true) . ' ' . get_user_meta($usuario->ID, 'last_name', true));
+                $firstname = get_user_meta($usuario->ID, 'first_name', true);
+                $lastname = get_user_meta($usuario->ID, 'last_name', true);
+                $nombrefinal = '';
+                if ($firstname != '') {
+                    $nombrefinal = $firstname;
+                    if ($lastname != '' ) {
+                        $nombrefinal = $firstname . ' ' . $lastname;
+                    }
+                } else {
+                    $nombrefinal = $usuario->user_login;
+                }
+                array_push($usuarios,  $nombrefinal );
             }
             $pacientes[$key]['responsables'] = implode('<br/>', $usuarios);
         }
 		
 		wp_send_json($pacientes);
+    }
+}
+//  Servicio para reporte de ficha de identificacion (datos personales)
+if ( ! function_exists( 'expedientes_reporte_ficha_identificacion' ) ) {
+    add_action( 'wp_ajax_nopriv_expedientes_reporte_ficha_identificacion', 'expedientes_reporte_ficha_identificacion' );
+    add_action( 'wp_ajax_expedientes_reporte_ficha_identificacion', 'expedientes_reporte_ficha_identificacion' );
+
+    function expedientes_reporte_ficha_identificacion() {
+        global $wpdb;
+        $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
+        $table_contactos = $wpdb->prefix . "expedientes_personas_contacto";
+        $table_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
+        $table_sustancias = $wpdb->prefix . "expedientes_psicotropicos";
+        $paciente_id = $_POST['id'];
+		$paciente = $wpdb->get_results(
+            "SELECT * FROM $table_pacientes WHERE id = '{$paciente_id}'", 
+            'ARRAY_A'
+        )[0];
+
+        $paciente['contactos'] = $wpdb->get_results(
+            "SELECT * FROM $table_contactos WHERE paciente = '{$paciente_id}'", 
+            'ARRAY_A'
+        );
+        $paciente['riesgos'] = $wpdb->get_results(
+            "SELECT * FROM $table_riesgos WHERE paciente = '{$paciente_id}'", 
+            'ARRAY_A'
+        )[0];
+        $paciente['sustancias'] = $wpdb->get_results(
+            "SELECT * FROM $table_sustancias WHERE paciente = '{$paciente_id}'", 
+            'ARRAY_A'
+        );
+
+		wp_send_json($paciente);
     }
 }
 

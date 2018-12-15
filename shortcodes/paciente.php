@@ -27,12 +27,33 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
         if (isset($_GET['paciente'])) {
             $paciente_id = $_GET['paciente'];
         }
-        if ( isset( $_POST['submitted'] ) && $_SESSION['rand'] != $_POST['randcheck'] ) {
-            guardar_paciente($paciente_id);
+        $permiso = validar_permisos($paciente_id);
+        if ($permiso == true) {
+            if ( isset( $_POST['submitted'] ) && $_SESSION['rand'] != $_POST['randcheck'] ) {
+                guardar_paciente($paciente_id);
+            } else {
+                render_html($paciente_id);
+            }
         } else {
-            render_html($paciente_id);
+            echo '<h1>NO TIENES ACCESO A ESTE EXPEDIENTE. Comunícate con un encargado para pedir acceso.</h1>';
         }
         return ob_get_clean();
+    }
+
+    function validar_permisos($paciente_id) {
+        $isAdmin = current_user_can('expedientes') && current_user_can('expedientes_admin');
+        if ($isAdmin == true) {
+            return true;
+        }
+        global $wpdb;
+        $table_responsables = $wpdb->prefix . "expedientes_responsables";
+        $current_user = wp_get_current_user();
+        $responsables = $wpdb->get_results(
+            "SELECT * FROM $table_responsables WHERE paciente = '{$paciente_id}' AND responsable = '{$current_user->user_login}'",
+            'ARRAY_A'
+        );
+
+        return count($responsables) > 0;
     }
     
     function render_html($paciente_id) {
@@ -166,6 +187,7 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             'cantidadhijos'      => $_POST['cantidadhijos'],
             'domicilio'          => $_POST['domicilio'],
             'ciudaddeorigen'     => $_POST['ciudaddeorigen'],
+            'ciudadactual'       => $_POST['ciudadactual'],
             'telefono'           => $_POST['telefono'],
             'email'              => $_POST['email'],
             'enfermedades'       => $_POST['enfermedades'],
@@ -193,6 +215,7 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                 '%s',
                 '%s',
                 '%s',
+                '%s',
             ));
             $paciente_id = $wpdb->insert_id;
         } else {
@@ -205,6 +228,7 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                 '%s',
                 '%s',
                 '%d',
+                '%s',
                 '%s',
                 '%s',
                 '%s',
@@ -251,7 +275,7 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                         '%d',
                     ));
                 } else {
-                    $wpdb->update( $table_name_contactos, $values_contacto, array('id' => $_POST['idssustancias'][$key] ), array(
+                    $wpdb->update( $table_name_contactos, $values_contacto, array('id' => $_POST['idscontacto'][$key] ), array(
                         '%s',
                         '%s',
                         '%s',
@@ -435,40 +459,38 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             }
         }
 
-        if(!empty($_POST['solucion_problemas'])) {
-            $values_fad = array(
-                'solucion_problemas'           => $_POST['solucion_problemas'],
-                'comunicacion'                 => $_POST['comunicacion'],
-                'respuesta_afectiva'           => $_POST['respuesta_afectiva'],
-                'involucramiento_afectivo'     => $_POST['involucramiento_afectivo'],
-                'control_del_comportamiento'   => $_POST['control_del_comportamiento'],
-                'funcionamiento_general'       => $_POST['funcionamiento_general'],
-                'interpretacion_general'       => $_POST['interpretacion_general'],
-                'paciente'                     => $paciente_id,
-            );
-            if ($_POST['editmode'] != '1') {
-                $wpdb->insert( $table_name_fad, $values_fad, array(
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%d',
-                ));
-            } else {
-                $wpdb->update( $table_name_fad, $values_fad, array('paciente' => $paciente_id ), array(
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%d',
-                ), '%d');
-            }
+        $values_fad = array(
+            'solucion_problemas'           => $_POST['solucion_problemas'],
+            'comunicacion'                 => $_POST['comunicacion'],
+            'respuesta_afectiva'           => $_POST['respuesta_afectiva'],
+            'involucramiento_afectivo'     => $_POST['involucramiento_afectivo'],
+            'control_del_comportamiento'   => $_POST['control_del_comportamiento'],
+            'funcionamiento_general'       => $_POST['funcionamiento_general'],
+            'interpretacion_general'       => $_POST['interpretacion_general'],
+            'paciente'                     => $paciente_id,
+        );
+        if ($_POST['editmode'] != '1') {
+            $wpdb->insert( $table_name_fad, $values_fad, array(
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+            ));
+        } else {
+            $wpdb->update( $table_name_fad, $values_fad, array('paciente' => $paciente_id ), array(
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+            ), '%d');
         }
 
         if(!empty($_POST['nota_progreso'])) {
@@ -520,39 +542,36 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             }
         }
 
-        // echo print_r($_FILES['archivos']);
-        // if ($_FILES['archivos']['size'] > 0 && $_FILES['archivos']['error'] == 0) {
-            foreach ($_FILES['archivos']['name'] as $key => $value) {
-                if ($_FILES['archivos']['name'][$key]) {
-                    $file = array(
-                        'name'     => $_FILES['archivos']['name'][$key],
-                        'type'     => $_FILES['archivos']['type'][$key],
-                        'tmp_name' => $_FILES['archivos']['tmp_name'][$key],
-                        'error'    => $_FILES['archivos']['error'][$key],
-                        'size'     => $_FILES['archivos']['size'][$key]
+        foreach ($_FILES['archivos']['name'] as $key => $value) {
+            if ($_FILES['archivos']['name'][$key]) {
+                $file = array(
+                    'name'     => $_FILES['archivos']['name'][$key],
+                    'type'     => $_FILES['archivos']['type'][$key],
+                    'tmp_name' => $_FILES['archivos']['tmp_name'][$key],
+                    'error'    => $_FILES['archivos']['error'][$key],
+                    'size'     => $_FILES['archivos']['size'][$key]
+                );
+                $movefile = wp_handle_upload($file, array('test_form' => FALSE));
+                if ( $movefile && ! isset( $movefile['error'] ) ) {
+                    $url = parse_url($movefile['url'])['path'];
+                    $values_archivos_adjuntos = array(
+                        'nombre'                       => $file['name'],
+                        'archivo_adjunto'              => $url,
+                        'fecha'                        => current_time( 'mysql' ),
+                        'paciente'                     => $paciente_id,
                     );
-                    $movefile = wp_handle_upload($file, array('test_form' => FALSE));
-                    if ( $movefile && ! isset( $movefile['error'] ) ) {
-                        $url = parse_url($movefile['url'])['path'];
-                        $values_archivos_adjuntos = array(
-                            'nombre'                       => $file['name'],
-                            'archivo_adjunto'              => $url,
-                            'fecha'                        => current_time( 'mysql' ),
-                            'paciente'                     => $paciente_id,
-                        );
-                        $wpdb->insert( $table_archivos_adjuntos, $values_archivos_adjuntos, array(
-                            '%s',
-                            '%s',
-                            '%s',
-                            '%d',
-                        ));
-                    } else {
-                        echo $movefile['error'];
-                        $error = true;
-                    }
+                    $wpdb->insert( $table_archivos_adjuntos, $values_archivos_adjuntos, array(
+                        '%s',
+                        '%s',
+                        '%s',
+                        '%d',
+                    ));
+                } else {
+                    echo $movefile['error'];
+                    $error = true;
                 }
             }
-        // }
+        }
 
         if ($error != true) {
             echo $_POST['nombre'] . ' guardado correctamente.<br><br><a href="/paciente/?paciente=' . $paciente_id . '">Ver</a><br><br><a href="/pacientes">Ver Todos Los Pacientes</a>';

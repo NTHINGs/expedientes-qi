@@ -1,0 +1,24 @@
+<table>
+    <thead>
+        <th>Fotografía</th>
+        <th>Nombre</th>
+        <th>Fecha de Nacimiento</th>
+        <th>Edad</th>
+        <th>Teléfono</th>
+        <th>Fecha de Creación</th>
+        <th>Fecha de Modificación</th>
+        <th>Responsables</th>
+    </thead>
+    <tbody>
+        <tr nth-for="paciente">
+            <td><img src="{{fotografia}}"></td>
+            <td>{{nombre}}</td>
+            <td>{{fechadenacimiento}}</td>
+            <td>{{edad}}</td>
+            <td>{{telefono}}</td>
+            <td>{{fecha_creacion}}</td>
+            <td>{{fecha_modificacion}}</td>
+            <td>{{responsables}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -43,7 +43,6 @@
 
     jQuery(document).ready(function ($) {
         let pacientes = JSON.parse('%PACIENTES%');
-        console.log(pacientes);
         for (let paciente of pacientes) {
             let fila = '<tr>\
             <th scope="row">' + paciente.id + '</th>';
@@ -101,12 +100,11 @@
                     action: 'expedientes_reporte_pacientes',
                 },
                 success: function (response) {
-                    console.log(response)
                     getTemplate('/wp-content/plugins/expedientes-qi/templates/tabla_pacientes.html')
                         .then(function (template) {
                             buildTemplate(template, ['paciente'], response).then(
                                 (builded_template) => {
-                                    createPDF(builded_template, 'pacientes', 'landscape');
+                                    createPDF(builded_template, 'pacientes', 'Pacientes', 'landscape', true);
                                 }
                             )
                         });
