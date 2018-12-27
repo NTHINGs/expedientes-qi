@@ -1511,17 +1511,17 @@
 
             if (paciente.responsables) {
                 responsables = paciente.responsables;
-                fillResponsables();
-            }
-            if (!isAdmin) {
-                $('#responsable').remove();
-                $('#responsable-label').remove();
-                var current_user = "%CURRENT_USER%"
-                if (current_user.length && responsablePos(current_user) === -1) {
-                    responsables.push({ responsable: current_user });
+                if (!isAdmin) {
+                    $('#responsable').remove();
+                    $('#responsable-label').remove();
+                    var current_user = "%CURRENT_USER%"
+                    if (current_user.length && responsablePos(current_user) === -1) {
+                        responsables.push({ responsable: current_user });
 
-                    fillResponsables();
+                        fillResponsables();
+                    }
                 }
+                fillResponsables();
             }
 
             // Llenar id en los botones de reportes
@@ -1531,6 +1531,17 @@
         } else if (paciente && paciente['error']) {
             $('#error_title').html('PACIENTE NO ENCONTRADO<br><a href="/pacientes">Volver a la lista</a>');
             $('.container').hide();
+        }
+
+        if (!isAdmin) {
+            $('#responsable').remove();
+            $('#responsable-label').remove();
+            var current_user = "%CURRENT_USER%"
+            if (current_user.length && responsablePos(current_user) === -1) {
+                responsables.push({ responsable: current_user });
+
+                fillResponsables();
+            }
         }
 
         $(".imprimir_ficha_identificacion").on('click', function () {
