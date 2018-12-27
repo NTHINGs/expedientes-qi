@@ -342,7 +342,7 @@ function createFichaIdentificacion(paciente) {
                     row.height = 10;
                 },
             });
-        doc.output('dataurlnewwindow');
+        doc.save(paciente.nombre + '.pdf');
 
     })();
 }
