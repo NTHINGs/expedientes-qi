@@ -1511,17 +1511,17 @@
 
             if (paciente.responsables) {
                 responsables = paciente.responsables;
-                if (!isAdmin) {
-                    $('#responsable').remove();
-                    $('#responsable-label').remove();
-                    var current_user = "%CURRENT_USER%"
-                    if (current_user.length && responsablePos(current_user) === -1) {
-                        responsables.push({ responsable: current_user });
-
-                        fillResponsables();
-                    }
-                }
                 fillResponsables();
+            }
+            if (!isAdmin) {
+                $('#responsable').remove();
+                $('#responsable-label').remove();
+                var current_user = "%CURRENT_USER%"
+                if (current_user.length && responsablePos(current_user) === -1) {
+                    responsables.push({ responsable: current_user });
+
+                    fillResponsables();
+                }
             }
 
             // Llenar id en los botones de reportes
