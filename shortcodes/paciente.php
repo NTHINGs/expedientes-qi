@@ -41,6 +41,9 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
     }
 
     function validar_permisos($paciente_id) {
+        if (!isset($paciente_id)) {
+            return true;
+        }
         $isAdmin = current_user_can('expedientes') && current_user_can('expedientes_admin');
         if ($isAdmin == true) {
             return true;
