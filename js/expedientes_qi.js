@@ -265,7 +265,7 @@ function createFichaIdentificacion(paciente) {
                             break;
                     }
                     for (let riesgo of riesgos[tipo_riesgo]) {
-                        if (riesgo.text === cell.raw && paciente.riesgos[tipo_riesgo].split(',').includes('' + riesgo.value)) {
+                        if (paciente.riesgos && paciente.riesgos[tipo_riesgo] && riesgo.text === cell.raw && paciente.riesgos[tipo_riesgo].split(',').includes('' + riesgo.value)) {
                             cell.styles.fillColor = [80, 18, 70];
                             cell.styles.textColor = 255;
                         }
@@ -275,73 +275,103 @@ function createFichaIdentificacion(paciente) {
 
         doc.text('Observaciones:', 15, 190);
         doc.setFontSize(10);
-        paciente.riesgos.observaciones = stringValidation(paciente.riesgos.observaciones);
-        if (paciente.riesgos.observaciones.length > 1000) {
-            paciente.riesgos.observaciones = paciente.riesgos.observaciones.substring(0, 1000) + '... Ver más en sistema.';
+        if (paciente.riesgos) {
+            paciente.riesgos.observaciones = stringValidation(paciente.riesgos.observaciones);
+            if (paciente.riesgos.observaciones.length > 800) {
+                paciente.riesgos.observaciones = paciente.riesgos.observaciones.substring(0, 800) + '... Ver más en sistema.';
+            }
+        } else {
+            paciente.riesgos = {};
+            paciente.riesgos.observaciones = '';
         }
+        
         doc.text(doc.splitTextToSize(paciente.riesgos.observaciones, 180), 15, 197);
         doc.setFontSize(12);
         paciente.enfermedades = stringValidation(paciente.enfermedades);
+        if (paciente.enfermedades.length > 500) {
+            paciente.enfermedades = paciente.enfermedades.substring(0, 500) + '... Ver más en sistema.';
+        }
+        
         paciente.alergias = stringValidation(paciente.alergias);
-        doc.text('Enfermedades:', 15, 195 + (doc.splitTextToSize(paciente.riesgos.observaciones, 180).length * 4));
-        doc.text(doc.splitTextToSize(paciente.enfermedades, 180), 15, 200 + (doc.splitTextToSize(paciente.riesgos.observaciones, 180).length * 4));
-        doc.text('Alergias:', 15, 205 + (doc.splitTextToSize(paciente.riesgos.observaciones, 180).length * 4) + (doc.splitTextToSize(paciente.enfermedades, 180).length * 4));
-        doc.text(doc.splitTextToSize(paciente.alergias, 180), 15, 210 + (doc.splitTextToSize(paciente.riesgos.observaciones, 180).length * 4) + (doc.splitTextToSize(paciente.enfermedades, 180).length * 4));
-        doc.addPage();
-        doc.setFontSize(18);
-        doc.text('PERSONAS DE CONTACTO', 65, 15);
+        if (paciente.alergias.length > 500) {
+            paciente.alergias = paciente.alergias.substring(0, 500) + '... Ver más en sistema.';
+        }
+        doc.text('Enfermedades:', 15, 197 + (doc.splitTextToSize(paciente.riesgos.observaciones, 180).length * 4));
+        doc.setFontSize(10);
+        console.log((doc.splitTextToSize(paciente.riesgos.observaciones, 180).length * 4));
+        console.log(doc.splitTextToSize(paciente.enfermedades, 180).length * 4                  );
+        doc.text(doc.splitTextToSize(paciente.enfermedades, 180), 15, 204 + (doc.splitTextToSize(paciente.riesgos.observaciones, 180).length * 4));
         doc.setFontSize(12);
-        let contactos_table_ref = 0;
-        doc.autoTable(
-            [
-                { title: 'Nombre', dataKey: 'nombre' },
-                { title: 'Relación', dataKey: 'relacion' },
-                { title: 'Domicilio', dataKey: 'domicilio' },
-                { title: 'Teléfono Celular', dataKey: 'telefono_celular' },
-                { title: 'Teléfono Casa', dataKey: 'telefono_casa' },
-                { title: 'Otro Teléfono', dataKey: 'telefono_otro' },
-            ],
-            paciente.contactos,
-            {
-                margin: { top: 20 },
-                styles: { overflow: 'linebreak', columnWidth: '50px' },
-                headerStyles: {
-                    fillColor: [80, 18, 70],
-                    textColor: 255
-                },
-                columnStyles: { text: { columnWidth: '50px' } },
-                drawRow: function (row, data) {
-                    row.height = 10;
-                    contactos_table_ref = data.table;
-                },
-            });
+        doc.text('Alergias:', 15, 211 + (doc.splitTextToSize(paciente.riesgos.observaciones, 180).length * 4) + (doc.splitTextToSize(paciente.enfermedades, 180).length * 4));
+        doc.setFontSize(10);
+        doc.text(doc.splitTextToSize(paciente.alergias, 180), 15, 218 + (doc.splitTextToSize(paciente.riesgos.observaciones, 180).length * 4) + (doc.splitTextToSize(paciente.enfermedades, 180).length * 4));
+        
+        if (paciente.contactos && paciente.contactos.length > 0) {
+            doc.addPage();
+            doc.setFontSize(18);
+            doc.text('PERSONAS DE CONTACTO', 65, 15);
+            doc.setFontSize(12);
+            doc.autoTable(
+                [
+                    { title: 'Nombre', dataKey: 'nombre' },
+                    { title: 'Relación', dataKey: 'relacion' },
+                    { title: 'Domicilio', dataKey: 'domicilio' },
+                    { title: 'Teléfono Celular', dataKey: 'telefono_celular' },
+                    { title: 'Teléfono Casa', dataKey: 'telefono_casa' },
+                    { title: 'Otro Teléfono', dataKey: 'telefono_otro' },
+                ],
+                paciente.contactos,
+                {
+                    margin: { top: 20 },
+                    styles: { overflow: 'linebreak', columnWidth: '50px' },
+                    headerStyles: {
+                        fillColor: [80, 18, 70],
+                        textColor: 255
+                    },
+                    columnStyles: { text: { columnWidth: '50px' } },
+                    drawRow: function (row, data) {
+                        row.height = 10;
+                        contactos_table_ref = data.table;
+                    },
+                }
+            );
+        }
+        
+        if (paciente.sustancias && paciente.sustancias.length > 0) {
+            doc.addPage('a4', 'landscape');  
+            doc.setFontSize(18);
+            doc.text('USO DE SUSTANCIAS', 120, 15);
+            doc.setFontSize(12);
 
-        doc.autoTable(
-            [
-                { title: 'Sustancia', dataKey: 'sustancia' },
-                { title: 'Año Del Primer Uso', dataKey: 'añoprimeruso' },
-                { title: 'Edad', dataKey: 'edadprimeruso' },
-                { title: 'Uso Regular', dataKey: 'usoregular' },
-                { title: 'Periodo', dataKey: 'periodo' },
-                { title: 'Unidad', dataKey: 'unidad' },
-                { title: 'Abstinencia Máxima', dataKey: 'abstinenciamaxima' },
-                { title: 'Abstinencia Actual', dataKey: 'abstinenciaactual' },
-                { title: 'Via de Uso / Administración', dataKey: 'viadeuso' },
-                { title: 'Fecha del Último Consumo', dataKey: 'fechaultimoconsumo' },
-            ],
-            paciente.sustancias,
-            {
-                margin: { top: contactos_table_ref.finalY },
-                styles: { overflow: 'linebreak', columnWidth: '50px' },
-                headerStyles: {
-                    fillColor: [80, 18, 70],
-                    textColor: 255
-                },
-                columnStyles: { text: { columnWidth: '50px' } },
-                drawRow: function (row, data) {
-                    row.height = 10;
-                },
-            });
+            doc.autoTable(
+                [
+                    { title: 'Sustancia', dataKey: 'sustancia' },
+                    { title: 'Año Del Primer Uso', dataKey: 'añoprimeruso' },
+                    { title: 'Edad', dataKey: 'edadprimeruso' },
+                    { title: 'Uso Regular', dataKey: 'usoregular' },
+                    { title: 'Periodo', dataKey: 'periodo' },
+                    { title: 'Unidad', dataKey: 'unidad' },
+                    { title: 'Abstinencia Máxima', dataKey: 'abstinenciamaxima' },
+                    { title: 'Abstinencia Actual', dataKey: 'abstinenciaactual' },
+                    { title: 'Via de Uso / Administración', dataKey: 'viadeuso' },
+                    { title: 'Fecha del Último Consumo', dataKey: 'fechaultimoconsumo' },
+                ],
+                paciente.sustancias,
+                {
+                    margin: { top: 20 },
+                    styles: { overflow: 'linebreak', columnWidth: '50px' },
+                    headerStyles: {
+                        fillColor: [80, 18, 70],
+                        textColor: 255
+                    },
+                    columnStyles: { text: { columnWidth: '50px' } },
+                    drawRow: function (row, data) {
+                        row.height = 10;
+                    },
+                }
+            );
+        }
+        
         doc.save(paciente.nombre + '.pdf');
 
     })();

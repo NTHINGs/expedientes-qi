@@ -296,24 +296,20 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
         $riesgos_individuales = NULL;
         $riesgos_familiares = NULL;
         $riesgos_entorno = NULL;
-        $create_riesgos = false;
 
         if (!empty($_POST['riesgos_individuales'])) {
             $riesgos_individuales = implode(",", $_POST['riesgos_individuales']);
-            $create_riesgos = true;
         }
 
         if (!empty($_POST['riesgos_familiares'])) {
             $riesgos_familiares = implode(",", $_POST['riesgos_familiares']);
-            $create_riesgos = true;
         }
 
         if (!empty($_POST['riesgos_entorno'])) {
             $riesgos_entorno = implode(",", $_POST['riesgos_entorno']);
-            $create_riesgos = true;
         }
 
-        if ($_POST['editmode'] != '1' && $create_riesgos) {
+        if ($_POST['editmode'] != '1') {
             $wpdb->insert( $table_name_riesgos,
                 array(
                     'individual'    => $riesgos_individuales,
@@ -330,7 +326,7 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                     '%d',
                 )
             );
-        } elseif ($create_riesgos) {
+        } else {
             $wpdb->update( $table_name_riesgos,
                 array(
                     'individual'    => $riesgos_individuales,
