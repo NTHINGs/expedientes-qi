@@ -310,6 +310,10 @@
                     <div class="tab-pane fade" id="nav-fases" role="tabpanel" aria-labelledby="nav-fases-tab">
                         <div class="container" id="fases">
                             <div class="row">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-info pull-right imprimir_reporte_fases">Imprimir
+                                        FASES</button>
+                                </div>
                                 <div class="col-12 col-sm-6" id="adaptabilidad">
                                     <div class="col-12">
                                         <h3>Adaptabilidad</h3>
@@ -835,6 +839,7 @@
 <script>
     jQuery(document).ready(function ($) {
         $('.imprimir_ficha_identificacion').hide();
+        $('.imprimir_reporte_fases').hide();
         var responsables = [];
         var responsables_delete = [];
         var isAdmin = !!+"%IS_ADMIN%";
@@ -1528,6 +1533,9 @@
             $('.imprimir_ficha_identificacion').show();
             $('.imprimir_ficha_identificacion').attr('data-id', paciente.id);
 
+            $('.imprimir_reporte_fases').show();
+            $('.imprimir_reporte_fases').attr('data-id', paciente.id);
+
         } else if (paciente && paciente['error']) {
             $('#error_title').html('PACIENTE NO ENCONTRADO<br><a href="/pacientes">Volver a la lista</a>');
             $('.container').hide();
@@ -1553,8 +1561,22 @@
                     action: 'expedientes_reporte_ficha_identificacion',
                 },
                 success: function (data) {
-                    console.log(data);
                     createFichaIdentificacion(data);
+                }
+            });
+        });
+        
+        $(".imprimir_reporte_fases").on('click', function () {
+            $.ajax({
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    id: $(this).data('id'),
+                    action: 'expedientes_reporte_faces',
+                },
+                success: function (data) {
+                    console.log(data);
+                    createFacesPDF(data);
                 }
             });
         });

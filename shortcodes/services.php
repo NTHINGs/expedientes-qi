@@ -225,3 +225,20 @@ if ( ! function_exists( 'expedientes_get_responsables' ) ) {
         wp_send_json($data);
     }
 }
+
+if ( ! function_exists( 'expedientes_reporte_faces' ) ) {
+    add_action( 'wp_ajax_nopriv_expedientes_reporte_faces', 'expedientes_reporte_faces' );
+    add_action( 'wp_ajax_expedientes_reporte_faces', 'expedientes_reporte_faces' );
+
+    function expedientes_reporte_faces() {
+        global $wpdb;
+        $paciente_id = $_POST['id'];
+        $table_name_esquema_fases = $wpdb->prefix . "expedientes_esquema_fases";
+        $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
+        $paciente_fases = $wpdb->get_results(
+            "SELECT * FROM $table_name_esquema_fases, $table_pacientes  WHERE paciente = '{$paciente_id}'", 
+            'ARRAY_A'
+        )[0];
+        wp_send_json($paciente_fases);
+    }
+}
