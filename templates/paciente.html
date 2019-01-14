@@ -145,6 +145,10 @@
                                 <div class="col-12">
                                     <h3>Evaluaciones Psicológicas</h3>
                                 </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-info pull-right imprimir_reporte_notas_evaluaciones" data-mode="evaluaciones_psicologicas">Imprimir
+                                        Evaluaciones</button>
+                                </div>
                                 <div class="col-sm-6 col-12">
                                     <div class="form-group col-12">
                                         <label for="evaluacion_psicologica">Nueva Evaluación Psicológica</label>
@@ -624,6 +628,10 @@
                                 <div class="col-12">
                                     <h3>FAD</h3>
                                 </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-info pull-right imprimir_reporte_fad">Imprimir
+                                        FAD</button>
+                                </div>
                                 <div class="form-group col-12">
                                     <label for="solucion_problemas">Solución De Problemas</label>
                                     <textarea class="form-control" rows="3" id="solucion_problemas" name="solucion_problemas"></textarea>
@@ -660,6 +668,10 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h3>Notas de Progreso</h3>
+                                </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-info pull-right imprimir_reporte_notas_evaluaciones" data-mode="notas_progreso">Imprimir
+                                        Notas</button>
                                 </div>
                                 <div class="col-sm-6 col-12">
                                     <div class="form-group col-12">
@@ -840,6 +852,8 @@
     jQuery(document).ready(function ($) {
         $('.imprimir_ficha_identificacion').hide();
         $('.imprimir_reporte_fases').hide();
+        $('.imprimir_reporte_fad').hide();
+        $('.imprimir_reporte_notas_evaluaciones').hide();
         var responsables = [];
         var responsables_delete = [];
         var isAdmin = !!+"%IS_ADMIN%";
@@ -1535,6 +1549,12 @@
 
             $('.imprimir_reporte_fases').show();
             $('.imprimir_reporte_fases').attr('data-id', paciente.id);
+            
+            $('.imprimir_reporte_fad').show();
+            $('.imprimir_reporte_fad').attr('data-id', paciente.id);
+            
+            $('.imprimir_reporte_notas_evaluaciones').show();
+            $('.imprimir_reporte_notas_evaluaciones').attr('data-id', paciente.id);
 
         } else if (paciente && paciente['error']) {
             $('#error_title').html('PACIENTE NO ENCONTRADO<br><a href="/pacientes">Volver a la lista</a>');
@@ -1575,8 +1595,41 @@
                     action: 'expedientes_reporte_faces',
                 },
                 success: function (data) {
-                    console.log(data);
                     createFacesPDF(data);
+                }
+            });
+        });
+
+        $(".imprimir_reporte_fad").on('click', function () {
+            $.ajax({
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    id: $(this).data('id'),
+                    action: 'expedientes_reporte_fad',
+                },
+                success: function (data) {
+                    createFadPDF(data);
+                }
+            });
+        });
+        
+        $(".imprimir_reporte_notas_evaluaciones").on('click', function () {
+            const mode = $(this).data('mode');
+            $.ajax({
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    id: $(this).data('id'),
+                    mode,
+                    action: 'expedientes_reporte_notas_evaluaciones',
+                },
+                success: function (data) {
+                    if (mode === 'notas_progreso') {
+                        createNotasProgresoPDF(data);
+                    } else if (mode === 'evaluaciones_psicologicas') {
+                        createEvaluacionesPsicologicasPDF(data);
+                    }
                 }
             });
         });

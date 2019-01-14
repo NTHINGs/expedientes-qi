@@ -242,3 +242,53 @@ if ( ! function_exists( 'expedientes_reporte_faces' ) ) {
         wp_send_json($paciente_fases);
     }
 }
+
+if ( ! function_exists( 'expedientes_reporte_fad' ) ) {
+    add_action( 'wp_ajax_nopriv_expedientes_reporte_fad', 'expedientes_reporte_fad' );
+    add_action( 'wp_ajax_expedientes_reporte_fad', 'expedientes_reporte_fad' );
+
+    function expedientes_reporte_fad() {
+        global $wpdb;
+        $paciente_id = $_POST['id'];
+        $table_name_fad = $wpdb->prefix . "expedientes_fad";
+        $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
+        $paciente_fad = $wpdb->get_results(
+            "SELECT * FROM $table_name_fad, $table_pacientes  WHERE paciente = '{$paciente_id}'", 
+            'ARRAY_A'
+        )[0];
+        wp_send_json($paciente_fad);
+    }
+}
+
+if ( ! function_exists( 'expedientes_reporte_notas_evaluaciones' ) ) {
+    add_action( 'wp_ajax_nopriv_expedientes_reporte_notas_evaluaciones', 'expedientes_reporte_notas_evaluaciones' );
+    add_action( 'wp_ajax_expedientes_reporte_notas_evaluaciones', 'expedientes_reporte_notas_evaluaciones' );
+
+    function expedientes_reporte_notas_evaluaciones() {
+        global $wpdb;
+        $paciente_id = $_POST['id'];
+        $mode = $_POST['mode'];
+        $table_name_evaluaciones = $wpdb->prefix . "expedientes_evaluaciones_psicologicas";
+        $table_name_notas = $wpdb->prefix . "expedientes_notas_progreso";
+        $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
+        $paciente = $wpdb->get_results(
+            "SELECT * FROM $table_pacientes WHERE id = '{$paciente_id}'", 
+            'ARRAY_A'
+        )[0];
+
+        $data = null;
+        if($mode == 'notas_progreso') {
+            $data = $wpdb->get_results(
+                "SELECT * FROM $table_name_notas WHERE paciente = '{$paciente_id}'", 
+                'ARRAY_A'
+            );
+        }
+        if($mode == 'evaluaciones_psicologicas') {
+            $data = $wpdb->get_results(
+                "SELECT * FROM $table_name_evaluaciones WHERE paciente = '{$paciente_id}'", 
+                'ARRAY_A'
+            );
+        }
+        wp_send_json(array('paciente' => $paciente, 'data' => $data));
+    }
+}

@@ -1,5 +1,4 @@
 function getDataUri(url) {
-    console.log(url);
     if (url) {
         return new Promise((resolve, reject) => {
             let extension = url.split('.').pop();
@@ -101,19 +100,21 @@ async function informacionPersonal(doc, paciente, header) {
     doc.text('Fecha de Nacimiento: ' + stringValidation(paciente.fechadenacimiento), 50, 52);
     doc.text('Edad: ' + stringValidation(paciente.edad), 150, 52);
 
-    doc.text('Escolaridad: ' + stringValidation(paciente.escolaridad), 50, 59);
-    doc.text('Ocupación: ' + stringValidation(paciente.ocupacion), 150, 59);
-
-    doc.text('Estado Civil: ' + stringValidation(paciente.estadocivil), 50, 66);
-    doc.text('Cantidad de Hijos: ' + stringValidation(paciente.cantidadhijos), 150, 66);
-
-    doc.text('Domicilio: ' + stringValidation(paciente.domicilio), 50, 73);
-
-    doc.text('Ciudad de Origen: ' + stringValidation(paciente.ciudaddeorigen), 50, 80);
-    doc.text('Ciudad Actual: ' + stringValidation(paciente.ciudadactual), 150, 80);
-
-    doc.text('Teléfono: ' + stringValidation(paciente.telefono), 50, 87);
-    doc.text('Email: ' + stringValidation(paciente.email), 150, 87);
+    if (header === 'Ficha de Identificación') {
+        doc.text('Escolaridad: ' + stringValidation(paciente.escolaridad), 50, 59);
+        doc.text('Ocupación: ' + stringValidation(paciente.ocupacion), 150, 59);
+    
+        doc.text('Estado Civil: ' + stringValidation(paciente.estadocivil), 50, 66);
+        doc.text('Cantidad de Hijos: ' + stringValidation(paciente.cantidadhijos), 150, 66);
+    
+        doc.text('Domicilio: ' + stringValidation(paciente.domicilio), 50, 73);
+    
+        doc.text('Ciudad de Origen: ' + stringValidation(paciente.ciudaddeorigen), 50, 80);
+        doc.text('Ciudad Actual: ' + stringValidation(paciente.ciudadactual), 150, 80);
+    
+        doc.text('Teléfono: ' + stringValidation(paciente.telefono), 50, 87);
+        doc.text('Email: ' + stringValidation(paciente.email), 150, 87);
+    }
 }
 function createFichaIdentificacion(paciente) {
     (async () => {
@@ -288,7 +289,7 @@ function createFichaIdentificacion(paciente) {
             });
         }
         
-        doc.save(paciente.nombre + '.pdf');
+        doc.save(paciente.nombre + '_FICHA.pdf');
 
     })();
 }
@@ -299,34 +300,274 @@ function createFacesPDF(data) {
             orientation: 'portrait',
             pageFormat: 'a4'
         });
-        await informacionPersonal(doc, data, 'FASES');
+        await informacionPersonal(doc, data, 'FACES');
 
         doc.setFontSize(18);
-        doc.text('FASES', 120, 15);
+        doc.text('FACES', 90, 65);
         doc.setFontSize(12);
 
-        // TODO: FACES
-        // doc.autoTable({
-        //     startY: 110,
-        //     columns: [
-        //         { header: 'Sustancia', dataKey: 'sustancia' },
-        //         { header: 'Año Del Primer Uso', dataKey: 'añoprimeruso' },
-        //         { header: 'Edad', dataKey: 'edadprimeruso' },
-        //         { header: 'Uso Regular', dataKey: 'usoregular' },
-        //         { header: 'Periodo', dataKey: 'periodo' },
-        //         { header: 'Unidad', dataKey: 'unidad' },
-        //         { header: 'Abstinencia Máxima', dataKey: 'abstinenciamaxima' },
-        //         { header: 'Abstinencia Actual', dataKey: 'abstinenciaactual' },
-        //         { header: 'Via de Uso / Administración', dataKey: 'viadeuso' },
-        //         { header: 'Fecha del Último Consumo', dataKey: 'fechaultimoconsumo' },
-        //     ],
-        //     body: paciente.sustancias,
-        //     headStyles: {
-        //         cellWidth: 'wrap',
-        //         fontSize: 8
-        //     },
-        //     showHead: 'firstPage'
-        // });
-        doc.save(data.nombre + '.pdf');
+        doc.autoTable({
+            startY: 70,
+            columns: [
+                { header: 'Adaptabilidad', dataKey: 'adaptabilidad' },
+                { header: 'Cohesión', dataKey: 'cohesion' },
+                { header: 'Rigidez', dataKey: 'rigidez' },
+                { header: 'Apego', dataKey: 'apego' },
+                { header: 'Caos', dataKey: 'caos' },
+                { header: 'Desapego', dataKey: 'desapego' },
+            ],
+            body: [
+                {
+                    adaptabilidad: data.adaptabilidad,
+                    cohesion: data.cohesion,
+                    rigidez: data.rigidez,
+                    apego: data.apego,
+                    caos: data.caos,
+                    desapego: data.desapego
+                }
+            ],
+            headStyles: {
+                fillColor: [80, 18, 70],
+                textColor: 255,
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 10
+            },
+            didParseCell: function(data) {
+                if (data.row.section === 'body') {
+                    try {
+                        const array = JSON.parse(data.cell.raw);
+                        let cell = '';
+                        for (let i=0; i<array.length; i++) {
+                            switch(i) {
+                                case 0:
+                                    cell += `Papá: ${array[i]}\n`;
+                                    break;
+                                
+                                case 1:
+                                    cell += `Mamá: ${array[i]}\n`;
+                                    break;
+                                    
+                                case 2:
+                                    cell += `Hijo: ${array[i]}\n`;
+                                    break;
+                                
+                                default:
+                                    cell += `${array[i].nombre}: ${array[i].valor}\n`;
+                                    break;
+                            }
+                        }
+
+                        data.cell.text = cell;
+                    } catch(e) {
+                        data.cell.text = '¡Ocurrió un error!';
+                    }
+                }
+            }
+        });
+        doc.save(data.nombre + '_FACES.pdf');
+    })();
+}
+
+function createFadPDF(data) {
+    (async () => {
+        let doc = new jsPDF({
+            orientation: 'portrait',
+            pageFormat: 'a4'
+        });
+        await informacionPersonal(doc, data, 'FAD');
+
+        doc.setFontSize(18);
+        doc.text('FAD', 90, 60);
+        doc.setFontSize(12);
+
+        doc.autoTable({
+            startY: 70,
+            head: [
+                ['Solución De Problemas'],
+            ],
+            body: [
+                [data.solucion_problemas]
+            ],
+            headStyles: {
+                fillColor: [80, 18, 70],
+                textColor: 255,
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 10
+            }
+        });
+        doc.autoTable({
+            startY: doc.lastAutoTable.finalY + 5,
+            head: [
+                ['Comunicación'],
+            ],
+            body: [
+                [data.comunicacion]
+            ],
+            headStyles: {
+                fillColor: [80, 18, 70],
+                textColor: 255,
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 10
+            }
+        });
+        doc.autoTable({
+            startY: doc.lastAutoTable.finalY + 5,
+            head: [
+                ['Respuesta Afectiva'],
+            ],
+            body: [
+                [data.respuesta_afectiva]
+            ],
+            headStyles: {
+                fillColor: [80, 18, 70],
+                textColor: 255,
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 10
+            }
+        });
+        doc.autoTable({
+            startY: doc.lastAutoTable.finalY + 5,
+            head: [
+                ['Involucramiento Afectivo'],
+            ],
+            body: [
+                [data.involucramiento_afectivo]
+            ],
+            headStyles: {
+                fillColor: [80, 18, 70],
+                textColor: 255,
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 10
+            }
+        });
+        doc.autoTable({
+            startY: doc.lastAutoTable.finalY + 5,
+            head: [
+                ['Control Del Comportamiento'],
+            ],
+            body: [
+                [data.control_del_comportamiento]
+            ],
+            headStyles: {
+                fillColor: [80, 18, 70],
+                textColor: 255,
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 10
+            }
+        });
+        doc.autoTable({
+            startY: doc.lastAutoTable.finalY + 5,
+            head: [
+                ['Funcionamiento General'],
+            ],
+            body: [
+                [data.funcionamiento_general]
+            ],
+            headStyles: {
+                fillColor: [80, 18, 70],
+                textColor: 255,
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 10
+            }
+        });
+        doc.autoTable({
+            startY: doc.lastAutoTable.finalY + 5,
+            head: [
+                ['Interpretación General'],
+            ],
+            body: [
+                [data.interpretacion_general]
+            ],
+            headStyles: {
+                fillColor: [80, 18, 70],
+                textColor: 255,
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 10
+            }
+        });
+    
+        doc.save(data.nombre + '_FAD.pdf');
+    })();
+}
+
+function createNotasProgresoPDF(data) {
+    (async () => {
+        let doc = new jsPDF({
+            orientation: 'portrait',
+            pageFormat: 'a4'
+        });
+        await informacionPersonal(doc, data.paciente, 'Notas De Progreso');
+
+        doc.setFontSize(18);
+        doc.text('Notas De Progreso', 80, 60);
+        doc.setFontSize(12);
+
+        doc.autoTable({
+            startY: 70,
+            columns: [
+                { header: 'ID', dataKey: 'id' },
+                { header: 'Nota De Progreso', dataKey: 'nota_progreso' },
+                { header: 'Fecha', dataKey: 'fecha' },
+            ],
+            body: data.data,
+            headStyles: {
+                fillColor: [80, 18, 70],
+                textColor: 255,
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 10
+            }
+        });
+        doc.save(data.paciente.nombre + '_NOTAS_PROGRESO.pdf');
+    })();
+}
+
+function createEvaluacionesPsicologicasPDF(data) {
+    (async () => {
+        let doc = new jsPDF({
+            orientation: 'portrait',
+            pageFormat: 'a4'
+        });
+        await informacionPersonal(doc, data.paciente, 'Evaluaciones Psicológicas');
+
+        doc.setFontSize(18);
+        doc.text('Evaluaciones Psicológicas', 80, 60);
+        doc.setFontSize(12);
+
+        doc.autoTable({
+            startY: 70,
+            columns: [
+                { header: 'ID', dataKey: 'id' },
+                { header: 'Evaluación Psicológica', dataKey: 'evaluacion_psicologica' },
+                { header: 'Fecha', dataKey: 'fecha' },
+            ],
+            body: data.data,
+            headStyles: {
+                fillColor: [80, 18, 70],
+                textColor: 255,
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 10
+            }
+        });
+        doc.save(data.paciente.nombre + '_EVALUACIONES_PSICOLOGICAS.pdf');
     })();
 }

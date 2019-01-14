@@ -139,7 +139,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
         
         $_SESSION['rand'] = $_POST['randcheck'];
         global $wpdb;
-        $wpdb->show_errors();
         $fotografia = '/wp-content/plugins/expedientes-qi/default.png';
         $table_name = $wpdb->prefix . "expedientes_pacientes";
         $table_name_contactos = $wpdb->prefix . "expedientes_personas_contacto";
@@ -245,7 +244,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             ), '%d');
         }
 
-        $wpdb->print_error();
 
         // CONTACTOS
         if (!empty($_POST['contactos_delete'])) {
@@ -293,7 +291,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             }
         }
 
-        $wpdb->print_error();
         // RIESGOS PSICOSOCIALES
 
         $riesgos_individuales = NULL;
@@ -350,7 +347,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             );
         }
 
-        $wpdb->print_error();
 
         // PSICOTROPICOS
         if (!empty($_POST['sustancias_delete'])) {
@@ -423,7 +419,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             }
         }
 
-        $wpdb->print_error();
         if(!empty($_POST['adaptabilidad'])) {
             $adaptabilidad = fases_procesar($_POST['adaptabilidad'], $_POST['adaptabilidad-name']);
             $cohesion = fases_procesar($_POST['cohesion'],  $_POST['cohesion-name']);
@@ -464,7 +459,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             }
         }
 
-        $wpdb->print_error();
         $values_fad = array(
             'solucion_problemas'           => $_POST['solucion_problemas'],
             'comunicacion'                 => $_POST['comunicacion'],
@@ -499,7 +493,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             ), '%d');
         }
 
-        $wpdb->print_error();
         if(!empty($_POST['nota_progreso'])) {
             $values_notas = array(
                 'nota_progreso'                => $_POST['nota_progreso'],
@@ -525,7 +518,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             ));
         }
 
-        $wpdb->print_error();
         
         if(!empty($_POST['responsables'])) {
             foreach($_POST['responsables'] as $key => $value) {
@@ -542,7 +534,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             }
         }
 
-        $wpdb->print_error();
         if (!empty($_POST['responsables_delete'])) {
             foreach( explode(",", $_POST['responsables_delete']) as $key => $id) {
                 $wpdb->delete(
@@ -552,7 +543,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                 );
             }
         }
-        $wpdb->print_error();
 
         foreach ($_FILES['archivos']['name'] as $key => $value) {
             if ($_FILES['archivos']['name'][$key]) {
@@ -585,7 +575,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             }
         }
 
-        $wpdb->print_error();
         if ($error != true) {
             echo $_POST['nombre'] . ' guardado correctamente.<br><br><a href="/paciente/?paciente=' . $paciente_id . '">Ver</a><br><br><a href="/pacientes">Ver Todos Los Pacientes</a>';
         } else {
