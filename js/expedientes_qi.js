@@ -47,16 +47,16 @@ function createPacientesPDF(pacientes) {
         doc.autoTable({
             startY: 40,
             columns: [
-                {header: 'Fotografía', dataKey: 'fotografia'},
-                {header: 'Nombre', dataKey: 'nombre'},
-                {header: 'Fecha de Nacimiento', dataKey: 'fechadenacimiento'},
-                {header: 'Edad', dataKey: 'edad'},
-                {header: 'Teléfono', dataKey: 'telefono'},
-                {header: 'Fecha de Creación', dataKey: 'fecha_creacion'},
-                {header: 'Fecha de Modificación', dataKey: 'fecha_modificacion'},
-                {header: 'Responsables', dataKey: 'responsables'},
+                { header: 'Fotografía', dataKey: 'fotografia' },
+                { header: 'Nombre', dataKey: 'nombre' },
+                { header: 'Fecha de Nacimiento', dataKey: 'fechadenacimiento' },
+                { header: 'Edad', dataKey: 'edad' },
+                { header: 'Teléfono', dataKey: 'telefono' },
+                { header: 'Fecha de Creación', dataKey: 'fecha_creacion' },
+                { header: 'Fecha de Modificación', dataKey: 'fecha_modificacion' },
+                { header: 'Responsables', dataKey: 'responsables' },
             ],
-            body: pacientes.map(function(paciente) {
+            body: pacientes.map(function (paciente) {
                 return {
                     fotografia: '',
                     nombre: paciente.nombre,
@@ -72,7 +72,7 @@ function createPacientesPDF(pacientes) {
                 minCellHeight: 25,
                 cellWidth: 'wrap'
             },
-            didDrawCell: function(data) {
+            didDrawCell: function (data) {
                 if (data.row.section === 'body' && data.column.dataKey === 'fotografia') {
                     doc.addImage(pacientes[data.row.index].fotografia, 'PNG', data.cell.x, data.cell.y, 20, 20);
                 }
@@ -103,15 +103,15 @@ async function informacionPersonal(doc, paciente, header) {
     if (header === 'Ficha de Identificación') {
         doc.text('Escolaridad: ' + stringValidation(paciente.escolaridad), 50, 59);
         doc.text('Ocupación: ' + stringValidation(paciente.ocupacion), 150, 59);
-    
+
         doc.text('Estado Civil: ' + stringValidation(paciente.estadocivil), 50, 66);
         doc.text('Cantidad de Hijos: ' + stringValidation(paciente.cantidadhijos), 150, 66);
-    
+
         doc.text('Domicilio: ' + stringValidation(paciente.domicilio), 50, 73);
-    
+
         doc.text('Ciudad de Origen: ' + stringValidation(paciente.ciudaddeorigen), 50, 80);
         doc.text('Ciudad Actual: ' + stringValidation(paciente.ciudadactual), 150, 80);
-    
+
         doc.text('Teléfono: ' + stringValidation(paciente.telefono), 50, 87);
         doc.text('Email: ' + stringValidation(paciente.email), 150, 87);
     }
@@ -129,7 +129,7 @@ function createFichaIdentificacion(paciente) {
                 textColor: 255
             }
         });
-        
+
         await informacionPersonal(doc, paciente, 'Ficha de Identificación');
         doc.setFontSize(18);
         doc.text('RIESGOS PSICOSOCIALES', 65, 100);
@@ -200,8 +200,8 @@ function createFichaIdentificacion(paciente) {
                     'INTENTO SUICIDA',
                 ],
             ],
-            didParseCell: function(data) {
-                if(data.row.section === 'body') {
+            didParseCell: function (data) {
+                if (data.row.section === 'body') {
                     let tipo_riesgo = '';
                     if (data.column.index == 0) {
                         tipo_riesgo = 'individual';
@@ -212,7 +212,7 @@ function createFichaIdentificacion(paciente) {
                     if (data.column.index == 2) {
                         tipo_riesgo = 'entorno';
                     }
-                    if(tipo_riesgo) {
+                    if (tipo_riesgo) {
                         for (let riesgo of riesgos[tipo_riesgo]) {
                             if (paciente.riesgos && paciente.riesgos[tipo_riesgo] && riesgo.text === data.cell.raw && paciente.riesgos[tipo_riesgo].split(',').includes('' + riesgo.value)) {
                                 data.cell.styles.fillColor = [80, 18, 70];
@@ -221,7 +221,7 @@ function createFichaIdentificacion(paciente) {
                         }
                     }
                 }
-                
+
             },
         });
 
@@ -245,7 +245,7 @@ function createFichaIdentificacion(paciente) {
             doc.setFontSize(18);
             doc.text('PERSONAS DE CONTACTO', 65, 15);
             doc.setFontSize(12);
-            doc.autoTable( {
+            doc.autoTable({
                 startY: 20,
                 columns: [
                     { header: 'Nombre', dataKey: 'nombre' },
@@ -259,9 +259,9 @@ function createFichaIdentificacion(paciente) {
                 showHead: 'firstPage'
             });
         }
-        
+
         if (paciente.sustancias && paciente.sustancias.length > 0) {
-            doc.addPage('a4', 'landscape');  
+            doc.addPage('a4', 'landscape');
             doc.setFontSize(18);
             doc.text('USO DE SUSTANCIAS', 120, 15);
             doc.setFontSize(12);
@@ -288,7 +288,7 @@ function createFichaIdentificacion(paciente) {
                 showHead: 'firstPage'
             });
         }
-        
+
         doc.save(paciente.nombre + '_FICHA.pdf');
 
     })();
@@ -334,25 +334,25 @@ function createFacesPDF(data) {
             bodyStyles: {
                 fontSize: 10
             },
-            didParseCell: function(data) {
+            didParseCell: function (data) {
                 if (data.row.section === 'body') {
                     try {
                         const array = JSON.parse(data.cell.raw);
                         let cell = '';
-                        for (let i=0; i<array.length; i++) {
-                            switch(i) {
+                        for (let i = 0; i < array.length; i++) {
+                            switch (i) {
                                 case 0:
                                     cell += `Papá: ${array[i]}\n`;
                                     break;
-                                
+
                                 case 1:
                                     cell += `Mamá: ${array[i]}\n`;
                                     break;
-                                    
+
                                 case 2:
                                     cell += `Hijo: ${array[i]}\n`;
                                     break;
-                                
+
                                 default:
                                     cell += `${array[i].nombre}: ${array[i].valor}\n`;
                                     break;
@@ -360,7 +360,7 @@ function createFacesPDF(data) {
                         }
 
                         data.cell.text = cell;
-                    } catch(e) {
+                    } catch (e) {
                         data.cell.text = '¡Ocurrió un error!';
                     }
                 }
@@ -501,7 +501,7 @@ function createFadPDF(data) {
                 fontSize: 10
             }
         });
-    
+
         doc.save(data.nombre + '_FAD.pdf');
     })();
 }
@@ -509,7 +509,7 @@ function createFadPDF(data) {
 function createNotasProgresoPDF(data) {
     (async () => {
         let doc = new jsPDF({
-            orientation: 'portrait',
+            orientation: 'landscape',
             pageFormat: 'a4'
         });
         await informacionPersonal(doc, data.paciente, 'Notas De Progreso');
@@ -524,6 +524,7 @@ function createNotasProgresoPDF(data) {
                 { header: 'ID', dataKey: 'id' },
                 { header: 'Nota De Progreso', dataKey: 'nota_progreso' },
                 { header: 'Fecha', dataKey: 'fecha' },
+                { header: 'Autor', dataKey: 'autor' },
             ],
             body: data.data,
             headStyles: {
@@ -533,6 +534,20 @@ function createNotasProgresoPDF(data) {
             },
             bodyStyles: {
                 fontSize: 10
+            },
+            willDrawCell: d => {
+                if (d.row.section === 'body' && d.column.dataKey === "nota_progreso") {
+                    var rowHeigth = d.cell.raw.split(' ')[0];
+                    d.cell.text = '';
+                    d.row.height = rowHeigth;
+                }
+            },
+            didDrawCell: d => {
+                if (d.row.section === 'body' && d.column.dataKey === "nota_progreso") {
+                    var rowHeigth = d.cell.raw.split(' ')[0];
+                    var base64 = d.cell.raw.split(' ')[1];
+                    doc.addImage(base64, 'PNG', d.cell.x, d.cell.y, d.cell.contentWidth, rowHeigth);
+                }
             }
         });
         doc.save(data.paciente.nombre + '_NOTAS_PROGRESO.pdf');

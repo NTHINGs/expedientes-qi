@@ -673,13 +673,18 @@
                                     <button type="button" class="btn btn-info pull-right imprimir_reporte_notas_evaluaciones" data-mode="notas_progreso">Imprimir
                                         Notas</button>
                                 </div>
-                                <div class="col-sm-6 col-12">
+                                <div class="col-lg-6 col-12">
                                     <div class="form-group col-12">
                                         <label for="nota_progreso">Nueva Nota de Progreso</label>
-                                        <textarea class="form-control" rows="3" id="nota_progreso" name="nota_progreso"></textarea>
+                                        <textarea rows="3" id="nota_progreso" name="nota_progreso"></textarea>
+                                        <script>
+                                            CKEDITOR.replace('nota_progreso', {
+                                                language: 'es'
+                                            });
+                                        </script>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-12">
+                                <div class="col-lg-6 col-12">
                                     <div class="col-12">
                                         <h4>Notas de Progreso Anteriores</h4>
                                     </div>
@@ -726,7 +731,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="notaProgreso" tabindex="-1" role="dialog" aria-labelledby="notaProgresoTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="notaProgresoTitle">Nota de Progreso</h5>
@@ -735,7 +740,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p id="nota-body"></p>
+                <div class="loading w-100 text-center">
+                    <img src="/wp-content/plugins/expedientes-qi/spinner.gif">
+                </div>
+                <div class="loaded">
+                    <p><b>Fecha: </b><span id="nota-fecha"></span></p>
+                    <p><b>Autor: </b><span id="nota-autor"></span></p>
+                    <textarea rows="3" id="nota-body" ></textarea>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -1254,7 +1266,32 @@
         $('#notaProgreso').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var nota = button.data('nota');
-            $('#nota-body').html(nota);
+            $('.loaded').hide();
+            $('.loading').show();
+            $.ajax({
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    action: 'expedientes_get_nota_progreso',
+                    id: nota
+                },
+                success: function (response) {
+                    var editor = CKEDITOR.instances['nota-body'];
+                    if (editor) {
+                        editor.destroy(true); 
+                    }  
+                    $('#nota-fecha').html(response.fecha);
+                    $('#nota-autor').html(response.autor);
+                    $('#nota-body').html(response.nota_progreso);
+                    CKEDITOR.replace('nota-body', {
+                        readOnly: true,
+                        language: 'es',
+                        // toolbar: []
+                    });
+                    $('.loaded').show();
+                    $('.loading').hide();
+                }
+            });
         });
 
         $('#eliminarNota').on('show.bs.modal', function (event) {
@@ -1479,13 +1516,16 @@
             if (paciente.notas_progreso) {
                 paciente.notas_progreso.forEach(function (nota_progreso, index) {
                     var nota = '<div class="row">\
-                        <div class="col-sm-4 col-12">\
+                        <div class="col-sm-3 col-12">\
                             <p>' + nota_progreso.fecha + '</p>\
                         </div>\
-                        <div class="col-sm-4 col-6">\
-                            <button type="button" class="btn btn-info" id="ver-nota' + index + '" data-toggle="modal" data-target="#notaProgreso" data-nota="' + nota_progreso.nota_progreso + '">Ver Nota</button>\
+                        <div class="col-sm-3 col-12">\
+                            <p>' + nota_progreso.autor + '</p>\
                         </div>\
-                        <div class="col-sm-4 col-6">\
+                        <div class="col-sm-3 col-6">\
+                            <button type="button" class="btn btn-info" id="ver-nota' + index + '" data-toggle="modal" data-target="#notaProgreso" data-nota="' + nota_progreso.id + '">Ver Nota</button>\
+                        </div>\
+                        <div class="col-sm-3 col-6">\
                             <button type="button" class="btn btn-danger" id="eliminar-nota' + index + '" data-toggle="modal" data-target="#eliminarNota" data-id="' + nota_progreso.id + '">Eliminar Nota</button>\
                         </div>\
                     </div>';
@@ -1626,7 +1666,26 @@
                 },
                 success: function (data) {
                     if (mode === 'notas_progreso') {
-                        createNotasProgresoPDF(data);
+                        let cellPromises = [];
+                        for (const nota of data.data) {
+                            cellPromises.push(new Promise((resolve, reject) => {
+                                (async () => {
+                                    var iframe = document.createElement('iframe');
+                                    document.body.appendChild(iframe);
+                                    var iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+                                    iframedoc.body.innerHTML = nota.nota_progreso;
+                                    var canvas = await html2canvas(iframedoc.body)
+                                    document.body.removeChild(iframe);
+
+                                    nota.nota_progreso = (canvas.height * 72 / 96) +' '+canvas.toDataURL('image/png');
+                                    resolve(true);
+                                })();
+                            }));
+                        }
+                        Promise.all(cellPromises).then((done) => {
+                            console.log(data);
+                            createNotasProgresoPDF(data);
+                        });
                     } else if (mode === 'evaluaciones_psicologicas') {
                         createEvaluacionesPsicologicasPDF(data);
                     }

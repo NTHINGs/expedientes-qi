@@ -292,3 +292,19 @@ if ( ! function_exists( 'expedientes_reporte_notas_evaluaciones' ) ) {
         wp_send_json(array('paciente' => $paciente, 'data' => $data));
     }
 }
+
+if ( ! function_exists( 'expedientes_get_nota_progreso' ) ) {
+    add_action( 'wp_ajax_nopriv_expedientes_get_nota_progreso', 'expedientes_get_nota_progreso' );
+    add_action( 'wp_ajax_expedientes_get_nota_progreso', 'expedientes_get_nota_progreso' );
+
+    function expedientes_get_nota_progreso() {
+        global $wpdb;
+        $nota_id = $_POST['id'];
+        $table_name_notas = $wpdb->prefix . "expedientes_notas_progreso";
+        $data = $wpdb->get_results(
+            "SELECT * FROM $table_name_notas WHERE id = '{$nota_id}'", 
+            'ARRAY_A'
+        );
+        wp_send_json($data[0]);
+    }
+}

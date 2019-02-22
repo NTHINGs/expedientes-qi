@@ -106,7 +106,7 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                     'ARRAY_A'
                 )[0];
                 $paciente['notas_progreso'] = $wpdb->get_results(
-                    "SELECT * FROM $table_notas_progreso WHERE paciente = '{$paciente_id}'",
+                    "SELECT fecha, id, autor FROM $table_notas_progreso WHERE paciente = '{$paciente_id}'",
                     'ARRAY_A'
                 );
                 $paciente['archivos_adjuntos'] = $wpdb->get_results(
@@ -132,6 +132,7 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
     }
 
     function guardar_paciente($paciente_id) {
+        $current_user = wp_get_current_user();
         $error = false;
         if ( !function_exists( 'wp_handle_upload' ) ){
             require_once( ABSPATH . 'wp-admin/includes/file.php' );
@@ -497,9 +498,11 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             $values_notas = array(
                 'nota_progreso'                => $_POST['nota_progreso'],
                 'fecha'                        => current_time( 'mysql' ),
+                'autor'                        => $current_user->user_login,
                 'paciente'                     => $paciente_id,
             );
             $wpdb->insert( $table_notas_progreso, $values_notas, array(
+                '%s',
                 '%s',
                 '%s',
                 '%d',
@@ -509,9 +512,11 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             $values_evaluaciones_psicologicas = array(
                 'evaluacion_psicologica'       => $_POST['evaluacion_psicologica'],
                 'fecha'                        => current_time( 'mysql' ),
+                'autor'                        => $current_user->user_login,
                 'paciente'                     => $paciente_id,
             );
             $wpdb->insert( $table_evaluaciones_psicologicas, $values_evaluaciones_psicologicas, array(
+                '%s',
                 '%s',
                 '%s',
                 '%d',
