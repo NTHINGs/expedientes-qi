@@ -21,10 +21,6 @@
                     role="tab" aria-controls="nav-riesgos-psicosociales" aria-selected="false">Riesgos Psicosociales</a>
                 <a class="nav-item nav-link" id="nav-psicotropicos-tab" data-toggle="tab" href="#nav-psicotropicos"
                     role="tab" aria-controls="nav-psicotropicos" aria-selected="false">Uso de Sustancias</a>
-                <a class="nav-item nav-link" id="nav-fases-tab" data-toggle="tab" href="#nav-fases" role="tab"
-                    aria-controls="nav-fases" aria-selected="false">Faces</a>
-                <a class="nav-item nav-link" id="nav-fad-tab" data-toggle="tab" href="#nav-fad" role="tab"
-                    aria-controls="nav-fad" aria-selected="false">FAD</a>
                 <a class="nav-item nav-link" id="nav-notas-tab" data-toggle="tab" href="#nav-notas" role="tab"
                     aria-controls="nav-notas" aria-selected="false">Notas de Progreso</a>
                 <a class="nav-item nav-link" id="nav-archivos-adjuntos-tab" data-toggle="tab" href="#nav-archivos-adjuntos"
@@ -152,7 +148,7 @@
                                 <div class="col-sm-6 col-12">
                                     <div class="form-group col-12">
                                         <label for="evaluacion_psicologica">Nueva Evaluación Psicológica</label>
-                                        <textarea class="form-control" rows="3" id="evaluacion_psicologica" name="evaluacion_psicologica"></textarea>
+                                        <textarea class="form-control" rows="10" id="evaluacion_psicologica" name="evaluacion_psicologica"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-12">
@@ -311,358 +307,6 @@
                             <button type="button" class="btn btn-success" id="agregar-sustancia">Agregar Otra Sustancia</button>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-fases" role="tabpanel" aria-labelledby="nav-fases-tab">
-                        <div class="container" id="fases">
-                            <div class="row">
-                                <div class="col-12">
-                                    <button type="button" class="btn btn-info pull-right imprimir_reporte_fases">Imprimir
-                                        FASES</button>
-                                </div>
-                                <div class="col-12 col-sm-6" id="adaptabilidad">
-                                    <div class="col-12">
-                                        <h3>Adaptabilidad</h3>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="adaptabilidad-papa">Papá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="6" max="30" id="adaptabilidad-papa"
-                                                name="adaptabilidad[]" required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="6" max="30" id="adaptabilidad-papa-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="adaptabilidad-mama">Mamá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="6" max="30" id="adaptabilidad-mama"
-                                                name="adaptabilidad[]" required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="6" max="30" id="adaptabilidad-mama-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="adaptabilidad-hijo">Hijo</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="6" max="30" id="adaptabilidad-hijo"
-                                                name="adaptabilidad[]" required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="6" max="30" id="adaptabilidad-hijo-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
-                                                Miembro</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6" id="cohesion">
-                                    <div class="col-12">
-                                        <h3>Cohesión</h3>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="cohesion-papa">Papá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="6" max="30" id="cohesion-papa" name="cohesion[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="6" max="30" id="cohesion-papa-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="cohesion-mama">Mamá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="6" max="30" id="cohesion-mama" name="cohesion[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="6" max="30" id="cohesion-mama-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="cohesion-hijo">Hijo</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="6" max="30" id="cohesion-hijo" name="cohesion[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="6" max="30" id="cohesion-hijo-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
-                                                Miembro</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6" id="rigidez">
-                                    <div class="col-12">
-                                        <h3>Rigidez</h3>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="rigidez-papa">Papá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="rigidez-papa" name="rigidez[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="rigidez-papa-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="rigidez-mama">Mamá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="rigidez-mama" name="rigidez[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="rigidez-mama-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="rigidez-hijo">Hijo</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="rigidez-hijo" name="rigidez[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="rigidez-hijo-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
-                                                Miembro</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6" id="apego">
-                                    <div class="col-12">
-                                        <h3>Apego</h3>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="apego-papa">Papá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="apego-papa" name="apego[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="apego-papa-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="apego-mama">Mamá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="apego-mama" name="apego[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="apego-mama-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="apego-hijo">Hijo</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="apego-hijo" name="apego[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="apego-hijo-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
-                                                Miembro</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6" id="caos">
-                                    <div class="col-12">
-                                        <h3>Caos</h3>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="caos-papa">Papá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="caos-papa" name="caos[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="caos-papa-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="caos-mama">Mamá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="caos-mama" name="caos[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="caos-mama-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="caos-hijo">Hijo</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="caos-hijo" name="caos[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="caos-hijo-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
-                                                Miembro</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6" id="desapego">
-                                    <div class="col-12">
-                                        <h3>Desapego</h3>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="desapego-papa">Papá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="desapego-papa" name="desapego[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="desapego-papa-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="desapego-mama">Mamá</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="desapego-mama" name="desapego[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="desapego-mama-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="desapego-hijo">Hijo</label>
-                                        </div>
-                                        <div class="col-12 col-sm-10">
-                                            <input type="range" class="slider" min="5" max="25" id="desapego-hijo" name="desapego[]"
-                                                required>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <input type="number" class="form-control" min="5" max="25" id="desapego-hijo-value"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <button type="button" class="btn btn-info fases-agregar-miembro">Agregar
-                                                Miembro</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="nav-fad" role="tabpanel" aria-labelledby="nav-fad-tab">
-                        <div class="container" id="fad">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h3>FAD</h3>
-                                </div>
-                                <div class="col-12">
-                                    <button type="button" class="btn btn-info pull-right imprimir_reporte_fad">Imprimir
-                                        FAD</button>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="solucion_problemas">Solución De Problemas</label>
-                                    <textarea class="form-control" rows="3" id="solucion_problemas" name="solucion_problemas"></textarea>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="comunicacion">Comunicación</label>
-                                    <textarea class="form-control" rows="3" id="comunicacion" name="comunicacion"></textarea>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="respuesta_afectiva">Respuesta Afectiva</label>
-                                    <textarea class="form-control" rows="3" id="respuesta_afectiva" name="respuesta_afectiva"></textarea>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="involucramiento_afectivo">Involucramiento Afectivo</label>
-                                    <textarea class="form-control" rows="3" id="involucramiento_afectivo" name="involucramiento_afectivo"></textarea>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="control_del_comportamiento">Control Del Comportamiento</label>
-                                    <textarea class="form-control" rows="3" id="control_del_comportamiento" name="control_del_comportamiento"></textarea>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="funcionamiento_general">Funcionamiento General</label>
-                                    <textarea class="form-control" rows="3" id="funcionamiento_general" name="funcionamiento_general"></textarea>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="interpretacion_general">Interpretación General</label>
-                                    <textarea class="form-control" rows="3" id="interpretacion_general" name="interpretacion_general"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="tab-pane fade" id="nav-notas" role="tabpanel" aria-labelledby="nav-notas-tab">
                         <div class="container" id="notas-progreso">
                             <div class="row">
@@ -673,13 +317,13 @@
                                     <button type="button" class="btn btn-info pull-right imprimir_reporte_notas_evaluaciones" data-mode="notas_progreso">Imprimir
                                         Notas</button>
                                 </div>
-                                <div class="col-sm-6 col-12">
+                                <div class="col-lg-6 col-12">
                                     <div class="form-group col-12">
                                         <label for="nota_progreso">Nueva Nota de Progreso</label>
-                                        <textarea class="form-control" rows="3" id="nota_progreso" name="nota_progreso"></textarea>
+                                        <textarea rows="10" id="nota_progreso" name="nota_progreso"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-12">
+                                <div class="col-lg-6 col-12">
                                     <div class="col-12">
                                         <h4>Notas de Progreso Anteriores</h4>
                                     </div>
@@ -726,7 +370,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="notaProgreso" tabindex="-1" role="dialog" aria-labelledby="notaProgresoTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="notaProgresoTitle">Nota de Progreso</h5>
@@ -735,7 +379,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p id="nota-body"></p>
+                <div class="loading w-100 text-center">
+                    <img src="/wp-content/plugins/expedientes-qi/spinner.gif">
+                </div>
+                <div class="loaded">
+                    <p><b>Fecha: </b><span id="nota-fecha"></span></p>
+                    <p><b>Autor: </b><span id="nota-autor"></span></p>
+                    <textarea rows="10" id="nota-body" readonly></textarea>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -754,7 +405,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p id="evaluacion-psicologica-body"></p>
+                <div class="loading w-100 text-center">
+                    <img src="/wp-content/plugins/expedientes-qi/spinner.gif">
+                </div>
+                <div class="loaded">
+                    <p><b>Fecha: </b><span id="evaluacion-psicologica-fecha"></span></p>
+                    <p><b>Autor: </b><span id="evaluacion-psicologica-autor"></span></p>
+                    <textarea rows="10" id="evaluacion-psicologica-body" readonly></textarea>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -856,8 +514,6 @@
             }
         });
         $('.imprimir_ficha_identificacion').hide();
-        $('.imprimir_reporte_fases').hide();
-        $('.imprimir_reporte_fad').hide();
         $('.imprimir_reporte_notas_evaluaciones').hide();
         var responsables = [];
         var responsables_delete = [];
@@ -1174,92 +830,28 @@
             }
         }
 
-        function sliders() {
-            $('input[type="range"]').each(function (index) {
-                var slider = $('#' + $(this).attr('id'));
-                var value = $('#' + $(this).attr('id') + '-value');
-
-                value.val(slider.val());
-                slider.on('change', function () {
-                    value.val($(this).val());
-                });
-
-                value.on('change', function () {
-                    slider.val($(this).val());
-                });
-            });
-        }
-        sliders();
-
-        var rangos = {
-            'adaptabilidad': {
-                min: 6,
-                max: 30,
-            },
-            'cohesion': {
-                min: 6,
-                max: 30,
-            },
-            'rigidez': {
-                min: 5,
-                max: 25,
-            },
-            'apego': {
-                min: 5,
-                max: 25,
-            },
-            'caos': {
-                min: 5,
-                max: 25,
-            },
-            'desapego': {
-                min: 5,
-                max: 25,
-            },
-        };
-        var fases = [];
-        $('.fases-agregar-miembro').each(function (index) {
-            fases[index] = {
-                i: 0
-            };
-            $(this).on('click', function () {
-                var container = $(this).parent().parent().parent();
-                fases[index].fase = container.attr('id');
-                var div = '\
-                <div class="form-group row">\
-                    <div class="col-12 col-sm-8">\
-                        <input type="text" class="form-control" placeholder="Nombre" id="' + fases[index].fase + fases[index].i + '-name" name="' + fases[index].fase + '-name[]" required>\
-                    </div>\
-                    <div class="col-12 col-sm-4 text-center">\
-                        <button type="button" class="btn btn-danger" id="fases-eliminar-miembro-' + fases[index].fase + '-' + fases[index].i + '">Eliminar Miembro</button>\
-                    </div>\
-                    <div class="col-12 col-sm-10">\
-                        <input type="range" class="slider" min="' + rangos[fases[index].fase].min + '" max="' + rangos[fases[index].fase].max + '" id="' + fases[index].fase + fases[index].i + '" name="' + fases[index].fase + '[]" required>\
-                    </div>\
-                    <div class="col-12 col-sm-2">\
-                        <input type="number" class="form-control" min="' + rangos[fases[index].fase].min + '" max="' + rangos[fases[index].fase].max + '" id="' + fases[index].fase + fases[index].i + '-value" required>\
-                    </div>\
-                </div>';
-
-                container.append(div);
-
-                $('#fases-eliminar-miembro-' + fases[index].fase + '-' + fases[index].i).on('click', function () {
-                    $(this).parent().parent().remove();
-                    fases[index].i--;
-                    sliders();
-                });
-
-                fases[index].i++;
-                sliders();
-            });
-        });
-
         var reload = false;
 
         $('#notaProgreso').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var nota = button.data('nota');
-            $('#nota-body').html(nota);
+            $('.loaded').hide();
+            $('.loading').show();
+            $.ajax({
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    action: 'expedientes_get_nota_progreso',
+                    id: nota
+                },
+                success: function (response) {
+                    $('#nota-fecha').html(response.fecha);
+                    $('#nota-autor').html(response.autor);
+                    $('#nota-body').html(response.nota_progreso);
+                    $('.loaded').show();
+                    $('.loading').hide();
+                }
+            });
         });
 
         $('#eliminarNota').on('show.bs.modal', function (event) {
@@ -1292,7 +884,23 @@
         $('#evaluacionPsicologica').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var evaluacion = button.data('evaluacion');
-            $('#evaluacion-psicologica-body').html(evaluacion);
+            $('.loaded').hide();
+            $('.loading').show();
+            $.ajax({
+                url: '%AJAX_URL%',
+                type: 'post',
+                data: {
+                    action: 'expedientes_get_evaluacion_psicologica',
+                    id: evaluacion
+                },
+                success: function (response) {
+                    $('#evaluacion-psicologica-fecha').html(response.fecha);
+                    $('#evaluacion-psicologica-autor').html(response.autor);
+                    $('#evaluacion-psicologica-body').html(response.evaluacion_psicologica);
+                    $('.loaded').show();
+                    $('.loading').hide();
+                }
+            });
         });
 
         $('#eliminarEvaluacionPsicologica').on('show.bs.modal', function (event) {
@@ -1452,46 +1060,21 @@
                 }
             }
 
-            // Llenar Fases
-            if (paciente.fases) {
-                for (var key of Object.keys(paciente.fases)) {
-                    if (paciente.fases[key].length > 3) {
-                        var elementos_extra = paciente.fases[key].length - 3;
-                        for (let index = 0; index < elementos_extra; index++) {
-                            $('#' + key).find('.fases-agregar-miembro')[0].click();
-                        }
-                    }
-                    $('input[name="' + key + '[]"]').each(function (index) {
-                        if (index < 3) {
-                            $(this).val(paciente.fases[key][index]);
-                        } else {
-                            $(this).val(paciente.fases[key][index].valor);
-                            $('#' + key + $(this).attr('id').replace(key, '') + '-name').val(paciente.fases[key][index].nombre);
-                        }
-                    });
-                }
-                sliders();
-            }
-
-            // Llenar FAD
-            if (paciente.fad) {
-                for (var key of Object.keys(paciente.fad)) {
-                    $('#' + key).val(paciente.fad[key]);
-                }
-            }
-
             //Llenar Notas de progreso
             if (paciente.notas_progreso) {
                 paciente.notas_progreso.forEach(function (nota_progreso, index) {
                     var nota = '<div class="row">\
-                        <div class="col-sm-4 col-12">\
+                        <div class="col-md-3 col-12">\
                             <p>' + nota_progreso.fecha + '</p>\
                         </div>\
-                        <div class="col-sm-4 col-6">\
-                            <button type="button" class="btn btn-info" id="ver-nota' + index + '" data-toggle="modal" data-target="#notaProgreso" data-nota="' + nota_progreso.nota_progreso + '">Ver Nota</button>\
+                        <div class="col-md-3 col-12">\
+                            <p>' + nota_progreso.autor + '</p>\
                         </div>\
-                        <div class="col-sm-4 col-6">\
-                            <button type="button" class="btn btn-danger" id="eliminar-nota' + index + '" data-toggle="modal" data-target="#eliminarNota" data-id="' + nota_progreso.id + '">Eliminar Nota</button>\
+                        <div class="col-md-3 col-6">\
+                            <button type="button" class="btn btn-info" id="ver-nota' + index + '" data-toggle="modal" data-target="#notaProgreso" data-nota="' + nota_progreso.id + '">Ver</button>\
+                        </div>\
+                        <div class="col-md-3 col-6">\
+                            <button type="button" class="btn btn-danger" id="eliminar-nota' + index + '" data-toggle="modal" data-target="#eliminarNota" data-id="' + nota_progreso.id + '">Eliminar</button>\
                         </div>\
                     </div>';
                     $('#notas-anteriores').append(nota);
@@ -1501,14 +1084,17 @@
             if (paciente.evaluaciones_psicologicas) {
                 paciente.evaluaciones_psicologicas.forEach(function (evaluacion_psicologica, index) {
                     var nota = '<div class="row">\
-                        <div class="col-sm-4 col-12">\
+                        <div class="col-md-3 col-12">\
                             <p>' + evaluacion_psicologica.fecha + '</p>\
                         </div>\
-                        <div class="col-sm-4 col-6">\
-                            <button type="button" class="btn btn-info" id="ver-evaluacion-psicologica' + index + '" data-toggle="modal" data-target="#evaluacionPsicologica" data-evaluacion="' + evaluacion_psicologica.evaluacion_psicologica + '">Ver Evaluación</button>\
+                        <div class="col-md-3 col-12">\
+                            <p>' + evaluacion_psicologica.autor + '</p>\
                         </div>\
-                        <div class="col-sm-4 col-6">\
-                            <button type="button" class="btn btn-danger" id="eliminar-evaluacion-psicologica' + index + '" data-toggle="modal" data-target="#eliminarEvaluacionPsicologica" data-id="' + evaluacion_psicologica.id + '">Eliminar Evaluación</button>\
+                        <div class="col-md-3 col-6">\
+                            <button type="button" class="btn btn-info" id="ver-evaluacion-psicologica' + index + '" data-toggle="modal" data-target="#evaluacionPsicologica" data-evaluacion="' + evaluacion_psicologica.id + '">Ver</button>\
+                        </div>\
+                        <div class="col-md-3 col-6">\
+                            <button type="button" class="btn btn-danger" id="eliminar-evaluacion-psicologica' + index + '" data-toggle="modal" data-target="#eliminarEvaluacionPsicologica" data-id="' + evaluacion_psicologica.id + '">Eliminar</button>\
                         </div>\
                     </div>';
                     $('#evaluaciones-psicologicas-anteriores').append(nota);
@@ -1551,12 +1137,6 @@
             // Llenar id en los botones de reportes
             $('.imprimir_ficha_identificacion').show();
             $('.imprimir_ficha_identificacion').attr('data-id', paciente.id);
-
-            $('.imprimir_reporte_fases').show();
-            $('.imprimir_reporte_fases').attr('data-id', paciente.id);
-            
-            $('.imprimir_reporte_fad').show();
-            $('.imprimir_reporte_fad').attr('data-id', paciente.id);
             
             $('.imprimir_reporte_notas_evaluaciones').show();
             $('.imprimir_reporte_notas_evaluaciones').attr('data-id', paciente.id);
@@ -1591,34 +1171,6 @@
             });
         });
         
-        $(".imprimir_reporte_fases").on('click', function () {
-            $.ajax({
-                url: '%AJAX_URL%',
-                type: 'post',
-                data: {
-                    id: $(this).data('id'),
-                    action: 'expedientes_reporte_faces',
-                },
-                success: function (data) {
-                    createFacesPDF(data);
-                }
-            });
-        });
-
-        $(".imprimir_reporte_fad").on('click', function () {
-            $.ajax({
-                url: '%AJAX_URL%',
-                type: 'post',
-                data: {
-                    id: $(this).data('id'),
-                    action: 'expedientes_reporte_fad',
-                },
-                success: function (data) {
-                    createFadPDF(data);
-                }
-            });
-        });
-        
         $(".imprimir_reporte_notas_evaluaciones").on('click', function () {
             const mode = $(this).data('mode');
             $.ajax({
@@ -1631,7 +1183,26 @@
                 },
                 success: function (data) {
                     if (mode === 'notas_progreso') {
-                        createNotasProgresoPDF(data);
+                        let cellPromises = [];
+                        for (const nota of data.data) {
+                            cellPromises.push(new Promise((resolve, reject) => {
+                                (async () => {
+                                    var iframe = document.createElement('iframe');
+                                    document.body.appendChild(iframe);
+                                    var iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+                                    iframedoc.body.innerHTML = nota.nota_progreso;
+                                    var canvas = await html2canvas(iframedoc.body)
+                                    document.body.removeChild(iframe);
+
+                                    nota.nota_progreso = (canvas.height * 72 / 96) +' '+canvas.toDataURL('image/png');
+                                    resolve(true);
+                                })();
+                            }));
+                        }
+                        Promise.all(cellPromises).then((done) => {
+                            console.log(data);
+                            createNotasProgresoPDF(data);
+                        });
                     } else if (mode === 'evaluaciones_psicologicas') {
                         createEvaluacionesPsicologicasPDF(data);
                     }
