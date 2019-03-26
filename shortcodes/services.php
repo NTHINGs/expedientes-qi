@@ -226,40 +226,6 @@ if ( ! function_exists( 'expedientes_get_responsables' ) ) {
     }
 }
 
-if ( ! function_exists( 'expedientes_reporte_faces' ) ) {
-    add_action( 'wp_ajax_nopriv_expedientes_reporte_faces', 'expedientes_reporte_faces' );
-    add_action( 'wp_ajax_expedientes_reporte_faces', 'expedientes_reporte_faces' );
-
-    function expedientes_reporte_faces() {
-        global $wpdb;
-        $paciente_id = $_POST['id'];
-        $table_name_esquema_fases = $wpdb->prefix . "expedientes_esquema_fases";
-        $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
-        $paciente_fases = $wpdb->get_results(
-            "SELECT * FROM $table_name_esquema_fases, $table_pacientes  WHERE paciente = '{$paciente_id}'", 
-            'ARRAY_A'
-        )[0];
-        wp_send_json($paciente_fases);
-    }
-}
-
-if ( ! function_exists( 'expedientes_reporte_fad' ) ) {
-    add_action( 'wp_ajax_nopriv_expedientes_reporte_fad', 'expedientes_reporte_fad' );
-    add_action( 'wp_ajax_expedientes_reporte_fad', 'expedientes_reporte_fad' );
-
-    function expedientes_reporte_fad() {
-        global $wpdb;
-        $paciente_id = $_POST['id'];
-        $table_name_fad = $wpdb->prefix . "expedientes_fad";
-        $table_pacientes = $wpdb->prefix . "expedientes_pacientes";
-        $paciente_fad = $wpdb->get_results(
-            "SELECT * FROM $table_name_fad, $table_pacientes  WHERE paciente = '{$paciente_id}'", 
-            'ARRAY_A'
-        )[0];
-        wp_send_json($paciente_fad);
-    }
-}
-
 if ( ! function_exists( 'expedientes_reporte_notas_evaluaciones' ) ) {
     add_action( 'wp_ajax_nopriv_expedientes_reporte_notas_evaluaciones', 'expedientes_reporte_notas_evaluaciones' );
     add_action( 'wp_ajax_expedientes_reporte_notas_evaluaciones', 'expedientes_reporte_notas_evaluaciones' );
@@ -303,6 +269,22 @@ if ( ! function_exists( 'expedientes_get_nota_progreso' ) ) {
         $table_name_notas = $wpdb->prefix . "expedientes_notas_progreso";
         $data = $wpdb->get_results(
             "SELECT * FROM $table_name_notas WHERE id = '{$nota_id}'", 
+            'ARRAY_A'
+        );
+        wp_send_json($data[0]);
+    }
+}
+
+if ( ! function_exists( 'expedientes_get_evaluacion_psicologica' ) ) {
+    add_action( 'wp_ajax_nopriv_expedientes_get_evaluacion_psicologica', 'expedientes_get_evaluacion_psicologica' );
+    add_action( 'wp_ajax_expedientes_get_evaluacion_psicologica', 'expedientes_get_evaluacion_psicologica' );
+
+    function expedientes_get_evaluacion_psicologica() {
+        global $wpdb;
+        $evaluacion_id = $_POST['id'];
+        $table_name_evaluaciones = $wpdb->prefix . "expedientes_evaluaciones_psicologicas";
+        $data = $wpdb->get_results(
+            "SELECT * FROM $table_name_evaluaciones WHERE id = '{$evaluacion_id}'", 
             'ARRAY_A'
         );
         wp_send_json($data[0]);

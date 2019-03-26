@@ -68,8 +68,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
             $table_contactos = $wpdb->prefix . "expedientes_personas_contacto";
             $table_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
             $table_sustancias = $wpdb->prefix . "expedientes_psicotropicos";
-            $table_name_esquema_fases = $wpdb->prefix . "expedientes_esquema_fases";
-            $table_name_fad = $wpdb->prefix . "expedientes_fad";
             $table_notas_progreso = $wpdb->prefix . "expedientes_notas_progreso";
             $table_archivos_adjuntos = $wpdb->prefix . "expedientes_archivos_adjuntos";
             $table_evaluaciones_psicologicas = $wpdb->prefix . "expedientes_evaluaciones_psicologicas";
@@ -92,19 +90,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                     "SELECT * FROM $table_sustancias WHERE paciente = '{$paciente_id}'", 
                     'ARRAY_A'
                 );
-                $paciente['fases'] = $wpdb->get_results(
-                    "SELECT * FROM $table_name_esquema_fases WHERE paciente = '{$paciente_id}'", 
-                    'ARRAY_A'
-                )[0];
-                unset( $paciente['fases']['id']);
-                unset( $paciente['fases']['paciente']);
-                foreach( $paciente['fases'] as $key => $value) {
-                    $paciente['fases'][$key] = json_decode($paciente['fases'][$key]);
-                }
-                $paciente['fad'] = $wpdb->get_results(
-                    "SELECT * FROM $table_name_fad WHERE paciente = '{$paciente_id}'", 
-                    'ARRAY_A'
-                )[0];
                 $paciente['notas_progreso'] = $wpdb->get_results(
                     "SELECT fecha, id, autor FROM $table_notas_progreso WHERE paciente = '{$paciente_id}'",
                     'ARRAY_A'
@@ -145,8 +130,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
         $table_name_contactos = $wpdb->prefix . "expedientes_personas_contacto";
         $table_name_riesgos = $wpdb->prefix . "expedientes_riesgos_psicosociales";
         $table_name_psicotropicos = $wpdb->prefix . "expedientes_psicotropicos";
-        $table_name_esquema_fases = $wpdb->prefix . "expedientes_esquema_fases";
-        $table_name_fad = $wpdb->prefix . "expedientes_fad";
         $table_notas_progreso = $wpdb->prefix . "expedientes_notas_progreso";
         $table_archivos_adjuntos = $wpdb->prefix . "expedientes_archivos_adjuntos";
         $table_evaluaciones_psicologicas = $wpdb->prefix . "expedientes_evaluaciones_psicologicas";
@@ -418,80 +401,6 @@ if ( ! function_exists( 'paciente_shortcode' ) ) {
                     ), '%d');
                 }
             }
-        }
-
-        if(!empty($_POST['adaptabilidad'])) {
-            $adaptabilidad = fases_procesar($_POST['adaptabilidad'], $_POST['adaptabilidad-name']);
-            $cohesion = fases_procesar($_POST['cohesion'],  $_POST['cohesion-name']);
-            $rigidez = fases_procesar($_POST['rigidez'], $_POST['rigidez-name']);
-            $apego = fases_procesar($_POST['apego'], $_POST['apego-name']);
-            $caos = fases_procesar($_POST['caos'], $_POST['caos-name']);
-            $desapego = fases_procesar($_POST['desapego'], $_POST['desapego-name']);
-
-            $values_fases = array(
-                'adaptabilidad'      => json_encode($adaptabilidad, JSON_NUMERIC_CHECK),
-                'cohesion'           => json_encode($cohesion, JSON_NUMERIC_CHECK),
-                'rigidez'            => json_encode($rigidez, JSON_NUMERIC_CHECK),
-                'apego'              => json_encode($apego, JSON_NUMERIC_CHECK),
-                'caos'               => json_encode($caos, JSON_NUMERIC_CHECK),
-                'desapego'           => json_encode($desapego, JSON_NUMERIC_CHECK),
-                'paciente'           => $paciente_id,
-            );
-            if ($_POST['editmode'] != '1') {
-                $wpdb->insert( $table_name_esquema_fases, $values_fases, array(
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%d',
-                ));
-            } else {
-                $wpdb->update( $table_name_esquema_fases, $values_fases, array('paciente' => $paciente_id ), array(
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%d',
-                ), '%d');
-            }
-        }
-
-        $values_fad = array(
-            'solucion_problemas'           => $_POST['solucion_problemas'],
-            'comunicacion'                 => $_POST['comunicacion'],
-            'respuesta_afectiva'           => $_POST['respuesta_afectiva'],
-            'involucramiento_afectivo'     => $_POST['involucramiento_afectivo'],
-            'control_del_comportamiento'   => $_POST['control_del_comportamiento'],
-            'funcionamiento_general'       => $_POST['funcionamiento_general'],
-            'interpretacion_general'       => $_POST['interpretacion_general'],
-            'paciente'                     => $paciente_id,
-        );
-        if ($_POST['editmode'] != '1') {
-            $wpdb->insert( $table_name_fad, $values_fad, array(
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-            ));
-        } else {
-            $wpdb->update( $table_name_fad, $values_fad, array('paciente' => $paciente_id ), array(
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-            ), '%d');
         }
 
         if(!empty($_POST['nota_progreso'])) {

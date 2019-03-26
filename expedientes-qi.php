@@ -66,9 +66,7 @@ function expedientes_qi_init() {
 	wp_enqueue_style( 'rangeslider', plugins_url( '/css/slider.css', __FILE__));
     wp_enqueue_script( 'jspdf', plugins_url( '/js/jspdf.min.js', __FILE__ ));
     wp_enqueue_script( 'jspdf-tables', plugins_url( '/js/jspdf.plugin.autotable.js', __FILE__ ));
-    wp_enqueue_script( 'html2canvas', plugins_url( '/js/html2canvas.min.js', __FILE__ ));
 	wp_enqueue_script( 'expedientes_qi', plugins_url( '/js/expedientes_qi.js', __FILE__ ));
-	wp_enqueue_script( 'ckeditor', plugins_url( '/js/ckeditor/ckeditor.js', __FILE__ ));
 }
 
 // Create Tables
