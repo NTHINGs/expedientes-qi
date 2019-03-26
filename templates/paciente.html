@@ -850,6 +850,11 @@
 
 <script>
     jQuery(document).ready(function ($) {
+        $('textarea').keydown(function (e){
+            if(e.keyCode == 13 || e.which == 13){
+                $(this).val($(this).val() + '\n');
+            }
+        });
         $('.imprimir_ficha_identificacion').hide();
         $('.imprimir_reporte_fases').hide();
         $('.imprimir_reporte_fad').hide();
@@ -1376,7 +1381,7 @@
 
         var paciente = null;
         try {
-            paciente = JSON.parse('%PACIENTE%');
+            paciente = JSON.parse('%PACIENTE%'.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));
         } catch (e) {
             console.error(e);
         }
