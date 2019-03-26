@@ -142,7 +142,8 @@
                                     <h3>Evaluaciones Psicológicas</h3>
                                 </div>
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-info pull-right imprimir_reporte_notas_evaluaciones" data-mode="evaluaciones_psicologicas">Imprimir
+                                    <button type="button" class="btn btn-info pull-right imprimir_reporte_notas_evaluaciones"
+                                        data-mode="evaluaciones_psicologicas">Imprimir
                                         Evaluaciones</button>
                                 </div>
                                 <div class="col-sm-6 col-12">
@@ -314,7 +315,8 @@
                                     <h3>Notas de Progreso</h3>
                                 </div>
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-info pull-right imprimir_reporte_notas_evaluaciones" data-mode="notas_progreso">Imprimir
+                                    <button type="button" class="btn btn-info pull-right imprimir_reporte_notas_evaluaciones"
+                                        data-mode="notas_progreso">Imprimir
                                         Notas</button>
                                 </div>
                                 <div class="col-lg-6 col-12">
@@ -508,8 +510,8 @@
 
 <script>
     jQuery(document).ready(function ($) {
-        $('textarea').keydown(function (e){
-            if(e.keyCode == 13 || e.which == 13){
+        $('textarea').keydown(function (e) {
+            if (e.keyCode == 13 || e.which == 13) {
                 $(this).val($(this).val() + '\n');
             }
         });
@@ -1063,12 +1065,16 @@
             //Llenar Notas de progreso
             if (paciente.notas_progreso) {
                 paciente.notas_progreso.forEach(function (nota_progreso, index) {
+                    var autor = nota_progreso.autor;
+                    if (!autor) {
+                        autor = 'SIN AUTOR';
+                    }
                     var nota = '<div class="row">\
                         <div class="col-md-3 col-12">\
                             <p>' + nota_progreso.fecha + '</p>\
                         </div>\
                         <div class="col-md-3 col-12">\
-                            <p>' + nota_progreso.autor + '</p>\
+                            <p>' + autor + '</p>\
                         </div>\
                         <div class="col-md-3 col-6">\
                             <button type="button" class="btn btn-info" id="ver-nota' + index + '" data-toggle="modal" data-target="#notaProgreso" data-nota="' + nota_progreso.id + '">Ver</button>\
@@ -1083,12 +1089,16 @@
             //Llenar Evaluaciones Psicologicas
             if (paciente.evaluaciones_psicologicas) {
                 paciente.evaluaciones_psicologicas.forEach(function (evaluacion_psicologica, index) {
+                    var autor = evaluacion_psicologica.autor;
+                    if (!autor) {
+                        autor = 'SIN AUTOR';
+                    }
                     var nota = '<div class="row">\
                         <div class="col-md-3 col-12">\
                             <p>' + evaluacion_psicologica.fecha + '</p>\
                         </div>\
                         <div class="col-md-3 col-12">\
-                            <p>' + evaluacion_psicologica.autor + '</p>\
+                            <p>' + autor + '</p>\
                         </div>\
                         <div class="col-md-3 col-6">\
                             <button type="button" class="btn btn-info" id="ver-evaluacion-psicologica' + index + '" data-toggle="modal" data-target="#evaluacionPsicologica" data-evaluacion="' + evaluacion_psicologica.id + '">Ver</button>\
@@ -1137,7 +1147,7 @@
             // Llenar id en los botones de reportes
             $('.imprimir_ficha_identificacion').show();
             $('.imprimir_ficha_identificacion').attr('data-id', paciente.id);
-            
+
             $('.imprimir_reporte_notas_evaluaciones').show();
             $('.imprimir_reporte_notas_evaluaciones').attr('data-id', paciente.id);
 
@@ -1170,7 +1180,7 @@
                 }
             });
         });
-        
+
         $(".imprimir_reporte_notas_evaluaciones").on('click', function () {
             const mode = $(this).data('mode');
             $.ajax({
@@ -1183,26 +1193,7 @@
                 },
                 success: function (data) {
                     if (mode === 'notas_progreso') {
-                        let cellPromises = [];
-                        for (const nota of data.data) {
-                            cellPromises.push(new Promise((resolve, reject) => {
-                                (async () => {
-                                    var iframe = document.createElement('iframe');
-                                    document.body.appendChild(iframe);
-                                    var iframedoc = iframe.contentDocument || iframe.contentWindow.document;
-                                    iframedoc.body.innerHTML = nota.nota_progreso;
-                                    var canvas = await html2canvas(iframedoc.body)
-                                    document.body.removeChild(iframe);
-
-                                    nota.nota_progreso = (canvas.height * 72 / 96) +' '+canvas.toDataURL('image/png');
-                                    resolve(true);
-                                })();
-                            }));
-                        }
-                        Promise.all(cellPromises).then((done) => {
-                            console.log(data);
-                            createNotasProgresoPDF(data);
-                        });
+                        createNotasProgresoPDF(data);
                     } else if (mode === 'evaluaciones_psicologicas') {
                         createEvaluacionesPsicologicasPDF(data);
                     }
