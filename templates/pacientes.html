@@ -42,7 +42,7 @@
 <script>
 
     jQuery(document).ready(function ($) {
-        let pacientes = JSON.parse('%PACIENTE%'.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));
+        let pacientes = JSON.parse('%PACIENTES%'.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));
         for (let paciente of pacientes) {
             let fila = '<tr>\
             <th scope="row">' + paciente.id + '</th>';
